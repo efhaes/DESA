@@ -1,0 +1,7 @@
+<!-- templates/pelayanan/ajukan_surat.html -->
+<h2>Form Pengajuan Surat</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Ajukan</button>
+</form>

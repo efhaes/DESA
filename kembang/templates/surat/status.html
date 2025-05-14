@@ -1,0 +1,8 @@
+<h2>Status Pengajuan Saya</h2>
+<ul>
+    {% for surat in daftar %}
+    <li>{{ surat.jenis_surat }} - Status: {{ surat.status }}</li>
+    {% empty %}
+    <li>Belum ada pengajuan.</li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,6 @@
+<h2>Semua Pengajuan</h2>
+<ul>
+    {% for surat in daftar %}
+    <li>{{ surat.nama }} - {{ surat.jenis_surat }} - {{ surat.status }}</li>
+    {% endfor %}
+</ul>

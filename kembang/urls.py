@@ -2,10 +2,14 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    path('', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
-    path('ajukan/', views.ajukan_surat, name='ajukan_surat'),
-    path('riwayat/', views.riwayat_surat, name='riwayat_surat'),
+    path('', views.home, name='home'),
+    path('tentang/', views.tentang, name='tentang'),
+    path('profil/', views.profil, name='profil'),
+    path('ajukan/', views.ajukan_surat, name='ajukan'),
+    path('status/', views.status_surat, name='status'),
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
+    path('login/', views.custom_login, name='login'),
 ]
+

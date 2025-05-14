@@ -1,34 +1,8 @@
-# pelayanan/views.py
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import PengajuanSurat
 from .forms import PengajuanSuratForm
-from django.shortcuts import render, redirect
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
-
-
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('riwayat_surat')  # Sudah login, langsung ke dashboard
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('riwayat_surat')  # Ganti dengan halaman tujuanmu
-        else:
-            messages.error(request, 'Username atau password salah!')
-
-    return render(request, 'pelayanan/login.html')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+from django.contrib.auth import authenticate, login
 
 @login_required
 def ajukan_surat(request):
@@ -38,17 +12,56 @@ def ajukan_surat(request):
             surat = form.save(commit=False)
             surat.user = request.user
             surat.save()
-            return render(request, 'pelayanan/sukses.html')
+            return redirect('status_surat')
     else:
         form = PengajuanSuratForm()
-    return render(request, 'pelayanan/ajukan_surat.html', {'form': form})
+    return render(request, 'surat/ajukan.html', {'form': form})
 
 @login_required
-def riwayat_surat(request):
-    surat_user = PengajuanSurat.objects.filter(user=request.user)
-    return render(request, 'pelayanan/riwayat.html', {'surat_list': surat_user})
+def status_surat(request):
+    daftar = PengajuanSurat.objects.filter(user=request.user)
+    return render(request, 'surat/status.html', {'daftar': daftar})
 
-@staff_member_required
+def is_admin(user):
+    return user.is_staff
+
+@login_required
+@user_passes_test(is_admin)
 def semua_pengajuan(request):
-    semua = PengajuanSurat.objects.all()
-    return render(request, 'pelayanan/semua_pengajuan.html', {'surat_list': semua})
+    daftar = PengajuanSurat.objects.all()
+    return render(request, 'surat/semua_pengajuan.html', {'daftar': daftar})
+
+
+def home(request):
+    return render(request, 'profile/home.html')
+
+def tentang(request):
+    return render(request, 'profile/tentang.html')
+
+def profil(request):
+    return render(request, 'profile/profil.html')
+
+@login_required
+def ajukan_surat(request):
+    if request.method == 'POST':
+        form = PengajuanSuratForm(request.POST)
+        if form.is_valid():
+            surat = form.save(commit=False)
+            surat.user = request.user
+            surat.save()
+            return redirect('status')
+    else:
+        form = PengajuanSuratForm()
+    return render(request, 'surat/ajukan.html', {'form': form})
+
+def custom_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'surat/login.html', {'error': 'Username atau password salah'})
+    return render(request, 'surat/login.html')

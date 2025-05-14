@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tentang Desa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(to right, #0d6efd, #6f42c1);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #343a40;
+        }
+    </style>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-success" href="#">Desa Kembang</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navProfil">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navProfil">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tentang' %}">Tentang</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'profil' %}">Profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'ajukan' %}">Ajukan Surat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'status' %}">Status Surat</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="hero">
+        <h1 class="display-4 fw-bold">Tentang Desa Kami</h1>
+        <p class="lead">Mengenal lebih dekat Desa Kembang yang penuh potensi dan budaya.</p>
+    </div>
+
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- Sejarah -->
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">Sejarah Desa</h2>
+                        <p class="card-text">
+                            Desa Kembang berdiri sejak 1950-an, berkembang pesat di kaki gunung dengan alam yang indah dan masyarakat yang harmonis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visi Misi -->
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">Visi & Misi</h2>
+                        <p><strong>Visi:</strong> Mewujudkan desa sejahtera dan berdaya saing.</p>
+                        <p><strong>Misi:</strong></p>
+                        <ul>
+                            <li>Meningkatkan kualitas pelayanan publik</li>
+                            <li>Mendorong UMKM & pertanian modern</li>
+                            <li>Melestarikan budaya & lingkungan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kontak -->
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">Kontak Desa</h2>
+                        <p>
+                            <strong>Kantor Desa Kembang</strong><br>
+                            Jl. Raya Desa Kembang No. 12<br>
+                            Telp: (021) 123-4567<br>
+                            Email: info@desakembang.id
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- MAPS LOKASI DESA -->
+<!-- MAPS DESA VERSI KECIL -->
+<div class="container my-5">
+    <div class="card shadow rounded-4 mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h4 class="card-title mb-3 text-center">Lokasi Desa Kembang</h4>
+            <div class="ratio ratio-4x3 rounded-3 overflow-hidden">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.728870044716!2d106.8227249!3d-6.2000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x123456789abcdef!2sDesa%20Kembang!5e0!3m2!1sid!2sid!4v1623456789012!5m2!1sid!2sid" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

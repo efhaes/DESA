@@ -10,6 +10,8 @@ urlpatterns = [
     path('ajukan/', views.ajukan_surat, name='ajukan'),
     path('status/', views.status_surat, name='status'),
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
-    path('login/', views.custom_login, name='login'),
+    path('update/<int:surat_id>/', views.update_status, name='update_status'),
+    path('login/', views.login_view, name='login'),
+
 ]
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Desa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .profile-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-success" href="#">Desa Kembang</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navProfil">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navProfil">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tentang' %}">Tentang</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'profil' %}">Profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'ajukan' %}">Ajukan Surat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'status' %}">Status Surat</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">Profil Desa Kembang</h1>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be" alt="Foto Desa" class="profile-img shadow">
+            </div>
+            <div class="col-md-6">
+                <h4>Informasi Umum</h4>
+                <p>
+                    Desa Kembang adalah desa yang terletak di Kecamatan Sukamaju, Kabupaten Bahagia. Jumlah penduduk mencapai 5.000 jiwa dengan mata pencaharian utama adalah bertani dan berdagang.
+                </p>
+                <h5>Data Desa</h5>
+                <ul>
+                    <li>Jumlah RW: 7</li>
+                    <li>Jumlah RT: 24</li>
+                    <li>Fasilitas: Balai Desa, Posyandu, Lapangan, Masjid, Sekolah</li>
+                    <li>Kepala Desa: Bapak Ahmad Setiawan</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

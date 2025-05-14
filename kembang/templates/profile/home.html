@@ -52,7 +52,7 @@
           <a class="nav-link" href="{% url 'ajukan' %}">Ajukan Surat</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'status_surat' %}">Status Surat</a>
+          <a class="nav-link" href="{% url 'status' %}">Status Surat</a>
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
@@ -113,7 +113,7 @@
             <div class="card-body">
               <h5 class="card-title">Lacak Status Surat</h5>
               <p class="card-text">Pantau proses pengajuan surat Anda. Cek status dan tunggu persetujuan dari admin desa.</p>
-              <a href="{% url 'status_surat' %}" class="btn btn-success">Cek Status</a>
+              <a href="{% url 'status' %}" class="btn btn-success">Cek Status</a>
             </div>
           </div>
         </div>

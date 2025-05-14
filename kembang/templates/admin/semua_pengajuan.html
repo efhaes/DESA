@@ -1,6 +1,19 @@
-<h2>Semua Pengajuan</h2>
-<ul>
-    {% for surat in daftar %}
-    <li>{{ surat.nama }} - {{ surat.jenis_surat }} - {{ surat.status }}</li>
-    {% endfor %}
-</ul>
+<h2>Daftar Pengajuan Surat</h2>
+<table border="1">
+  <tr>
+    <th>Nama</th>
+    <th>NIK</th>
+    <th>Jenis Surat</th>
+    <th>Status</th>
+    <th>Aksi</th>
+  </tr>
+  {% for surat in semua_surat %}
+  <tr>
+    <td>{{ surat.nama }}</td>
+    <td>{{ surat.nik }}</td>
+    <td>{{ surat.jenis_surat }}</td>
+    <td>{{ surat.status }}</td>
+    <td><a href="{% url 'update_status' surat.id %}">Update</a></td>
+  </tr>
+  {% endfor %}
+</table>

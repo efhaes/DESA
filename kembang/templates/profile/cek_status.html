@@ -1,0 +1,56 @@
+<h2>Cek Status Pengajuan Surat</h2>
+<form method="get">
+    <label for="jenis">Jenis Surat:</label>
+    <select name="jenis" required>
+        <option value="">-- Pilih --</option>
+        <option value="kelahiran" {% if jenis == 'kelahiran' %}selected{% endif %}>Akta Kelahiran</option>
+        <option value="kematian" {% if jenis == 'kematian' %}selected{% endif %}>Akta Kematian</option>
+        <option value="pindah_datang" {% if jenis == 'pindah_datang' %}selected{% endif %}>Pindah Datang</option>
+        <option value="pindah_keluar" {% if jenis == 'pindah_keluar' %}selected{% endif %}>Pindah Keluar</option>
+    </select>
+
+    <label for="nik">Nama atau NIK / No. WhatsApp:</label>
+    <input type="text" name="nik" value="{{ nik }}" required>
+
+    <button type="submit">Cari</button>
+</form>
+
+{% if hasil != None %}
+    <h3>Hasil Pencarian:</h3>
+    {% if hasil %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Status</th>
+                    <th>File Surat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in hasil %}
+                <tr>
+                    <td>
+                        {% if jenis == 'kelahiran' %}
+                            {{ item.nama_lengkap }}
+                        {% elif jenis == 'kematian' %}
+                            {{ item.nama_jenazah }}
+                        {% else %}
+                            {{ item.nama }}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.status }}</td>
+                    <td>
+                        {% if item.hasil_surat %}
+                            <a href="{{ item.hasil_surat.url }}" target="_blank">Download</a>
+                        {% else %}
+                            Belum tersedia
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p><strong>Data tidak ditemukan.</strong></p>
+    {% endif %}
+{% endif %}

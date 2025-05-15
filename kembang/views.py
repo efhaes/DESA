@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import PengajuanSurat
-from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm,PindahDatangForm,PindahKeluarForm
+from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar
+from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm,PindahDatangForm,PindahKeluarForm,AktaKematianHasilForm
 from django.contrib.auth import authenticate, login
-from .forms import UpdateStatusForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Q
 
 def status_surat(request):
     nama = request.GET.get('nama')
@@ -66,61 +66,171 @@ def is_admin(user):
 
 @user_passes_test(is_admin)
 def semua_pengajuan(request):
-    semua_surat = PengajuanSurat.objects.all().order_by('-tanggal')
-    return render(request, 'admin/dashboard.html', {'semua_surat': semua_surat})
+    akta_kelahiran = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
+    pindah_datang = PindahDatang.objects.all().order_by('-tanggal_pindah')
+    pindah_keluar = PindahKeluar.objects.all().order_by('-tanggal_pindah')
+    return render(request, 'admin/dashboard.html', {
+        'akta_kelahiran': akta_kelahiran,
+        'pindah_datang': pindah_datang,
+        'pindah_keluar': pindah_keluar,
+    })
 
 
-@user_passes_test(is_admin)
-def update_status(request, surat_id):
-    surat = get_object_or_404(PengajuanSurat, id=surat_id)
-    if request.method == 'POST':
-        form = UpdateStatusForm(request.POST, instance=surat)
-        if form.is_valid():
-            form.save()
-            return redirect('semua_pengajuan')
-    else:
-        form = UpdateStatusForm(instance=surat)
-    return render(request, 'admin/update_status.html', {'form': form})
-
-
-def ajukan_akta_kematian(request):
-    form = AktaKematianForm()
+@login_required
+def pengajuan_akta_kematian(request):
     if request.method == 'POST':
         form = AktaKematianForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Pengajuan Akta Kematian berhasil dikirim!')
-            form = AktaKematianForm()  # Reset form
-    return render(request, 'surat/akta_kematian.html', {'form': form})
+            messages.success(request, "Pengajuan berhasil dikirim.")
+            return redirect('riwayat_kematian')  # ganti sesuai nama URL beranda kamu
+    else:
+        form = AktaKematianForm()
+    return render(request, 'surat/aktakematianform.html', {'form': form})
 
+@staff_member_required
+def daftar_pengajuan_akta_kematian(request):
+    pengajuan = AktaKematian.objects.all().order_by('-tanggal_pengajuan')
+    return render(request, 'admin/daftar_kematian.html', {'pengajuan': pengajuan})
 
-def ajukan_akta_kelahiran(request):
-    form = AktaKelahiranForm()
+@staff_member_required
+def detail_pengajuan_akta_kematian(request, pk):
+    akta = get_object_or_404(AktaKematian, pk=pk)
+
     if request.method == 'POST':
-        form = AktaKelahiranForm(request.POST)
+        status = request.POST.get('status')
+        hasil_surat = request.FILES.get('hasil_surat')
+        akta.status = status
+        if hasil_surat:
+            akta.hasil_surat = hasil_surat
+        akta.save()
+        messages.success(request, "Status berhasil diperbarui.")
+        return redirect('daftar_pengajuan_akta_kematian') 
+
+    return render(request, 'admin/detail_kematian.html', {'akta': akta})
+
+
+@login_required
+def pengajuan_akta_kelahiran(request):
+    if request.method == 'POST':
+        form = AktaKelahiranForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Pengajuan Akta Kelahiran berhasil dikirim!')
-            form = AktaKelahiranForm()
-    return render(request, 'surat/akta_kelahiran.html', {'form': form})
+            messages.success(request, "Pengajuan berhasil dikirim.")
+            return redirect('home')
+    else:
+        form = AktaKelahiranForm()
+    return render(request, 'surat/akta_kelahiran_form.html', {'form': form})
 
 
-def ajukan_pindah_datang(request):
-    form = PindahDatangForm()
+@staff_member_required
+def daftar_pengajuan_kelahiran(request):
+    pengajuan = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
+    return render(request, 'admin/daftarkelahiran.html', {'pengajuan': pengajuan})
+
+@staff_member_required
+def detail_pengajuan_kelahiran(request, pk):
+    akta = get_object_or_404(AktaKelahiran, pk=pk)
     if request.method == 'POST':
-        form = PindahDatangForm(request.POST, request.FILES)
+        status = request.POST.get('status')
+        hasil_surat = request.FILES.get('hasil_surat')
+        akta.status = status
+        if hasil_surat:
+            akta.hasil_surat = hasil_surat
+        akta.save()
+        messages.success(request, "Status berhasil diperbarui.")
+        return redirect('detail_pengajuan_kelahiran', pk=pk)
+    return render(request, 'admin/detail_kelahiran.html', {'akta': akta})
+
+@login_required
+def pengajuan_pindah_datang(request):
+    if request.method == 'POST':
+        form = AktaKelahiranForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Pengajuan Pindah Datang berhasil dikirim!')
-            form = PindahDatangForm()  # reset form biar kosong lagi
-    return render(request, 'surat/pindah_datang.html', {'form': form})
+            messages.success(request, "Pengajuan berhasil dikirim.")
+            return redirect('home')
+    else:
+        form = AktaKelahiranForm()
+    return render(request, 'admin/aktakelahiran.html', {'form': form})
 
-def ajukan_pindah_keluar(request):
-    form = PindahKeluarForm()
+
+@staff_member_required
+def daftar_pindah_datang(request):
+    pengajuan = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
+    return render(request, 'admin/akta_kelahiran.html', {'pengajuan': pengajuan})
+
+@staff_member_required
+def detail_pindah_datang(request, pk):
+    akta = get_object_or_404(AktaKelahiran, pk=pk)
     if request.method == 'POST':
-        form = PindahKeluarForm(request.POST, request.FILES)
+        status = request.POST.get('status')
+        hasil_surat = request.FILES.get('hasil_surat')
+        akta.status = status
+        if hasil_surat:
+            akta.hasil_surat = hasil_surat
+        akta.save()
+        messages.success(request, "Status berhasil diperbarui.")
+        return redirect('detail_pengajuan_kelahiran', pk=pk)
+    return render(request, 'admin/detail_kelahiran.html', {'akta': akta})
+
+
+
+@login_required
+def pengajuan_pindah_keluar(request):
+    if request.method == 'POST':
+        form = AktaKelahiranForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Pengajuan Pindah Keluar berhasil dikirim!')
-            form = PindahKeluarForm()
-    return render(request, 'surat/pindah_keluar.html', {'form': form})
+            messages.success(request, "Pengajuan berhasil dikirim.")
+            return redirect('home')
+    else:
+        form = AktaKelahiranForm()
+    return render(request, 'admin/aktakelahiran.html', {'form': form})
+
+
+@staff_member_required
+def daftar_pindah_keluar(request):
+    pengajuan = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
+    return render(request, 'admin/akta_kelahiran.html', {'pengajuan': pengajuan})
+
+@staff_member_required
+def detail_pindah_keluar(request, pk):
+    akta = get_object_or_404(AktaKelahiran, pk=pk)
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        hasil_surat = request.FILES.get('hasil_surat')
+        akta.status = status
+        if hasil_surat:
+            akta.hasil_surat = hasil_surat
+        akta.save()
+        messages.success(request, "Status berhasil diperbarui.")
+        return redirect('detail_pengajuan_kelahiran', pk=pk)
+    return render(request, 'admin/detail_kelahiran.html', {'akta': akta})
+
+
+
+
+
+@login_required
+def cek_status_surat(request):
+    hasil = None
+    jenis = request.GET.get('jenis')
+    nik = request.GET.get('nik')
+
+    if jenis and nik:
+        if jenis == 'kelahiran':
+            hasil = AktaKelahiran.objects.filter(Q(nama_lengkap__icontains=nik) | Q(no_whatsapp__icontains=nik))
+        elif jenis == 'kematian':
+            hasil = AktaKematian.objects.filter(Q(nama_jenazah__icontains=nik) | Q(no_whatsapp__icontains=nik))
+        elif jenis == 'pindah_datang':
+            hasil = PindahDatang.objects.filter(Q(nama__icontains=nik) | Q(nik__icontains=nik))
+        elif jenis == 'pindah_keluar':
+            hasil = PindahKeluar.objects.filter(Q(nama__icontains=nik) | Q(nik__icontains=nik))
+
+    return render(request, 'profile/cek_status.html', {
+        'hasil': hasil,
+        'jenis': jenis,
+        'nik': nik
+    })
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengajuan Akta Kelahiran</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Detail Pengajuan Akta Kelahiran</h2>
+
+    <div class="form-container">
+        <div class="info">
+            <p><strong>Nama Lengkap:</strong> {{ akta.nama_lengkap }}</p>
+            <p><strong>Tempat Lahir:</strong> {{ akta.tempat_lahir }}</p>
+            <p><strong>Tanggal Lahir:</strong> {{ akta.tanggal_lahir }}</p>
+            <p><strong>Jenis Kelamin:</strong> {{ akta.jenis_kelamin }}</p>
+            <p><strong>Nama Ayah:</strong> {{ akta.nama_ayah }}</p>
+            <p><strong>Nama Ibu:</strong> {{ akta.nama_ibu }}</p>
+            <p><strong>Status:</strong> {{ akta.status }}</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="status">Ubah Status</label>
+                <select name="status" id="status">
+                    <option value="diajukan" {% if akta.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
+                    <option value="sedang diproses" {% if akta.status == 'sedang diproses' %}selected{% endif %}>Sedang Diproses</option>
+                    <option value="selesai" {% if akta.status == 'selesai' %}selected{% endif %}>Selesai</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="hasil_surat">Upload Hasil Surat (PDF)</label>
+                <input type="file" name="hasil_surat" id="hasil_surat">
+            </div>
+
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<h2>Detail Pengajuan Akta Kematian</h2>
+<p><strong>Nama Jenazah:</strong> {{ akta.nama_jenazah }}</p>
+<p><strong>Status Saat Ini:</strong> {{ akta.status }}</p>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="status">Ubah Status:</label>
+    <select name="status" id="status">
+        <option value="diajukan" {% if akta.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
+        <option value="diproses" {% if akta.status == 'diproses' %}selected{% endif %}>Sedang Diproses</option>
+        <option value="selesai" {% if akta.status == 'selesai' %}selected{% endif %}>Selesai</option>
+    </select>
+    <br><br>
+
+    <label for="hasil_surat">Upload Hasil Surat (jika selesai):</label>
+    <input type="file" name="hasil_surat" id="hasil_surat"><br><br>
+
+    <button type="submit">Simpan Perubahan</button>
+</form>
+
+{% if akta.status == 'selesai' and akta.hasil_surat %}
+    <p><strong>File Surat:</strong> {{ akta.hasil_surat.name }}</p>
+    <a href="https://wa.me/{{ akta.no_whatsapp|cut:'+' }}?text=Berikut%20hasil%20surat%20akta%20kematian%20Anda:%20{{ request.build_absolute_uri(akta.hasil_surat.url) }}" target="_blank">Kirim via WhatsApp</a>
+{% endif %}

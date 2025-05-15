@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import PengajuanSurat
-from .forms import PengajuanSuratForm
+from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm
 from django.contrib.auth import authenticate, login
 from .forms import UpdateStatusForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -81,3 +81,24 @@ def update_status(request, surat_id):
     else:
         form = UpdateStatusForm(instance=surat)
     return render(request, 'admin/update_status.html', {'form': form})
+
+
+def ajukan_akta_kematian(request):
+    if request.method == 'POST':
+        form = AktaKematianForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('sukses_pengajuan')  # ganti ke URL sukses lu
+    else:
+        form = AktaKematianForm()
+    return render(request, 'akta_kematian/form_pengajuan.html', {'form': form})
+
+def ajukan_akta_kelahiran(request):
+    if request.method == 'POST':
+        form = AktaKelahiranForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('sukses_akta_kelahiran')
+    else:
+        form = AktaKelahiranForm()
+    return render(request, 'akta_kelahiran/form_pengajuan.html', {'form': form})

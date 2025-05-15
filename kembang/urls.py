@@ -10,6 +10,7 @@ urlpatterns = [
     path('ajukan/', views.ajukan_surat, name='ajukan'),
     path('status/', views.status_surat, name='status'),
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
+    path('akta-kematian/ajukan/', views.ajukan_akta_kematian, name='ajukan_akta_kematian'),
     path('update/<int:surat_id>/', views.update_status, name='update_status'),
     path('login/', views.login_view, name='login'),
 

@@ -64,15 +64,18 @@ def login_view(request):
 def is_admin(user):
     return user.is_staff
 
-@user_passes_test(is_admin)
+@staff_member_required
 def semua_pengajuan(request):
-    akta_kelahiran = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
-    pindah_datang = PindahDatang.objects.all().order_by('-tanggal_pindah')
-    pindah_keluar = PindahKeluar.objects.all().order_by('-tanggal_pindah')
+    akta_kelahiran = AktaKelahiran.objects.all()
+    pindah_datang = PindahDatang.objects.all()
+    pindah_keluar = PindahKeluar.objects.all()
+    akta_kematian = AktaKematian.objects.all()
+
     return render(request, 'admin/dashboard.html', {
         'akta_kelahiran': akta_kelahiran,
         'pindah_datang': pindah_datang,
         'pindah_keluar': pindah_keluar,
+        'akta_kematian': akta_kematian,
     })
 
 
@@ -126,7 +129,7 @@ def pengajuan_akta_kelahiran(request):
 @staff_member_required
 def daftar_pengajuan_kelahiran(request):
     pengajuan = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
-    return render(request, 'admin/daftarkelahiran.html', {'pengajuan': pengajuan})
+    return render(request, 'admin/daftar_kelahiran.html', {'pengajuan': pengajuan})
 
 @staff_member_required
 def detail_pengajuan_kelahiran(request, pk):
@@ -152,13 +155,13 @@ def pengajuan_pindah_datang(request):
             return redirect('home')
     else:
         form = AktaKelahiranForm()
-    return render(request, 'admin/aktakelahiran.html', {'form': form})
+    return render(request, 'admin/daftar_kelahiran.html', {'form': form})
 
 
 @staff_member_required
 def daftar_pindah_datang(request):
     pengajuan = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
-    return render(request, 'admin/akta_kelahiran.html', {'pengajuan': pengajuan})
+    return render(request, 'admin/daftar_datang.html', {'pengajuan': pengajuan})
 
 @staff_member_required
 def detail_pindah_datang(request, pk):
@@ -192,7 +195,7 @@ def pengajuan_pindah_keluar(request):
 @staff_member_required
 def daftar_pindah_keluar(request):
     pengajuan = AktaKelahiran.objects.all().order_by('-tanggal_lahir')
-    return render(request, 'admin/akta_kelahiran.html', {'pengajuan': pengajuan})
+    return render(request, 'admin/daftar_keluar.html', {'pengajuan': pengajuan})
 
 @staff_member_required
 def detail_pindah_keluar(request, pk):

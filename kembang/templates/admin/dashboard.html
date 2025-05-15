@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .card p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        a.button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a.button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Selamat Datang, Admin</h1>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h2>Akta Kelahiran</h2>
+            <p>{{ akta_kelahiran.count }}</p>
+            <a href="{% url 'daftar_pengajuan_kelahiran' %}" class="button">Lihat Detail</a>
+        </div>
+
+        <div class="card">
+            <h2>Pindah Datang</h2>
+            <p>{{ pindah_datang.count }}</p>
+            <a href="{% url 'daftar_pengajuan_pindah_datang' %}" class="button">Lihat Detail</a>
+        </div>
+
+        <div class="card">
+            <h2>Pindah Keluar</h2>
+            <p>{{ pindah_keluar.count }}</p>
+            <a href="{% url 'daftar_pengajuan_pindah_keluar' %}" class="button">Lihat Detail</a>
+        </div>
+
+        <div class="card">
+            <h2>Akta Kematian</h2>
+            <p>{{ akta_kematian.count }}</p>
+            <a href="{% url 'daftar_pengajuan_akta_kematian' %}" class="button">Lihat Detail</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

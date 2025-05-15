@@ -1,6 +1,7 @@
 from django import forms
-from .models import PengajuanSurat,AktaKematian,AktaKelahiran
+from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang, PindahKeluar
 
+ 
 
 class PengajuanSuratForm(forms.ModelForm):
     class Meta:
@@ -60,3 +61,43 @@ class AktaKelahiranForm(forms.ModelForm):
             'alamat': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
         }
 
+
+
+
+class PindahDatangForm(forms.ModelForm):
+    class Meta:
+        model = PindahDatang
+        fields = '__all__'
+        widgets = {
+            'tanggal_pindah': forms.DateInput(attrs={'type': 'date'}),
+        }
+        labels = {
+            'nama': 'Nama Lengkap',
+            'nik': 'NIK',
+            'asal_daerah': 'Asal Daerah',
+            'tujuan_daerah': 'Tujuan Daerah',
+            'tanggal_pindah': 'Tanggal Pindah',
+            'alasan_pindah': 'Alasan Pindah',
+            'kk_lama': 'Upload KK Lama',
+            'ktp': 'Upload KTP',
+            'surat_pengantar': 'Surat Pengantar RT/RW',
+        }
+
+class PindahKeluarForm(forms.ModelForm):
+    class Meta:
+        model = PindahKeluar
+        fields = '__all__'
+        widgets = {
+            'tanggal_pindah': forms.DateInput(attrs={'type': 'date'}),
+        }
+        labels = {
+            'nama': 'Nama Lengkap',
+            'nik': 'NIK',
+            'asal_daerah': 'Asal Daerah',
+            'tujuan_daerah': 'Tujuan Daerah',
+            'tanggal_pindah': 'Tanggal Pindah',
+            'alasan_pindah': 'Alasan Pindah',
+            'kk': 'Upload KK',
+            'ktp': 'Upload KTP',
+            'surat_pengantar': 'Surat Pengantar RT/RW',
+        }

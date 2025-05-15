@@ -70,3 +70,34 @@ class AktaKelahiran(models.Model):
 
     def __str__(self):
         return f'Akta Kelahiran {self.nama_lengkap}'
+
+
+class PindahKeluar(models.Model):
+    nama = models.CharField(max_length=100)
+    nik = models.CharField(max_length=16)
+    asal_daerah = models.CharField(max_length=100)
+    tujuan_daerah = models.CharField(max_length=100)
+    tanggal_pindah = models.DateField()
+    alasan_pindah = models.TextField()
+    kk = models.FileField(upload_to='pindah_keluar/kk/')
+    ktp = models.FileField(upload_to='pindah_keluar/ktp/')
+    surat_pengantar = models.FileField(upload_to='pindah_keluar/surat_pengantar/')
+
+    def __str__(self):
+        return f"Pindah Keluar - {self.nama} ({self.nik})"
+
+
+
+class PindahDatang(models.Model):
+    nama = models.CharField(max_length=100)
+    nik = models.CharField(max_length=16)
+    asal_daerah = models.CharField(max_length=100)
+    tujuan_daerah = models.CharField(max_length=100)
+    tanggal_pindah = models.DateField()
+    alasan_pindah = models.TextField()
+    kk_lama = models.FileField(upload_to='pindah_datang/kk_lama/')
+    ktp = models.FileField(upload_to='pindah_datang/ktp/')
+    surat_pengantar = models.FileField(upload_to='pindah_datang/surat_pengantar/')
+
+    def __str__(self):
+        return f"Pindah Datang - {self.nama} ({self.nik})"

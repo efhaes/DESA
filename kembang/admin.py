@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PengajuanSurat,AktaKematian,AktaKelahiran
+from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar
 
 @admin.register(PengajuanSurat)
 class PengajuanSuratAdmin(admin.ModelAdmin):
@@ -22,4 +22,16 @@ class AktaKelahiranAdmin(admin.ModelAdmin):
     search_fields = ('nama_lengkap', 'nama_ayah', 'nama_ibu')
 
 admin.site.register(AktaKelahiran, AktaKelahiranAdmin)
+
+@admin.register(PindahDatang)
+class PindahDatangAdmin(admin.ModelAdmin):
+    list_display = ('nama', 'asal', 'tanggal_datang')
+    search_fields = ('nama', 'asal')
+    list_filter = ('tanggal_datang',)
+
+@admin.register(PindahKeluar)
+class PindahKeluarAdmin(admin.ModelAdmin):
+    list_display = ('nama', 'tujuan', 'tanggal_pindah')
+    search_fields = ('nama', 'tujuan')
+    list_filter = ('tanggal_pindah',)
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import PengajuanSurat
-from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm
+from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm,PindahDatangForm,PindahKeluarForm
 from django.contrib.auth import authenticate, login
 from .forms import UpdateStatusForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -84,21 +84,43 @@ def update_status(request, surat_id):
 
 
 def ajukan_akta_kematian(request):
+    form = AktaKematianForm()
     if request.method == 'POST':
         form = AktaKematianForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('sukses_pengajuan')  # ganti ke URL sukses lu
-    else:
-        form = AktaKematianForm()
-    return render(request, 'akta_kematian/form_pengajuan.html', {'form': form})
+            messages.success(request, 'Pengajuan Akta Kematian berhasil dikirim!')
+            form = AktaKematianForm()  # Reset form
+    return render(request, 'surat/akta_kematian.html', {'form': form})
+
 
 def ajukan_akta_kelahiran(request):
+    form = AktaKelahiranForm()
     if request.method == 'POST':
         form = AktaKelahiranForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('sukses_akta_kelahiran')
-    else:
-        form = AktaKelahiranForm()
-    return render(request, 'akta_kelahiran/form_pengajuan.html', {'form': form})
+            messages.success(request, 'Pengajuan Akta Kelahiran berhasil dikirim!')
+            form = AktaKelahiranForm()
+    return render(request, 'surat/akta_kelahiran.html', {'form': form})
+
+
+def ajukan_pindah_datang(request):
+    form = PindahDatangForm()
+    if request.method == 'POST':
+        form = PindahDatangForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Pengajuan Pindah Datang berhasil dikirim!')
+            form = PindahDatangForm()  # reset form biar kosong lagi
+    return render(request, 'surat/pindah_datang.html', {'form': form})
+
+def ajukan_pindah_keluar(request):
+    form = PindahKeluarForm()
+    if request.method == 'POST':
+        form = PindahKeluarForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Pengajuan Pindah Keluar berhasil dikirim!')
+            form = PindahKeluarForm()
+    return render(request, 'surat/pindah_keluar.html', {'form': form})

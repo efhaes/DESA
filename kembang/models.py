@@ -4,7 +4,7 @@ STATUS_CHOICES = [
     ('diajukan', 'Diajukan'),
     ('diproses', 'Sedang Diproses'),
     ('selesai', 'Sudah Diproses'),
-    ('siap', 'Siap Diambil'),
+
 ]
 
 class PengajuanSurat(models.Model):
@@ -21,7 +21,7 @@ class PengajuanSurat(models.Model):
     keterangan = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     tanggal = models.DateTimeField(auto_now_add=True)
-
+    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
     def __str__(self):
         return f"{self.nama} - {self.jenis_surat}"
 
@@ -37,7 +37,7 @@ class AktaKematian(models.Model):
     nama_pelapor = models.CharField(max_length=100)
     nik_pelapor = models.CharField(max_length=16)
     hubungan_pelapor = models.CharField(max_length=100)
-
+    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
     kk_jenazah = models.FileField(upload_to='akta_kematian/', blank=True, null=True)
     ktp_jenazah = models.FileField(upload_to='akta_kematian/', blank=True, null=True)
     surat_keterangan_kematian = models.FileField(upload_to='akta_kematian/', blank=True, null=True)
@@ -45,17 +45,7 @@ class AktaKematian(models.Model):
     dokumen_pendukung_lainnya = models.FileField(upload_to='akta_kematian/', blank=True, null=True)
 
     tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(
-        max_length=20,
-        choices=[
-            ('pending', 'Pending'),
-            ('proses', 'Proses'),
-            ('selesai', 'Selesai'),
-            ('ditolak', 'Ditolak')
-        ],
-        default='pending'
-    )
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='diajukan')
     def __str__(self):
         return f"{self.nama_jenazah} - {self.nik_jenazah}"
     
@@ -67,7 +57,8 @@ class AktaKelahiran(models.Model):
     nama_ayah = models.CharField(max_length=100)
     nama_ibu = models.CharField(max_length=100)
     alamat = models.TextField()
-
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
+    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
     def __str__(self):
         return f'Akta Kelahiran {self.nama_lengkap}'
 
@@ -82,7 +73,8 @@ class PindahKeluar(models.Model):
     kk = models.FileField(upload_to='pindah_keluar/kk/')
     ktp = models.FileField(upload_to='pindah_keluar/ktp/')
     surat_pengantar = models.FileField(upload_to='pindah_keluar/surat_pengantar/')
-
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
+    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
     def __str__(self):
         return f"Pindah Keluar - {self.nama} ({self.nik})"
 
@@ -98,6 +90,7 @@ class PindahDatang(models.Model):
     kk_lama = models.FileField(upload_to='pindah_datang/kk_lama/')
     ktp = models.FileField(upload_to='pindah_datang/ktp/')
     surat_pengantar = models.FileField(upload_to='pindah_datang/surat_pengantar/')
-
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
+    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
     def __str__(self):
         return f"Pindah Datang - {self.nama} ({self.nik})"

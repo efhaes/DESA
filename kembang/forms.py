@@ -6,7 +6,7 @@ from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang, Pind
 class PengajuanSuratForm(forms.ModelForm):
     class Meta:
         model = PengajuanSurat
-        fields = ['nama', 'nik', 'alamat', 'jenis_surat', 'keterangan']
+        fields = ['nama', 'nik', 'alamat', 'jenis_surat','no_whatsapp','keterangan']
 
 class UpdateStatusForm(forms.ModelForm):
     class Meta:
@@ -55,7 +55,7 @@ class AktaKematianForm(forms.ModelForm):
 class AktaKelahiranForm(forms.ModelForm):
     class Meta:
         model = AktaKelahiran
-        fields = ['nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'nama_ayah', 'nama_ibu', 'alamat']
+        fields = ['nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'nama_ayah', 'nama_ibu', 'alamat','no_whatsapp']
         widgets = {
             'tanggal_lahir': forms.DateInput(attrs={'type': 'date'}),
             'alamat': forms.Textarea(attrs={'rows': 4, 'cols': 40}),

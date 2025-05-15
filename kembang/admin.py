@@ -25,13 +25,15 @@ admin.site.register(AktaKelahiran, AktaKelahiranAdmin)
 
 @admin.register(PindahDatang)
 class PindahDatangAdmin(admin.ModelAdmin):
-    list_display = ('nama', 'asal', 'tanggal_datang')
-    search_fields = ('nama', 'asal')
-    list_filter = ('tanggal_datang',)
+    list_display = ('nama', 'asal_daerah', 'tanggal_pindah')
+    search_fields = ('nama', 'asal_daerah')
+    list_filter = ('tanggal_pindah',)
+
 
 @admin.register(PindahKeluar)
 class PindahKeluarAdmin(admin.ModelAdmin):
-    list_display = ('nama', 'tujuan', 'tanggal_pindah')
-    search_fields = ('nama', 'tujuan')
+    list_display = ('nama', 'tujuan_daerah', 'tanggal_pindah')
+    search_fields = ('nama', 'tujuan_daerah')
     list_filter = ('tanggal_pindah',)
+
 

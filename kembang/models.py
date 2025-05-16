@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 STATUS_CHOICES = [
@@ -28,6 +29,7 @@ class PengajuanSurat(models.Model):
 
 
 class AktaKematian(models.Model):
+    
     nama_jenazah = models.CharField(max_length=100)
     nik_jenazah = models.CharField(max_length=16)
     tanggal_kematian = models.DateField()
@@ -102,3 +104,63 @@ class PindahDatang(models.Model):
 
     def __str__(self):
         return f"Pindah Datang - {self.nama} ({self.nik})"
+
+
+
+class SKTMPengajuan(models.Model):
+    nama_lengkap = models.CharField(max_length=100)
+    nik = models.CharField(max_length=16)
+    no_whatsapp = models.CharField(max_length=15)
+
+    surat_pengantar = models.FileField(upload_to='sktm/surat_pengantar/')
+    foto_ktp = models.ImageField(upload_to='sktm/foto_ktp/')
+    foto_kk = models.ImageField(upload_to='sktm/foto_kk/')
+    surat_pernyataan = models.FileField(upload_to='sktm/surat_pernyataan/')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
+    hasil_surat = models.FileField(upload_to='sktm/hasil_surat/', blank=True, null=True)
+    tanggal_dibuat = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.nama_lengkap} - {self.nik}"
+    
+class DomisiliPengajuan(models.Model):
+    nama_lengkap = models.CharField(max_length=100)
+    nik = models.CharField(max_length=16)
+    no_whatsapp = models.CharField(max_length=15)
+
+    surat_pengantar = models.FileField(upload_to='domisili/surat_pengantar/')
+    foto_ktp = models.ImageField(upload_to='domisili/foto_ktp/')
+    foto_kk = models.ImageField(upload_to='domisili/foto_kk/')
+    surat_permohonan = models.FileField(upload_to='domisili/surat_permohonan/')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
+    hasil_surat = models.FileField(upload_to='domisili/hasil_surat/', blank=True, null=True)
+    tanggal_dibuat = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.nama_lengkap} - {self.nik}"
+
+class SKUPengajuan(models.Model):
+    nama_lengkap = models.CharField(max_length=100)
+    nik = models.CharField(max_length=16)
+    no_whatsapp = models.CharField(max_length=15)
+    npwp = models.CharField(max_length=50)
+    surat_pengantar = models.FileField(upload_to='SKU/surat_pengantar/')
+    surat_permohonan = models.FileField(upload_to='SKU/surat_permohonan/')
+    foto_ktp = models.ImageField(upload_to='SKU/foto_ktp/')
+    foto_kk = models.ImageField(upload_to='SKU/foto_kk/')
+    surat_kuasa = models.ImageField(upload_to='SKU/surat_kuasa/')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
+    hasil_surat = models.FileField(upload_to='SKU/hasil_surat/', blank=True, null=True)
+    tanggal_dibuat = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.nama_lengkap} - {self.nik}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nama = models.CharField(max_length=100)
+    alamat = models.TextField()
+
+    def __str__(self):
+        return self.nama

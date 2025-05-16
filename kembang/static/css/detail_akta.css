@@ -1,0 +1,84 @@
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 8px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+strong {
+    display: inline-block;
+    width: 220px;
+}
+
+form {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #999;
+    background-color: #f9f9f9;
+}
+
+label {
+    font-weight: bold;
+}
+
+select,
+input[type="file"],
+button {
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    padding: 6px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+a {
+    color: #004085;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.file-info {
+    background-color: #e0f0e0;
+    padding: 10px;
+    border: 1px solid #999;
+    margin: 15px 0;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 30px 0;
+}

@@ -1,0 +1,38 @@
+<!-- templates/admin/daftar_sktm.html -->
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Pengajuan SKTM</title>
+    <link rel="stylesheet" href="{% static 'css/daftar_pindah.css' %}">
+</head>
+<body>
+    <h2>Daftar Pengajuan SKTM</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>NIK</th>
+                <th>No. WhatsApp</th>
+                <th>Status</th>
+                <th>Tanggal</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in daftar %}
+            <tr>
+                <td>{{ item.nama_lengkap }}</td>
+                <td>{{ item.nik }}</td>
+                <td>{{ item.no_whatsapp }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.tanggal_dibuat|date:"d M Y" }}</td>
+                <td><a href="{% url 'detail_pengajuan_sktm' item.pk %}">Lihat</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">Belum ada pengajuan.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

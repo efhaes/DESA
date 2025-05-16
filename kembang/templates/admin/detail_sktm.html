@@ -1,0 +1,38 @@
+<!-- templates/admin/detail_sktm.html -->
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Pengajuan SKTM</title>
+    <link rel="stylesheet" href="{% static 'css/detail_pindah.css' %}">
+</head>
+<body>
+    <h2>Detail Pengajuan SKTM</h2>
+    <p><strong>Nama:</strong> {{ sktm.nama_lengkap }}</p>
+    <p><strong>NIK:</strong> {{ sktm.nik }}</p>
+    <p><strong>No WhatsApp:</strong> <a href="https://wa.me/{{ sktm.no_whatsapp }}">{{ sktm.no_whatsapp }}</a></p>
+    <p><strong>Surat Pengantar:</strong> <a href="{{ sktm.surat_pengantar.url }}">Download</a></p>
+    <p><strong>Foto KTP:</strong> <a href="{{ sktm.foto_ktp.url }}">Lihat</a></p>
+    <p><strong>Foto KK:</strong> <a href="{{ sktm.foto_kk.url }}">Lihat</a></p>
+    <p><strong>Surat Pernyataan:</strong> <a href="{{ sktm.surat_pernyataan.url }}">Download</a></p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+            <option value="diajukan" {% if sktm.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
+            <option value="sedang diproses" {% if sktm.status == 'sedang diproses' %}selected{% endif %}>Sedang Diproses</option>
+            <option value="selesai" {% if sktm.status == 'selesai' %}selected{% endif %}>Selesai</option>
+        </select><br><br>
+
+        <label for="hasil_surat">Upload Hasil Surat (PDF):</label>
+        <input type="file" name="hasil_surat" id="hasil_surat"><br><br>
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+
+    {% if sktm.hasil_surat %}
+        <p><strong>File Surat Selesai:</strong> <a href="{{ sktm.hasil_surat.url }}">Download Surat</a></p>
+    {% endif %}
+</body>
+</html>

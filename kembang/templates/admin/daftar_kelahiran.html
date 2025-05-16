@@ -1,80 +1,45 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Daftar Pengajuan Akta Kelahiran</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 30px;
-            background-color: #f9f9f9;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-        }
-        thead {
-            background-color: #3498db;
-            color: white;
-        }
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        a.detail-link {
-            background-color: #2ecc71;
-            color: white;
-            padding: 6px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        a.detail-link:hover {
-            background-color: #27ae60;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/daftar_kelahiran.css' %}">
 </head>
 <body>
+    <div class="container">
+        <h1>Daftar Pengajuan Akta Kelahiran</h1>
 
-    <h2>Daftar Pengajuan Akta Kelahiran</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Nama Lengkap</th>
-                <th>Tanggal Lahir</th>
-                <th>Jenis Kelamin</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in pengajuan %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ item.nama_lengkap }}</td>
-                    <td>{{ item.tanggal_lahir|date:"Y-m-d" }}</td>
-                    <td>{{ item.jenis_kelamin }}</td>
-                    <td>{{ item.status }}</td>
+                    <th>Nama Anak</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for akta in pengajuan %}
+                <tr>
+                    <td>{{ akta.nama_anak }}</td>
+                    <td>{{ akta.tanggal_lahir }}</td>
                     <td>
-                        <a class="detail-link" href="{% url 'detail_pengajuan_kelahiran' item.pk %}">Detail</a>
+                        <span class="status {{ akta.status }}">{{ akta.status|title }}</span>
+                    </td>
+                    <td>
+                        <a class="button" href="{% url 'detail_pengajuan_kelahiran' akta.pk %}">Detail</a>
                     </td>
                 </tr>
-            {% empty %}
+                {% empty %}
                 <tr>
-                    <td colspan="5">Belum ada pengajuan akta kelahiran.</td>
+                    <td colspan="4" style="text-align: center;">Belum ada pengajuan.</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
 
+        <a href="{% url 'admin_dashboard' %}" class="back-link">← Kembali ke Dashboard Admin</a>
+    </div>
 </body>
 </html>

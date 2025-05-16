@@ -1,0 +1,43 @@
+<!-- templates/admin/detail_sku.html -->
+{%load static%}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengajuan SKU</title>
+    <link rel="stylesheet" href="{% static 'css/detail_pindah.css' %}">
+</head>
+<body>
+    <h2>Detail Pengajuan Surat Keterangan Usaha (SKU)</h2>
+
+    <p><strong>Nama Lengkap:</strong> {{ sku.nama_lengkap }}</p>
+    <p><strong>NIK:</strong> {{ sku.nik }}</p>
+    <p><strong>No WhatsApp:</strong> <a href="https://wa.me/{{ sku.no_whatsapp }}">{{ sku.no_whatsapp }}</a></p>
+    <p><strong>NPWP:</strong> {{ sku.npwp }}</p>
+
+    <p><strong>Surat Pengantar:</strong> <a href="{{ sku.surat_pengantar.url }}" target="_blank">Lihat</a></p>
+    <p><strong>Surat Permohonan:</strong> <a href="{{ sku.surat_permohonan.url }}" target="_blank">Lihat</a></p>
+    <p><strong>Foto KTP:</strong><br><img src="{{ sku.foto_ktp.url }}" width="200"></p>
+    <p><strong>Foto KK:</strong><br><img src="{{ sku.foto_kk.url }}" width="200"></p>
+    <p><strong>Surat Kuasa:</strong><br><img src="{{ sku.surat_kuasa.url }}" width="200"></p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="status">Status:</label>
+        <select name="status">
+            <option value="diajukan" {% if sku.status == "diajukan" %}selected{% endif %}>Diajukan</option>
+            <option value="diproses" {% if sku.status == "diproses" %}selected{% endif %}>Diproses</option>
+            <option value="selesai" {% if sku.status == "selesai" %}selected{% endif %}>Selesai</option>
+        </select><br><br>
+
+        <label>Upload Hasil Surat:</label>
+        <input type="file" name="hasil_surat"><br><br>
+
+        {% if sku.hasil_surat %}
+        <p><strong>Hasil Surat:</strong> <a href="{{ sku.hasil_surat.url }}" target="_blank">Download</a></p>
+        {% endif %}
+
+        <button type="submit">Simpan</button>
+    </form>
+</body>
+</html>

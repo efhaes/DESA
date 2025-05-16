@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengajuan Pindah Keluar</title>
+    <link rel="stylesheet" href="{% static 'css/detail_pindah.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Detail Pengajuan Pindah Keluar</h2>
+
+        <div class="info">
+            <p><strong>Nama:</strong> {{ keluar.nama }}</p>
+            <p><strong>NIK:</strong> {{ keluar.nik }}</p>
+            <p><strong>Alamat Asal:</strong> {{ keluar.alamat_asal }}</p>
+            <p><strong>Alamat Tujuan:</strong> {{ keluar.tujuan_pindah }}</p>
+            <p><strong>Tanggal Pindah:</strong> {{ keluar.tanggal_pindah|date:"Y-m-d" }}</p>
+            <p><strong>Alasan Pindah:</strong> {{ keluar.alasan_pindah }}</p>
+            <p><strong>Status:</strong> {{ keluar.status|title }}</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="status">Update Status:</label>
+            <select name="status" id="status">
+                <option value="diajukan" {% if keluar.status == "diajukan" %}selected{% endif %}>Diajukan</option>
+                <option value="sedang diproses" {% if keluar.status == "sedang diproses" %}selected{% endif %}>Sedang Diproses</option>
+                <option value="selesai" {% if keluar.status == "selesai" %}selected{% endif %}>Selesai</option>
+            </select>
+
+            <label for="hasil_surat">Unggah Surat Hasil (PDF):</label>
+            <input type="file" name="hasil_surat" accept=".pdf">
+
+            <button type="submit">Simpan</button>
+        </form>
+
+        {% if keluar.hasil_surat %}
+        <p><strong>File Surat:</strong> <a href="{{ keluar.hasil_surat.url }}" target="_blank">Lihat File</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>

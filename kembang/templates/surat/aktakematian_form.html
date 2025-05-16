@@ -1,0 +1,29 @@
+<!-- surat/aktakematian_form.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pengajuan Akta Kematian</title>
+    <link rel="stylesheet" href="{% static 'css/surat/form_kelahiran.css' %}">
+</head>
+<body>
+    <h1>Form Pengajuan Akta Kematian</h1>
+    {% if messages %}
+        <ul>
+            {% for msg in messages %}
+                <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Kirim Pengajuan</button>
+    </form>
+
+    <a href="{% url 'cek_status' %}">Cek Status Pengajuan</a>
+</body>
+</html>

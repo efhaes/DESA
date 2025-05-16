@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pengajuan Pindah Keluar</title>
+    <link rel="stylesheet" href="{% static 'css/surat/pindah.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Form Pengajuan Pindah Keluar</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Kirim Pengajuan</button>
+        </form>
+    </div>
+</body>
+</html>

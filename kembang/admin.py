@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar
+from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar,SKTMPengajuan, DomisiliPengajuan,SKUPengajuan
 
 @admin.register(PengajuanSurat)
 class PengajuanSuratAdmin(admin.ModelAdmin):
@@ -37,3 +37,25 @@ class PindahKeluarAdmin(admin.ModelAdmin):
     list_filter = ('tanggal_pindah',)
 
 
+
+
+@admin.register(SKTMPengajuan)
+class SKTMPengajuanAdmin(admin.ModelAdmin):
+    list_display = ('nama_lengkap', 'nik', 'no_whatsapp', 'status', 'tanggal_dibuat')
+    list_filter = ('status', 'tanggal_dibuat')
+    search_fields = ('nama_lengkap', 'nik', 'no_whatsapp')
+    readonly_fields = ('tanggal_dibuat',)
+
+@admin.register(DomisiliPengajuan)
+class DomisiliPengajuanAdmin(admin.ModelAdmin):
+    list_display = ('nama_lengkap', 'nik', 'no_whatsapp', 'status', 'tanggal_dibuat')
+    list_filter = ('status', 'tanggal_dibuat')
+    search_fields = ('nama_lengkap', 'nik', 'no_whatsapp')
+    readonly_fields = ('tanggal_dibuat',)
+
+@admin.register(SKUPengajuan)
+class SKUPengajuanAdmin(admin.ModelAdmin):
+    list_display = ('nama_lengkap', 'nik', 'npwp', 'no_whatsapp', 'status', 'tanggal_dibuat')
+    list_filter = ('status', 'tanggal_dibuat')
+    search_fields = ('nama_lengkap', 'nik', 'npwp', 'no_whatsapp')
+    readonly_fields = ('tanggal_dibuat',)

@@ -1,0 +1,35 @@
+<!-- templates/admin/daftar_sku.html -->
+{%load static%}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pengajuan SKU</title>
+    <link rel="stylesheet" href="{% static 'css/daftar_pindah.css' %}">
+</head>
+<body>
+    <h2>Daftar Pengajuan Surat Keterangan Usaha (SKU)</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th>Nama Lengkap</th>
+            <th>NIK</th>
+            <th>Status</th>
+            <th>Tanggal Dibuat</th>
+            <th>Aksi</th>
+        </tr>
+        {% for item in daftar %}
+        <tr>
+            <td>{{ item.nama_lengkap }}</td>
+            <td>{{ item.nik }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.tanggal_dibuat }}</td>
+            <td><a href="{% url 'detail_pengajuan_sku' item.pk %}">Detail</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Belum ada pengajuan.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

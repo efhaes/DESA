@@ -1,0 +1,10 @@
+<!-- templates/registration/register.html -->
+<h2>Registrasi Akun Masyarakat</h2>
+{% block content %}
+<h2>Registrasi</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Daftar</button>
+</form>
+{% endblock %}

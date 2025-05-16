@@ -1,7 +1,9 @@
 from django import forms
-from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang, PindahKeluar
+from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang, PindahKeluar,SKTMPengajuan, DomisiliPengajuan, SKUPengajuan
 
- 
+from django import forms
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 class PengajuanSuratForm(forms.ModelForm):
     class Meta:
@@ -111,7 +113,103 @@ class PindahKeluarForm(forms.ModelForm):
             'no_whatsapp': forms.TextInput(attrs={'placeholder': '08xxxxxxxxxx'}),
         }
         
-class AktaKematianHasilForm(forms.ModelForm):
+
+
+
+class SKTMPengajuanForm(forms.ModelForm):
     class Meta:
-        model = AktaKematian
-        fields = ['status', 'hasil_surat'] 
+        model = SKTMPengajuan
+        fields = [
+            'nama_lengkap',
+            'nik',
+            'no_whatsapp',
+            'surat_pengantar',
+            'foto_ktp',
+            'foto_kk',
+            'surat_pernyataan'
+        ]
+        widgets = {
+            'nama_lengkap': forms.TextInput(attrs={'class': 'form-control'}),
+            'nik': forms.TextInput(attrs={'class': 'form-control'}),
+            'no_whatsapp': forms.TextInput(attrs={'class': 'form-control'}),
+            'surat_pengantar': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'foto_ktp': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'foto_kk': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'surat_pernyataan': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class DomisiliPengajuanForm(forms.ModelForm):
+    class Meta:
+        model = DomisiliPengajuan
+        fields = [
+            'nama_lengkap',
+            'nik',
+            'no_whatsapp',
+            'surat_pengantar',
+            'foto_ktp',
+            'foto_kk',
+            'surat_permohonan'
+        ]
+        widgets = {
+            'nama_lengkap': forms.TextInput(attrs={'class': 'form-control'}),
+            'nik': forms.TextInput(attrs={'class': 'form-control'}),
+            'no_whatsapp': forms.TextInput(attrs={'class': 'form-control'}),
+            'surat_pengantar': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'foto_ktp': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'foto_kk': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'surat_permohonan': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class SKUPengajuanForm(forms.ModelForm):
+    class Meta:
+        model = SKUPengajuan
+        fields = [
+            'nama_lengkap',
+            'nik',
+            'no_whatsapp',
+            'npwp',
+            'surat_pengantar',
+            'surat_permohonan',
+            'foto_ktp',
+            'foto_kk',
+            'surat_kuasa'
+        ]
+        widgets = {
+            'nama_lengkap': forms.TextInput(attrs={'class': 'form-control'}),
+            'nik': forms.TextInput(attrs={'class': 'form-control'}),
+            'no_whatsapp': forms.TextInput(attrs={'class': 'form-control'}),
+            'npwp': forms.TextInput(attrs={'class': 'form-control'}),
+            'surat_pengantar': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'surat_permohonan': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'foto_ktp': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'foto_kk': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            
+        }
+
+
+
+
+class RegisterForm(forms.Form):
+    nik = forms.CharField(max_length=16, label='NIK')
+    nama = forms.CharField(max_length=100, label='Nama Lengkap')
+    alamat = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), label='Alamat')
+    email = forms.EmailField(label='Email')
+    password = forms.CharField(widget=forms.PasswordInput, label='Password')
+    confirm_password = forms.CharField(widget=forms.PasswordInput, label='Konfirmasi Password')
+
+    def clean_nik(self):
+        nik = self.cleaned_data['nik']
+        if User.objects.filter(username=nik).exists():
+            raise ValidationError("NIK sudah terdaftar.")
+        return nik
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+        if password and confirm_password and password != confirm_password:
+            self.add_error('confirm_password', "Password tidak cocok.")
+
+

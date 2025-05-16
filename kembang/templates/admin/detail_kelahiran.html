@@ -1,87 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Detail Pengajuan Akta Kelahiran</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 30px;
-            background-color: #f4f4f4;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-container {
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .info {
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/detail_akta.css' %}">
 </head>
 <body>
+    <h1>Detail Pengajuan Akta Kelahiran</h1>
 
-    <h2>Detail Pengajuan Akta Kelahiran</h2>
+    <p><strong>Nama Bayi:</strong> {{ akta.nama_lengkap }}</p>
+    <p><strong>Tanggal Lahir:</strong> {{ akta.tanggal_lahir }}</p>
+    <p><strong>Tempat Lahir:</strong> {{ akta.tempat_lahir }}</p>
 
-    <div class="form-container">
-        <div class="info">
-            <p><strong>Nama Lengkap:</strong> {{ akta.nama_lengkap }}</p>
-            <p><strong>Tempat Lahir:</strong> {{ akta.tempat_lahir }}</p>
-            <p><strong>Tanggal Lahir:</strong> {{ akta.tanggal_lahir }}</p>
-            <p><strong>Jenis Kelamin:</strong> {{ akta.jenis_kelamin }}</p>
-            <p><strong>Nama Ayah:</strong> {{ akta.nama_ayah }}</p>
-            <p><strong>Nama Ibu:</strong> {{ akta.nama_ibu }}</p>
-            <p><strong>Status:</strong> {{ akta.status }}</p>
-        </div>
+    <hr>
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="status">Ubah Status</label>
-                <select name="status" id="status">
-                    <option value="diajukan" {% if akta.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
-                    <option value="sedang diproses" {% if akta.status == 'sedang diproses' %}selected{% endif %}>Sedang Diproses</option>
-                    <option value="selesai" {% if akta.status == 'selesai' %}selected{% endif %}>Selesai</option>
-                </select>
-            </div>
+    <p><strong>Nama Ayah:</strong> {{ akta.nama_ayah }}</p>
+    <p><strong>Nama Ibu:</strong> {{ akta.nama_ibu }}</p>
+    <p><strong>No. WhatsApp Pelapor:</strong> {{ akta.no_whatsapp }}</p>
 
-            <div class="form-group">
-                <label for="hasil_surat">Upload Hasil Surat (PDF)</label>
-                <input type="file" name="hasil_surat" id="hasil_surat">
-            </div>
+    <hr>
 
-            <button type="submit">Simpan Perubahan</button>
-        </form>
-    </div>
+    <h3>Update Status dan Upload Hasil Surat</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="status">Status:</label>
+        <select name="status" id="status" required>
+            <option value="diajukan" {% if akta.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
+            <option value="diproses" {% if akta.status == 'diproses' %}selected{% endif %}>Diproses</option>
+            <option value="selesai" {% if akta.status == 'selesai' %}selected{% endif %}>Selesai</option>
+        </select><br><br>
 
+        <label for="hasil_surat">Upload Hasil Surat (jika selesai):</label>
+        <input type="file" name="hasil_surat" id="hasil_surat"><br><br>
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+
+    {% if akta.hasil_surat %}
+    <p>File hasil surat: <a href="{{ akta.hasil_surat.url }}" target="_blank">Download</a></p>
+
+    <p>
+        <a href="https://wa.me/{{ akta.no_whatsapp|cut:'+' }}?text=Berikut%20hasil%20surat%20akta%20kelahiran%20Anda:%20{{ request.scheme }}://{{ request.get_host }}{{ akta.hasil_surat.url }}" target="_blank">
+            Kirim via WhatsApp
+        </a>
+    </p>
+    {% endif %}
+
+    <a href="{% url 'daftar_pengajuan_kelahiran' %}">Kembali ke Daftar Pengajuan</a>
 </body>
 </html>

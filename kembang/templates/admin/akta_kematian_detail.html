@@ -1,24 +1,67 @@
-<h2>Detail Pengajuan Akta Kematian</h2>
-<p><strong>Nama Jenazah:</strong> {{ akta.nama_jenazah }}</p>
-<p><strong>Status Saat Ini:</strong> {{ akta.status }}</p>
+<!-- admin/akta_kematian_detail.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detail Pengajuan Akta Kematian</title>
+    <link rel="stylesheet" href="{% static 'css/detail_akta.css' %}">
+
+</head>
+<body>
+    <h1>Detail Pengajuan Akta Kematian</h1>
+
+    <p><strong>Nama Jenazah:</strong> {{ akta.nama_jenazah }}</p>
+    <p><strong>NIK Jenazah:</strong> {{ akta.nik_jenazah }}</p>
+    <p><strong>Tanggal Kematian:</strong> {{ akta.tanggal_kematian }}</p>
+    <p><strong>Tempat Kematian:</strong> {{ akta.tempat_kematian }}</p>
+    <p><strong>Penyebab Kematian:</strong> {{ akta.penyebab_kematian }}</p>
+
+    <hr>
+
+    <p><strong>Nama Pelapor:</strong> {{ akta.nama_pelapor }}</p>
+    <p><strong>NIK Pelapor:</strong> {{ akta.nik_pelapor }}</p>
+    <p><strong>Hubungan Pelapor:</strong> {{ akta.hubungan_pelapor }}</p>
+    <p><strong>No. WhatsApp Pelapor:</strong> {{ akta.no_whatsapp }}</p>
+    
+    
+
+    <hr>
+
+    <h3>Update Status dan Upload Hasil Surat</h3>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <label for="status">Ubah Status:</label>
-    <select name="status" id="status">
+
+    <label for="status">Status:</label>
+    <select name="status" id="status" required>
         <option value="diajukan" {% if akta.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
-        <option value="diproses" {% if akta.status == 'diproses' %}selected{% endif %}>Sedang Diproses</option>
+        <option value="diproses" {% if akta.status == 'diproses' %}selected{% endif %}>Diproses</option>
         <option value="selesai" {% if akta.status == 'selesai' %}selected{% endif %}>Selesai</option>
     </select>
     <br><br>
 
-    <label for="hasil_surat">Upload Hasil Surat (jika selesai):</label>
+    {% if akta.hasil_surat %}
+        <p style="color: green;">✅ Hasil surat sudah diupload: 
+            <a href="{{ akta.hasil_surat.url }}" target="_blank">Lihat File</a>
+        </p>
+    {% endif %}
+
+    <label for="hasil_surat">Upload Ulang Hasil Surat (jika ingin diganti):</label>
     <input type="file" name="hasil_surat" id="hasil_surat"><br><br>
 
     <button type="submit">Simpan Perubahan</button>
 </form>
-
-{% if akta.status == 'selesai' and akta.hasil_surat %}
-    <p><strong>File Surat:</strong> {{ akta.hasil_surat.name }}</p>
-    <a href="https://wa.me/{{ akta.no_whatsapp|cut:'+' }}?text=Berikut%20hasil%20surat%20akta%20kematian%20Anda:%20{{ request.build_absolute_uri(akta.hasil_surat.url) }}" target="_blank">Kirim via WhatsApp</a>
+{% if akta.hasil_surat %}
+    <p>
+        <a href="https://wa.me/{{ akta.no_whatsapp|cut:'+' }}?text=Berikut%20hasil%20surat%20akta%20kematian%20Anda:%20{{ request.scheme }}://{{ request.get_host }}{{ akta.hasil_surat.url }}" target="_blank">
+            Kirim via WhatsApp
+        </a>
+    </p>
 {% endif %}
+
+
+    <a href="{% url 'daftar_pengajuan_akta_kematian' %}">Kembali ke Daftar Pengajuan</a>
+</body>
+</html>

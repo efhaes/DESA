@@ -1,0 +1,17 @@
+<!-- templates/surat/sktm_form.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pengajuan SKTM</title>
+    <link rel="stylesheet" href="{% static 'css/surat/pindah.css'%}">
+</head>
+<body>
+    <h2>Form Pengajuan SKTM</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Kirim Pengajuan</button>
+    </form>
+</body>
+</html>

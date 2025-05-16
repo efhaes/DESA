@@ -1,0 +1,42 @@
+<!-- templates/admin/detail_domisili.html -->
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Pengajuan Surat Domisili</title>
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+    <h2>Detail Pengajuan Surat Domisili</h2>
+    <p><strong>Nama:</strong> {{ domisili.nama_lengkap }}</p>
+    <p><strong>NIK:</strong> {{ domisili.nik }}</p>
+    <p><strong>No WhatsApp:</strong> <a href="https://wa.me/{{ domisili.no_whatsapp }}">{{ domisili.no_whatsapp }}</a></p>
+    <p><strong>Surat Pengantar:</strong> <a href="{{ domisili.surat_pengantar.url }}">Download</a></p>
+    <p><strong>Foto KTP:</strong> <a href="{{ domisili.foto_ktp.url }}">Lihat</a></p>
+    <p><strong>Foto KK:</strong> <a href="{{ domisili.foto_kk.url }}">Lihat</a></p>
+    <p><strong>Surat Permohonan:</strong> <a href="{{ domisili.surat_permohonan.url }}">Download</a></p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+            <option value="diajukan" {% if domisili.status == 'diajukan' %}selected{% endif %}>Diajukan</option>
+            <option value="sedang diproses" {% if domisili.status == 'sedang diproses' %}selected{% endif %}>Sedang Diproses</option>
+            <option value="selesai" {% if domisili.status == 'selesai' %}selected{% endif %}>Selesai</option>
+        </select><br><br>
+
+        <label for="hasil_surat">Upload Hasil Surat (PDF):</label>
+        <input type="file" name="hasil_surat" id="hasil_surat"><br><br>
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+
+{% if domisili.hasil_surat %}
+    <p>
+        <a href="https://wa.me/{{ akta.no_whatsapp|cut:'+' }}?text=Berikut%20hasil%20surat%20akta%20kematian%20Anda:%20{{ request.scheme }}://{{ request.get_host }}{{ akta.hasil_surat.url }}" target="_blank">
+            Kirim via WhatsApp
+        </a>
+    </p>
+{% endif %}
+</body>
+</html>

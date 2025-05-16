@@ -13,7 +13,7 @@ urlpatterns = [
     path('status/', views.status_surat, name='status'),
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
     
-    path('surat/akta-kematian/', views.pengajuan_akta_kematian, name='pengajuan_akta_kematian'),
+    path('pengajuan-akta-kematian/', views.pengajuan_akta_kematian, name='pengajuan_akta_kematian'),
     path('admin/akta-kematian/', views.daftar_pengajuan_akta_kematian, name='daftar_pengajuan_akta_kematian'),
     path('admin/akta-kematian/<int:pk>/', views.detail_pengajuan_akta_kematian, name='detail_pengajuan_akta_kematian'),
     # Akta Kelahiran
@@ -30,11 +30,27 @@ urlpatterns = [
     path('pengajuan/pindah-keluar/', views.pengajuan_pindah_keluar, name='pengajuan_pindah_keluar'),
     path('admin/pindah-keluar/', views.daftar_pindah_keluar, name='daftar_pengajuan_pindah_keluar'),
     path('admin/pindah-keluar/<int:pk>/', views.detail_pindah_keluar, name='detail_pengajuan_pindah_keluar'),
+    
+    # sktm
+    path('pengajuan/sktm/', views.pengajuan_sktm, name='pengajuan_sktm'),
+    path('admin/sktm/', views.daftar_sktm, name='daftar_pengajuan_sktm'),
+    path('admin/sktm/<int:pk>/', views.detail_sktm, name='detail_pengajuan_sktm'),
+    
+    # domisili
+    path('domisili/pengajuan/', views.pengajuan_domisili, name='pengajuan_domisili'),
+    path('domisili/daftar/', views.daftar_domisili, name='daftar_domisili'),
+    path('domisili/<int:pk>/', views.detail_domisili, name='detail_pengajuan_domisili'),
+    
+    # sku
+    path('sku/pengajuan/', views.pengajuan_sku, name='pengajuan_sku'),
+    path('sku/daftar/', views.daftar_sku, name='daftar_sku'),
+    path('sku/<int:pk>/', views.detail_sku, name='detail_pengajuan_sku'),
 
     # urls.py
     path('cek-status/', views.cek_status_surat, name='cek_status'),
-
+    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('login/', views.login_view, name='login'),
+    path('register/', views.register, name='register'),
 
 ]
 

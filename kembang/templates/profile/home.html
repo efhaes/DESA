@@ -1,141 +1,191 @@
-
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Desa Kita - Home</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .hero {
-      background: url('https://images.unsplash.com/photo-1582560475120-18f3dd4703b6') no-repeat center center;
-      background-size: cover;
-      color: black;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: bold;
-    }
-    .section {
-      padding: 60px 0;
-    }
-    .card img {
-      height: 200px;
-      object-fit: cover;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <title>Halaman Utama - Pengajuan Surat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0; padding: 20px;
+        }
+        /* Navbar */
+        nav {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-radius: 0 0 10px 10px;
+        }
+        nav .brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            width: 250px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+            position: relative;
+        }
+        .card:hover {
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.15);
+        }
+        .card h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #007bff;
+        }
+        .card a, .card button {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 6px;
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.25s ease;
+        }
+        .card a:hover, .card button:hover {
+            background-color: #0056b3;
+        }
+        .card button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        .login-msg {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #d9534f; /* merah */
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'home' %}">Desa Kita</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Beranda</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'profil' %}">Profil Desa</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'tentang' %}">Tentang Desa</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'ajukan' %}">Ajukan Surat</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'status' %}">Status Surat</a>
-        </li>
+
+<nav>
+    <div class="brand">Desa Kita</div>
+    <div>
         {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-        </li>
+            <span>Halo, {{ user.get_username }}</span>
+            <a href="{% url 'logout' %}">Logout</a>
         {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </li>
+            <a href="{% url 'login' %}">Login</a>
         {% endif %}
-      </ul>
     </div>
-  </div>
 </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div>
-      <h1>Selamat Datang di Website Resmi</h1>
-      <h2>Desa Kita</h2>
-      <p>Melayani dengan sepenuh hati untuk kemajuan desa</p>
+<h1>Pengajuan Surat Desa</h1>
+
+<div class="cards-container">
+
+    <!-- Akta Kelahiran -->
+    <div class="card">
+        <h2>Akta Kelahiran</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_akta_kelahiran' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
     </div>
-  </section>
 
-  <!-- Tentang Desa -->
-  <section class="section bg-light">
-    <div class="container">
-      <h3 class="text-center mb-5">Tentang Desa</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <p>Desa Kita adalah desa yang berkomitmen pada pelayanan publik berbasis digital. Dengan teknologi, kami ingin memberikan kemudahan bagi masyarakat dalam mengurus surat menyurat dan mendapatkan informasi terbaru seputar desa.</p>
-        </div>
-        <div class="col-md-6">
-          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994" class="img-fluid rounded" alt="Tentang Desa">
-        </div>
-      </div>
+    <!-- Pindah Datang -->
+    <div class="card">
+        <h2>Pindah Datang</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_pindah_datang' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
     </div>
-  </section>
 
-  <!-- Layanan -->
-  <section class="section">
-    <div class="container">
-      <h3 class="text-center mb-5">Layanan Desa</h3>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <img src="https://images.unsplash.com/photo-1581090700227-1e8cfc800f5e" class="card-img-top" alt="Ajukan Surat">
-            <div class="card-body">
-              <h5 class="card-title">Ajukan Surat</h5>
-              <p class="card-text">Ajukan berbagai jenis surat seperti surat keterangan, domisili, dan lainnya dengan mudah dan cepat.</p>
-              <a href="{% url 'ajukan' %}" class="btn btn-primary">Ajukan Sekarang</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <img src="https://images.unsplash.com/photo-1573164574396-b97b5f2d4f83" class="card-img-top" alt="Lacak Status">
-            <div class="card-body">
-              <h5 class="card-title">Lacak Status Surat</h5>
-              <p class="card-text">Pantau proses pengajuan surat Anda. Cek status dan tunggu persetujuan dari admin desa.</p>
-              <a href="{% url 'status' %}" class="btn btn-success">Cek Status</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm">
-            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" class="card-img-top" alt="Informasi Desa">
-            <div class="card-body">
-              <h5 class="card-title">Informasi Desa</h5>
-              <p class="card-text">Dapatkan update terbaru tentang pembangunan, kegiatan masyarakat, dan program desa lainnya.</p>
-              <a href="{% url 'profil' %}" class="btn btn-info">Lihat Profil Desa</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Pindah Keluar -->
+    <div class="card">
+        <h2>Pindah Keluar</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_pindah_keluar' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4">
-    <p>© 2025 Desa Kita. All rights reserved.</p>
-  </footer>
+    <!-- Akta Kematian -->
+    <div class="card">
+        <h2>Akta Kematian</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_akta_kematian' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SKTM -->
+    <div class="card">
+        <h2>Surat Keterangan Tidak Mampu (SKTM)</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_sktm' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
+    </div>
+
+    <!-- Domisili -->
+    <div class="card">
+        <h2>Surat Domisili</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_domisili' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
+    </div>
+
+    <!-- SKU -->
+    <div class="card">
+        <h2>Surat Keterangan Usaha (SKU)</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pengajuan_sku' %}">Ajukan Sekarang</a>
+        {% else %}
+            <button disabled>Ajukan Sekarang</button>
+            <div class="login-msg">Harap login terlebih dahulu</div>
+        {% endif %}
+    </div>
+
+</div>
+
 </body>
 </html>

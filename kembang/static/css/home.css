@@ -1,0 +1,128 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f0f4f8;
+    color: #333;
+}
+
+nav {
+    background-color: #2a9d8f;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+nav .brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 20px 30px;
+    background: linear-gradient(to right, #2a9d8f, #43c6ac);
+    color: white;
+    border-radius: 0 0 40px 40px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.info {
+    padding: 30px 20px;
+    background: #fff;
+    margin: 40px auto;
+    max-width: 800px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.info h2 {
+    margin-bottom: 20px;
+}
+
+.info ul {
+    padding-left: 20px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 40px 20px;
+}
+
+.card {
+    background: white;
+    width: 270px;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    color: #2a9d8f;
+}
+
+.card a, .card button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #2a9d8f;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+
+.card a:hover, .card button:hover {
+    background-color: #21867a;
+}
+
+.card button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.login-msg {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #d9534f;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background-color: #2a9d8f;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}

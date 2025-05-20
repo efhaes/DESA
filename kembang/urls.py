@@ -7,8 +7,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
+    
     path('tentang/', views.tentang, name='tentang'),
     path('profil/', views.profil, name='profil'),
+    path('persyaratan/', views.persyaratan, name='persyaratan'),
     path('ajukan/', views.ajukan_surat, name='ajukan'),
     path('status/', views.status_surat, name='status'),
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
@@ -50,6 +52,7 @@ urlpatterns = [
     path('cek-status/', views.cek_status_surat, name='cek_status'),
     path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
 
 ]

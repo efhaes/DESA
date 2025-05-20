@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar,UserProfile,SKTMPengajuan
@@ -24,6 +25,12 @@ def status_surat(request):
 
 def home(request):
     return render(request, 'profile/home.html')
+def persyaratan(request):
+    return render(request, 'profile/persyaratan.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 def tentang(request):
     return render(request, 'profile/tentang.html')

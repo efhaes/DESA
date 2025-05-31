@@ -2,99 +2,131 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="{% static 'css/dashboard_admin.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Dashboard Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" /> 
+  <link rel="stylesheet" href="{% static 'css/dashboard_admin.css' %}">
+  <!-- Di dalam <head> -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- Di akhir <body> -->
+
+
 </head>
 <body>
-
-<div class="admin-header">
-    <img src="{% static 'img/logo tegar.png' %}" alt="Admin Avatar" class="admin-avatar">
-    <div>
-        <h1>Halo, Admin!</h1>
-        <p>Selamat datang kembali di panel pengelolaan surat.</p>
+    
+<div class="admin-header" data-aos="fade-down">
+  <div class="admin-header-content">
+    <div class="admin-avatar">
+      <img src="avatar.jpg" alt="Admin Avatar">
     </div>
+    <div class="admin-title">
+      <h1>Halo, Admin!</h1>
+      <p>Selamat datang di Dashboard</p>
+    </div>
+  </div>
 </div>
 
+<!-- Kartu Jumlah Pengajuan -->
 <div class="card-container">
-    <div class="card">
-        <h2>Akta Kelahiran</h2>
-        <p>{{ akta_kelahiran.count }}</p>
-        <a href="{% url 'daftar_pengajuan_kelahiran' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="0">
+    <h2>👶 Akta Kelahiran</h2>
+    <p>{{ akta_kelahiran.count }}</p>
+    <a href="{% url 'daftar_pengajuan_kelahiran' %}" class="button">Lihat Detail</a>
+  </div>
 
-    <div class="card">
-        <h2>Pindah Datang</h2>
-        <p>{{ pindah_datang.count }}</p>
-        <a href="{% url 'daftar_pengajuan_pindah_datang' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="100">
+    <h2>🚚 Pindah Datang</h2>
+    <p>{{ pindah_datang.count }}</p>
+    <a href="{% url 'daftar_pengajuan_pindah_datang' %}" class="button">Lihat Detail</a>
+  </div>
 
-    <div class="card">
-        <h2>Pindah Keluar</h2>
-        <p>{{ pindah_keluar.count }}</p>
-        <a href="{% url 'daftar_pengajuan_pindah_keluar' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="200">
+    <h2>🏠 Pindah Keluar</h2>
+    <p>{{ pindah_keluar.count }}</p>
+    <a href="{% url 'daftar_pengajuan_pindah_keluar' %}" class="button">Lihat Detail</a>
+  </div>
 
-    <div class="card">
-        <h2>Akta Kematian</h2>
-        <p>{{ akta_kematian.count }}</p>
-        <a href="{% url 'daftar_pengajuan_akta_kematian' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="300">
+    <h2>⚰️ Akta Kematian</h2>
+    <p>{{ akta_kematian.count }}</p>
+    <a href="{% url 'daftar_pengajuan_akta_kematian' %}" class="button">Lihat Detail</a>
+  </div>
 
-    <div class="card">
-        <h2>SKU</h2>
-        <p>{{ sku.count }}</p>
-        <a href="{% url 'daftar_sku' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="400">
+    <h2>🏪 SKU</h2>
+    <p>{{ sku.count }}</p>
+    <a href="{% url 'daftar_sku' %}" class="button">Lihat Detail</a>
+  </div>
 
-    <div class="card">
-        <h2>Domisili</h2>
-        <p>{{ domisili.count }}</p>
-        <a href="{% url 'daftar_domisili' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="500">
+    <h2>📍 Domisili</h2>
+    <p>{{ domisili.count }}</p>
+    <a href="{% url 'daftar_domisili' %}" class="button">Lihat Detail</a>
+  </div>
 
-    <div class="card">
-        <h2>SKTM</h2>
-        <p>{{ sktm.count }}</p>
-        <a href="{% url 'daftar_pengajuan_sktm' %}" class="button">Lihat Detail</a>
-    </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="600">
+    <h2>💸 SKTM</h2>
+    <p>{{ sktm.count }}</p>
+    <a href="{% url 'daftar_pengajuan_sktm' %}" class="button">Lihat Detail</a>
+  </div>
 </div>
 
-<div class="pengajuan-container">
-    <h2>Semua Pengajuan</h2>
+<!-- Tabel Semua Pengajuan -->
+<div class="pengajuan-container" data-aos="fade-up">
+  <h2>🗃️ Semua Pengajuan</h2>
+  <div class="table-wrapper">
     <table>
-        <thead>
-            <tr>
-                <th>Nama</th>
-                <th>NIK</th>
-                <th>Jenis Surat</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for p in semua_pengajuan %}
-            <tr>
-                <td>{{ p.nama }}</td>
-                <td>{{ p.nik }}</td>
-                <td>
-                    {% if p.alasan_pindah %}Pindah Datang
-                    {% elif p.tujuan_pindah %}Pindah Keluar
-                    {% elif p.tanggal_lahir %}Akta Kelahiran
-                    {% elif p.tanggal_kematian %}Akta Kematian
-                    {% elif p.npwp %}SKU
-                    {% elif p.surat_pernyataan %}SKTM
-                    {% elif p.surat_permohonan %}Domisili
-                    {% else %}-{% endif %}
-                </td>
-                <td>{{ p.status|title }}</td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="4" style="text-align: center;">Tidak ada pengajuan</td></tr>
-            {% endfor %}
-        </tbody>
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>NIK</th>
+          <th>Jenis Surat</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in semua_pengajuan %}
+        <tr>
+          <td>{{ p.nama }}</td>
+          <td>{{ p.nik }}</td>
+          <td>
+            {% if p.alasan_pindah %}Pindah Datang
+            {% elif p.tujuan_pindah %}Pindah Keluar
+            {% elif p.tanggal_lahir %}Akta Kelahiran
+            {% elif p.tanggal_kematian %}Akta Kematian
+            {% elif p.npwp %}SKU
+            {% elif p.surat_pernyataan %}SKTM
+            {% elif p.surat_permohonan %}Domisili
+            {% else %}-{% endif %}
+          </td>
+          <td>{{ p.status|title }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" style="text-align: center;">Tidak ada pengajuan</td></tr>
+        {% endfor %}
+      </tbody>
     </table>
+  </div>
 </div>
 
+<!-- Script AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 900 });
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
 </body>
 </html>

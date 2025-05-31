@@ -4,20 +4,29 @@
 <head>
     <meta charset="UTF-8" />
     <title>Beranda Desa Kita</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+    <!-- Fonts & AOS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+    <!-- Icon (optional) -->
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png">
 </head>
 <body>
 
+<!-- Navbar -->
 <nav>
     <div class="brand">🌾 Desa Kita</div>
-    <div>
-        <a href="{% url 'persyaratan' %}">Persyaratan</a>
+    <div class="nav-links">
+        <a href="{% url 'persyaratan'%}">Persyaratan</a>
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'tentang' %}">Tentang</a>
-      {% if user.is_authenticated %}
-            <span>👤 {{ user.get_username }}</span>
+        {% if user.is_authenticated %}
+            <span>👤 {{ user.userprofile.nama }}</span>
             <a href="{% url 'logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'login' %}">Login</a>
@@ -25,11 +34,13 @@
     </div>
 </nav>
 
-<header class="hero" data-aos="fade-down">
+<!-- Hero -->
+<header class="hero" data-aos="zoom-in-up">
     <h1>Selamat Datang di Website Resmi Desa Kita</h1>
     <p>Pelayanan publik jadi lebih cepat dan mudah 💡</p>
 </header>
 
+<!-- Berita -->
 <section class="info" data-aos="fade-up">
     <h2>📰 Berita & Pengumuman</h2>
     <ul>
@@ -39,6 +50,7 @@
     </ul>
 </section>
 
+<!-- Kartu Pengajuan -->
 <div class="cards-container">
     <div class="card" data-aos="fade-up" data-aos-delay="0">
         <h2>👶 Akta Kelahiran</h2>
@@ -111,13 +123,34 @@
     </div>
 </div>
 
+<!-- Footer -->
 <footer data-aos="fade-up">
     <p>© 2025 Desa Kita. Dibuat dengan ❤️ oleh Pemuda Desa.</p>
 </footer>
 
+<!-- Script AOS -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-    AOS.init();
+    AOS.init({
+        duration: 800,
+        once: true,
+    });
 </script>
+
+<!-- Burger Menu Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('nav');
+    const burger = document.createElement('div');
+    burger.classList.add('burger');
+    burger.innerHTML = '<span></span><span></span><span></span>';
+    nav.insertBefore(burger, nav.children[1]);
+
+    burger.addEventListener('click', () => {
+        nav.classList.toggle('active');
+    });
+});
+</script>
+
 </body>
 </html>

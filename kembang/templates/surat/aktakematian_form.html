@@ -5,25 +5,33 @@
 <head>
     <meta charset="UTF-8" />
     <title>Pengajuan Akta Kematian</title>
-    <link rel="stylesheet" href="{% static 'css/surat/form_kelahiran.css' %}">
+    <link rel="stylesheet" href="{% static 'css/surat/form_kematian.css' %}">
 </head>
 <body>
-    <h1>Form Pengajuan Akta Kematian</h1>
-    {% if messages %}
-        <ul>
-            {% for msg in messages %}
-                <li>{{ msg }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
 
+     <nav>
+        <div class="brand">Pelayanan Desa</div>
+        <div>
+            <a href="{% url 'home' %}">Beranda</a>
+            <a href="{% url 'logout' %}">logout</a>
+            <a href="{% url 'cek_status' %}">Cek Status</a>
+            <a href="{% url 'tentang' %}">Tentang</a>
+        </div>
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <h1>Formulir Pengajuan Akta Kematian</h1>
     <form method="POST" enctype="multipart/form-data">
+    
         {% csrf_token %}
         {{ form.as_p }}
 
         <button type="submit">Kirim Pengajuan</button>
     </form>
 
-    <a href="{% url 'cek_status' %}">Cek Status Pengajuan</a>
+    
 </body>
 </html>

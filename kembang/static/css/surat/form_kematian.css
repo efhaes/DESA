@@ -1,10 +1,8 @@
-/* ===== Import Font (Optional) ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* ===== Global Style ===== */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #E6F3FF; /* biru sangat muda */
+    background-color: #E6F3FF;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
@@ -20,25 +18,23 @@ a:hover {
     color: #00BFFF;
 }
 
-/* ===== Navbar ===== */
+/* Navbar */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #3498DB; /* biru tua */
+    background-color: #3498DB;
     padding: 1rem 2rem;
+    color: #ffffff;
     position: sticky;
     top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    color: #FFFFFF;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 nav .brand {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #FFFFFF;
-    letter-spacing: 1.5px;
 }
 
 nav div {
@@ -48,26 +44,25 @@ nav div {
 }
 
 nav a {
-    color: #F0F8FF;
+    color: #ffffff;
     font-weight: 500;
 }
 
 nav a:hover {
-    color: #7FDBFF;
+    color: #00FFFF;
 }
 
 /* Burger menu */
 .burger {
     display: none;
     flex-direction: column;
-    cursor: pointer;
     gap: 5px;
+    cursor: pointer;
 }
-
 .burger span {
     width: 25px;
     height: 3px;
-    background: #ffffff;
+    background-color: #fff;
     border-radius: 2px;
     transition: all 0.3s ease;
 }
@@ -77,12 +72,12 @@ nav a:hover {
         position: absolute;
         top: 100%;
         right: 0;
-        background: #3498DB;
+        background-color: #01257D;
         flex-direction: column;
         width: 180px;
-        padding: 1rem 0.8rem;
-        border-radius: 0 0 10px 10px;
+        padding: 1rem;
         display: none;
+        border-radius: 0 0 10px 10px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
@@ -95,24 +90,21 @@ nav a:hover {
     }
 }
 
-/* ===== Container/Form ===== */
-.container {
-    max-width: 800px;
-    margin: 3rem auto;
-    padding: 2rem;
-    background: #F0F8FF;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0,191,255,0.2);
-    animation: fadeIn 0.5s ease-in;
-}
-
-.container h1 {
+/* Heading */
+h1 {
     text-align: center;
     color: #01257D;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
+/* Form */
 form {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #F0F8FF;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,191,255,0.2);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -125,7 +117,7 @@ form p {
 form label {
     font-weight: 600;
     color: #01257D;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
     display: inline-block;
 }
 
@@ -143,6 +135,7 @@ form select {
     color: #2E3C54;
     transition: border 0.3s ease;
 }
+
 form input:focus,
 form select:focus {
     border-color: #00BFFF;
@@ -161,22 +154,19 @@ button[type="submit"] {
     transition: background 0.3s ease;
     align-self: flex-start;
 }
-
 button[type="submit"]:hover {
     background: #01257D;
 }
 
-.container a {
-    display: inline-block;
+/* Link bawah */
+a[href*="cek_status"] {
+    display: block;
+    text-align: center;
     margin-top: 2rem;
-    color: #3498DB;
     font-weight: 500;
 }
-.container a:hover {
-    text-decoration: underline;
-}
 
-/* ===== AOS Animations ===== */
+/* AOS Support */
 [data-aos] {
     opacity: 0;
     transition-property: transform, opacity;
@@ -184,16 +174,4 @@ button[type="submit"]:hover {
 }
 [data-aos].aos-animate {
     opacity: 1;
-}
-
-/* ===== Keyframe (fallback if AOS is not loaded) ===== */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }

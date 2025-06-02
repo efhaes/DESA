@@ -1,7 +1,7 @@
 <h2>Cek Status Pengajuan Surat</h2>
 <form method="get">
     <label for="jenis">Jenis Surat:</label>
-    <select name="jenis" required>
+    <select name="jenis" id="jenis" required>
         <option value="">-- Pilih --</option>
         <option value="kelahiran" {% if jenis == 'kelahiran' %}selected{% endif %}>Akta Kelahiran</option>
         <option value="kematian" {% if jenis == 'kematian' %}selected{% endif %}>Akta Kematian</option>
@@ -9,16 +9,13 @@
         <option value="pindah_keluar" {% if jenis == 'pindah_keluar' %}selected{% endif %}>Pindah Keluar</option>
     </select>
 
-    <label for="nik">Nama atau NIK / No. WhatsApp:</label>
-    <input type="text" name="nik" value="{{ nik }}" required>
-
     <button type="submit">Cari</button>
 </form>
 
-{% if hasil != None %}
+{% if hasil is not None %}
     <h3>Hasil Pencarian:</h3>
     {% if hasil %}
-        <table border="1">
+        <table border="1" cellpadding="8" cellspacing="0">
             <thead>
                 <tr>
                     <th>Nama</th>

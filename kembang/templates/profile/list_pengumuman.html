@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pengumuman</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <h2>Daftar Pengumuman</h2>
+
+  {% for a in announcements %}
+    <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+      <h3><a href="{% url 'announcement_detail' a.pk %}">{{ a.title }}</a></h3>
+      <p>{{ a.content|truncatewords:20 }}</p>
+      <small>{{ a.published_at|date:"d M Y" }}</small>
+    </div>
+  {% empty %}
+    <p>Belum ada pengumuman.</p>
+  {% endfor %}
+</body>
+</html>

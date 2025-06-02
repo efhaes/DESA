@@ -1,21 +1,30 @@
+/* Warna Tema Biru */
+:root {
+  --primary: #3498DB;     /* Biru tua */
+  --secondary: #00FFFF;   /* Biru elektrik */
+  --background: #f5faff;  /* Biru sangat muda */
+  --text: #1a1a1a;        /* Teks gelap */
+}
+
+/* Reset dasar */
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f4f8fc;
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/* Navbar */
 nav {
-  background-color: #01257D;
+  background-color: var(--primary);
   color: white;
-  padding: 1rem 2rem;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 nav .brand {
@@ -25,64 +34,70 @@ nav .brand {
 
 nav a {
   color: white;
-  margin-left: 1.2rem;
   text-decoration: none;
+  margin-left: 20px;
+  font-weight: 600;
   transition: color 0.3s ease;
 }
 
 nav a:hover {
-  color: #00FFFF;
-  text-shadow: 0 0 5px #00FFFF;
+  color: var(--secondary);
 }
 
+/* Judul halaman */
 h2 {
-  color: #01257D;
-  margin-bottom: 2rem;
-  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 40px;
+  font-weight: 700;
 }
 
+/* Card 3D Animasi */
 .custom-card {
-  background: white;
-  border-left: 5px solid #01257D;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(1, 37, 125, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
+  background-color: white;
+  border: 1px solid var(--secondary);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .custom-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 255, 255, 0.3);
+  transform: translateY(-12px) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.card-title {
-  color: #01257D;
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
+.custom-card h5 {
+  color: var(--primary);
   font-weight: 600;
+  margin-bottom: 15px;
 }
 
-ul {
-  padding-left: 1.2rem;
+.custom-card ul {
+  padding-left: 20px;
 }
 
-ul li {
-  margin-bottom: 0.5rem;
-  color: #333;
+.custom-card ul li {
+  margin-bottom: 8px;
+  line-height: 1.6;
 }
 
+/* Responsif */
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  nav a {
-    margin-left: 0;
-    margin-top: 0.5rem;
+  nav div {
+    margin-top: 10px;
   }
 
-  .card-title {
-    font-size: 1.1rem;
+  .custom-card {
+    padding: 20px !important;
+  }
+
+  h2 {
+    font-size: 1.5rem;
   }
 }

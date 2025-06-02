@@ -12,7 +12,7 @@ urlpatterns = [
     path('profil/', views.profil, name='profil'),
     path('persyaratan/', views.persyaratan, name='persyaratan'),
     path('ajukan/', views.ajukan_surat, name='ajukan'),
-    path('status/', views.status_surat, name='status'),
+
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
     
     path('pengajuan-akta-kematian/', views.pengajuan_akta_kematian, name='pengajuan_akta_kematian'),
@@ -51,8 +51,11 @@ urlpatterns = [
     # urls.py
     path('cek-status/', views.cek_status_surat, name='cek_status'),
     path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
-    path('login/', views.login_view, name='login'),
+    path('kelola/pengumuman/', views.announcement_manage, name='announcement_manage'),
+    path('pengumuman/', views.announcement_list, name='announcement_list'),
+    path('pengumuman/<int:pk>/', views.announcement_detail, name='announcement_detail'),
     path('logout/', views.logout_view, name='logout'),
+    path('login/', views.login_view, name='login'),
     path('register/', views.register, name='register'),
 
 ]

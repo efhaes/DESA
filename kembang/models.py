@@ -5,6 +5,7 @@ STATUS_CHOICES = [
     ('diajukan', 'Diajukan'),
     ('diproses', 'Sedang Diproses'),
     ('selesai', 'Sudah Diproses'),
+    
 
 ]
 
@@ -14,7 +15,7 @@ class PengajuanSurat(models.Model):
         ('sktm', 'Surat Keterangan Tidak Mampu'),
         ('usaha', 'Surat Keterangan Usaha'),
     ]
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     alamat = models.CharField(max_length=100)  # <- ini udah bener sekarang
@@ -29,7 +30,7 @@ class PengajuanSurat(models.Model):
 
 
 class AktaKematian(models.Model):
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)   
     nama_jenazah = models.CharField(max_length=100)
     nik_jenazah = models.CharField(max_length=16)
     tanggal_kematian = models.DateField()
@@ -54,6 +55,7 @@ class AktaKematian(models.Model):
         return f"{self.nama_jenazah} - {self.nik_jenazah}"
     
 class AktaKelahiran(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama_lengkap = models.CharField(max_length=100)
     tempat_lahir = models.CharField(max_length=100)
     tanggal_lahir = models.DateField()
@@ -70,6 +72,7 @@ class AktaKelahiran(models.Model):
 
 
 class PindahKeluar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     asal_daerah = models.CharField(max_length=100)
@@ -89,6 +92,7 @@ class PindahKeluar(models.Model):
 
 
 class PindahDatang(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     asal_daerah = models.CharField(max_length=100)
@@ -108,6 +112,7 @@ class PindahDatang(models.Model):
 
 
 class SKTMPengajuan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama_lengkap = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     no_whatsapp = models.CharField(max_length=15)
@@ -124,6 +129,7 @@ class SKTMPengajuan(models.Model):
         return f"{self.nama_lengkap} - {self.nik}"
     
 class DomisiliPengajuan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama_lengkap = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     no_whatsapp = models.CharField(max_length=15)
@@ -140,6 +146,7 @@ class DomisiliPengajuan(models.Model):
         return f"{self.nama_lengkap} - {self.nik}"
 
 class SKUPengajuan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nama_lengkap = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     no_whatsapp = models.CharField(max_length=15)
@@ -164,3 +171,22 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.nama
+    
+from django.db import models
+class Announcement(models.Model):
+    title = models.CharField(max_length=200)             
+    content = models.TextField()                          
+    published_at = models.DateTimeField(auto_now_add=True)  
+    updated_at = models.DateTimeField(auto_now=True)        
+    is_active = models.BooleanField(default=True)           
+
+    # Optional: gambar ilustrasi pengumuman
+    image = models.ImageField(upload_to='announcement_images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-published_at']   # pengumuman terbaru muncul paling atas
+        verbose_name = "Pengumuman"
+        verbose_name_plural = "Pengumuman"

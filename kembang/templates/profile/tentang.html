@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,9 +11,83 @@
       background-color: #f0f8f7;
       color: #2c3e50;
       line-height: 1.6;
+       /* space for fixed navbar */
     }
+    /* Navbar */
+ nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3498DB;
+    padding: 1rem 2rem;
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+nav .brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+nav div {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+}
+
+nav a {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #00FFFF;
+}
+
+/* Burger menu */
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+.burger span {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    nav div {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #01257D;
+        flex-direction: column;
+        width: 180px;
+        padding: 1rem;
+        display: none;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav div.active {
+        display: flex;
+    }
+
+    .burger {
+        display: flex;
+    }
+}
+
+    /* Hero section */
     .hero-section {
-      background: linear-gradient(90deg, #2a9d8f, #43c6ac);
+      background: #1a3d7c;
       color: white;
       padding: 100px 20px;
       text-align: center;
@@ -33,21 +104,60 @@
       max-width: 700px;
       margin: 0 auto;
     }
-    .content-section {
+
+    /* About section */
+    .about-section {
+      background-color: #e6f0f8;
+      border-radius: 20px;
+      padding: 40px 30px;
       max-width: 960px;
       margin: 60px auto;
-      padding: 0 15px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      color: #1a3d7c;
     }
-    .content-section h2 {
-      color: #2a9d8f;
-      margin-bottom: 30px;
+    .about-section h2 {
+      color: #01257D;
       font-weight: 700;
+      margin-bottom: 30px;
       text-align: center;
     }
-    .content-section p {
-      margin-bottom: 20px;
+    .about-section p {
       font-size: 1.1rem;
+      margin-bottom: 20px;
     }
+    .highlight {
+      color: #43c6ac;
+      font-weight: 600;
+    }
+
+    /* Visi & Misi Cards */
+    #visi-misi .card-custom {
+  box-shadow: 0 8px 24px rgba(1, 37, 125, 0.25);
+  border-radius: 20px;
+  border: none;
+}
+
+#visi-misi .card-header {
+  background-color: #01257D;
+  color: #00FFFF;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+}
+
+#visi-misi .card-body {
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+#visi-misi img {
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+
+    /* Image container */
     .image-container {
       text-align: center;
       margin: 40px 0;
@@ -58,8 +168,10 @@
       border-radius: 20px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
+
+    /* Footer */
     footer {
-      background-color: #2a9d8f;
+      background-color: #3498DB;
       color: white;
       padding: 20px 0;
       text-align: center;
@@ -67,24 +179,36 @@
       margin-top: 80px;
       border-radius: 30px 30px 0 0;
     }
-    .highlight {
-      color: #43c6ac;
-      font-weight: 600;
-    }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
+<nav>
+    <div class="brand">🌾 Desa Cidokom</div>
+    <div class="nav-links">
+        
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'persyaratan'%}">Persyaratan</a>
+        <a href="{% url 'tentang' %}">Tentang</a>
+        {% if user.is_authenticated %}
+            <span>👤 {{ user.userprofile.nama }}</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</nav>
+
   <section class="hero-section">
-    <h1>Desa Ciseeng</h1>
+    <h1>Desa Cidokom</h1>
     <p>Membangun harmoni dan kemajuan bersama demi masa depan yang lebih cerah</p>
   </section>
 
-  <section class="content-section">
-    <h2>Tentang Desa Ciseeng</h2>
-    <p>Desa Ciseeng merupakan salah satu desa di Kabupaten Bogor yang dikenal dengan keindahan alamnya dan masyarakat yang ramah serta gotong royong tinggi. Berlokasi strategis dekat dengan jalur transportasi utama, desa ini menjadi pusat pertanian dan perdagangan kecil yang berkembang pesat.</p>
-    <p>Wilayah desa yang dikelilingi perbukitan hijau dan sungai jernih ini memberikan suasana yang asri dan nyaman untuk tinggal maupun berwisata. Banyak warga yang mengandalkan sektor pertanian, khususnya palawija dan tanaman hortikultura, serta peternakan skala kecil.</p>
-    
+  <section id="about" class="about-section">
+    <h2>Tentang Desa Cidokom</h2>
+    <p>Desa Cidokom berdiri pada tahun 1942. Pemberian nama Cidokom karena ada sungai mengalir namanya sungai Cidokom. Maka, diberi nama Desa Cidokom. Desa Cidokom telah dimekarkan menjadi 2 desa, yaitu Desa
+Cidokom dan Desa Mekar Jaya.</p>
     <div class="image-container">
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80" alt="Pemandangan Desa Ciseeng" />
     </div>
@@ -93,37 +217,62 @@
     <p>Desa Ciseeng memiliki potensi besar dalam bidang <span class="highlight">agrowisata</span> dan <span class="highlight">ekowisata</span>. Lokasi yang alami dan jauh dari hiruk pikuk kota cocok untuk pengembangan wisata desa yang edukatif dan ramah lingkungan.</p>
     <p>Selain itu, masyarakat desa masih menjaga tradisi dan kearifan lokal, seperti gotong royong dalam kegiatan pertanian dan acara adat yang rutin dilaksanakan. Hal ini memperkuat ikatan sosial dan membuat Desa Ciseeng menjadi tempat yang aman dan nyaman untuk berkembang.</p>
     <p>Pemerintah desa juga aktif mendorong inovasi seperti pelatihan teknologi pertanian modern dan pemasaran digital untuk hasil pertanian agar kesejahteraan warga meningkat secara berkelanjutan.</p>
-
-    <h2>Visi dan Misi Desa</h2>
-    <p><strong>Visi:</strong> Menjadi desa yang mandiri, sejahtera, dan berbudaya dengan memanfaatkan potensi alam dan teknologi demi kesejahteraan warga.</p>
-    <p><strong>Misi:</strong></p>
-    <ul>
-      <li>Meningkatkan kualitas pendidikan dan pelatihan keterampilan warga.</li>
-      <li>Mengembangkan sektor pertanian dan UMKM dengan inovasi teknologi.</li>
-      <li>Melestarikan lingkungan dan budaya lokal sebagai aset desa.</li>
-      <li>Mendorong partisipasi aktif masyarakat dalam pembangunan desa.</li>
-    </ul>
   </section>
-  <div class="container my-5">
-    <div class="card shadow rounded-4 mx-auto" style="max-width: 600px;">
-        <div class="card-body">
-            <h4 class="card-title mb-3 text-center">Lokasi Desa Kembang</h4>
-            <div class="ratio ratio-4x3 rounded-3 overflow-hidden">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.728870044716!2d106.8227249!3d-6.2000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x123456789abcdef!2sDesa%20Kembang!5e0!3m2!1sid!2sid!4v1623456789012!5m2!1sid!2sid" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
-    </div>
 
+<section id="visi-misi" class="container my-5">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="card card-custom mb-4">
+        <div class="card-header">Visi Desa</div>
+        <div class="card-body">
+          <p>Terwujudnya Desa Cidokom yang “AGAMIS, MAJU, MANDIRI, dan  SEJAHTERA. Desa yang religious, menjunjung tinggi nilai-nilai agama, subur makmur gemah ripah repah rapih, bru dijuru bro dipanto, ngalayah di tengah imah, maju dalam segala bidang, serta tidak tergantung pada orang lain, serta selalu didasari oleh budaya Sunda”.</p>
+
+        </div>
+      </div>
+      <div class="card card-custom">
+        <div class="card-header">Misi Desa</div>
+        <div class="card-body">
+          <ul>
+            <li>Menciptakan kondisi lingkungan yang kondusif dan agamis, ditunjang oleh tersedianya sarana peribadatan dan sumber daya manusia yang kompeten.</li>
+            <li>Membangun pola hidup sehat melalui pemberdayaan kader kesehatan dan optimalisasi Desa Siaga. .</li>
+            <li>Menyelenggarakan Pemerintahan yang transparan, akuntabilitas, partisipatif dan responsive.</li>
+            <li>Meningkatkan dan memberdayakan peranan perempuan dan pemuda, dengan tetap memelihara adat istiadat dan budaya local.</li>
+            <li>Membangun sarana dan prasarana yang berbasis pada ekonomi pertanian yang produktif, infrastruktur pedesaan, dalam upaya peningkatan indeks daya beli masyarakat, serta peningkatan sumber daya masyarakat desa yang berkualitas melalui “Program Desa Pendidikan” yang berwawasan ilmu pengetahuan dan teknologi serta berwawasan global.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 text-center">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" 
+           alt="Pemandangan Desa Ciseeng" 
+           class="img-fluid rounded-4 shadow-lg" 
+           style="max-height: 400px; object-fit: cover;" />
+    </div>
+  </div>
+</section>
+
+
+  <div class="container my-5" id="lokasi">
+    <div class="card shadow rounded-4 mx-auto" style="max-width: 600px;">
+      <div class="card-body">
+        <h4 class="card-title mb-3 text-center">Lokasi Desa Cidokom</h4>
+        <div class="ratio ratio-4x3 rounded-3 overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d7928.071927018268!2d106.6721299!3d-6.5171321!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNsKwMzAnNTYuMyJTIDEwNsKwNDAnMjMuNiJF!5e0!3m2!1sid!2sid!4v1748885093311!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer>
-    &copy; 2025 Desa Ciseeng | Dikelola oleh Pemerintah Desa
+    &copy; 2025 Desa Cidokom | Di buat oleh Pemuduo
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

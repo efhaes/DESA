@@ -5,8 +5,39 @@
     <meta charset="UTF-8">
     <title>Form Akta Kelahiran</title>
     <link rel="stylesheet" href="{% static 'css/surat/form_kelahiran.css' %}">
+    <!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script defer>
+        // Navbar Toggle Script
+        document.addEventListener("DOMContentLoaded", function () {
+            const burger = document.querySelector('.burger');
+            const navLinks = document.querySelector('nav div');
+
+            burger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
 </head>
 <body>
+    <!-- ===== Navbar Start ===== -->
+    <nav>
+        <div class="brand">Pelayanan Desa</div>
+        <div>
+            <a href="{% url 'home' %}">Beranda</a>
+            <a href="{% url 'logout' %}">logout</a>
+            <a href="{% url 'cek_status' %}">Cek Status</a>
+            <a href="{% url 'tentang' %}">Tentang</a>
+        </div>
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <!-- ===== Navbar End ===== -->
+
     <div class="container">
         <h1>Form Pengajuan Akta Kelahiran</h1>
         <form method="POST" enctype="multipart/form-data">
@@ -16,5 +47,14 @@
         </form>
         <a href="{% url 'home' %}">Kembali ke Beranda</a>
     </div>
+    <!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        once: true,
+        duration: 800
+    });
+</script>
+
 </body>
 </html>

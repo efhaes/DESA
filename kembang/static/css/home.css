@@ -1,19 +1,19 @@
 /* ===== Global Style ===== */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #01257D;
-    color: white;
+    background: #E6F3FF; /* biru sangat muda */
+    color: #2E3C54; /* abu gelap kebiruan */
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
 }
 a {
+    color: #F0F8FF;/* biru terang kalem */
     text-decoration: none;
-    color: #00FFFF;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 a:hover {
-    color: #ffffff;
+    color: #7FDBFF; /* biru langit */
 }
 
 /* ===== Navbar ===== */
@@ -21,25 +21,25 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #000E4D;
+    background: #3498DB; /* biru tua */
     padding: 1rem 2rem;
     position: sticky;
     top: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    color: #FFFFFF;
 }
 nav .brand {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #00FFFF;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #FFFFFF; /* biru elektrik */
+    letter-spacing: 1.5px;
 }
 nav div {
     display: flex;
     gap: 1.2rem;
     align-items: center;
 }
-
-/* Burger Menu */
 .burger {
     display: none;
     flex-direction: column;
@@ -49,20 +49,22 @@ nav div {
 .burger span {
     width: 25px;
     height: 3px;
-    background: #00FFFF;
-    transition: 0.3s;
+    background: #ffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
 }
-
 @media (max-width: 768px) {
     nav div {
         position: absolute;
         top: 100%;
         right: 0;
-        background: #000E4D;
+        background: #3498DB;
         flex-direction: column;
-        width: 200px;
-        padding: 1rem;
+        width: 180px;
+        padding: 1rem 0.8rem;
+        border-radius: 0 0 10px 10px;
         display: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     nav.active div {
         display: flex;
@@ -73,93 +75,171 @@ nav div {
 }
 
 /* ===== Hero Section ===== */
+/* ===== Hero Section (Revisi Gagah & Elegan) ===== */
 .hero {
+    position: relative;
+    background: linear-gradient(135deg, #01257D 50%, #00BFFF 100%);
+    color: #FFFFFF;
+    padding: 7rem 2rem 6rem;
     text-align: center;
-    padding: 5rem 2rem;
-    background: linear-gradient(to bottom right, #01257D, #000E4D);
-    color: #00FFFF;
-    animation: pulseGlow 3s ease-in-out infinite;
+    overflow: hidden;
+    z-index: 1;
 }
-@keyframes pulseGlow {
-    0%, 100% { text-shadow: 0 0 10px #00FFFF; }
-    50% { text-shadow: 0 0 20px #00FFFF, 0 0 30px #00FFFF; }
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: #E6F3FF;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+    z-index: -1;
 }
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    animation: fadeInDown 1s ease-out;
+}
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #D0F0FF;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeInUp 1.2s ease-out;
+}
+.hero small {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 300;
+    color: #BDEFFF;
+    font-size: 1rem;
+}
+
+/* Animasi Hero */
+@keyframes fadeInDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 
 /* ===== Info Section ===== */
 .info {
-    padding: 2rem;
-    background: #00153D;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem;
+    background: #F0F8FF; /* biru lembut */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 191, 255, 0.15);
 }
 .info h2 {
-    color: #00FFFF;
+    color: #01257D;
+    font-weight: 700;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 .info ul {
     list-style: none;
     padding: 0;
-    text-align: center;
+    color: #3C4A63;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
 }
-.info li {
-    margin-bottom: 0.5rem;
+.info ul li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.4rem;
+    position: relative;
+}
+.info ul li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #E6F3FF;
 }
 
-/* ===== Cards ===== */
+/* ===== Cards Section ===== */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
-    background: #01257D;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 1.8rem;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
 }
 .card {
-    background: #00153D;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 15px rgba(0,255,255,0.2);
+    background: #F0F8FF;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 6px 18px rgba(0,191,255,0.2);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: white;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    color: #01257D;
 }
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 6px 25px rgba(0,255,255,0.5);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,191,255,0.35);
+}
+.card h3 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+.card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
 }
 .card a, .card button {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.6rem 1.2rem;
-    background: #00FFFF;
-    color: #01257D;
+    background: #00BFFF;
+    color: #FFFFFF;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background 0.3s;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
-.card a:hover {
-    background: #00cccc;
+.card a:hover, .card button:hover {
+    background: #01257D;
 }
 .card button[disabled] {
-    background: #555;
+    background: #B0C4DE;
+    color: #888;
     cursor: not-allowed;
-    color: #ccc;
-}
-.login-msg {
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
-    color: #ffbebe;
 }
 
 /* ===== Footer ===== */
 footer {
-    background: #000E4D;
+    background: #3498DB;
     text-align: center;
-    padding: 1rem;
-    color: #aaa;
+    padding: 1rem 1.5rem;
+    color: #00FFFF;
     font-size: 0.9rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* ===== AOS Overrides ===== */
+/* ===== AOS Overrides (Animation on Scroll) ===== */
 [data-aos] {
     opacity: 0;
     transition-property: transform, opacity;
@@ -167,4 +247,3 @@ footer {
 [data-aos].aos-animate {
     opacity: 1;
 }
-

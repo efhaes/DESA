@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ announcement.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <h2>{{ announcement.title }}</h2>
+  <small>{{ announcement.published_at|date:"d M Y H:i" }}</small>
+
+  {% if announcement.image %}
+    <div>
+      <img src="{{ announcement.image.url }}" alt="Gambar Pengumuman" style="max-width: 300px;">
+    </div>
+  {% endif %}
+
+  <p>{{ announcement.content|linebreaks }}</p>
+
+  <a href="{% url 'announcement_list' %}">← Kembali ke Daftar</a>
+</body>
+</html>

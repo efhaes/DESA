@@ -18,18 +18,27 @@
 
 </head>
 <body>
-    
-<div class="admin-header" data-aos="fade-down">
-  <div class="admin-header-content">
-    <div class="admin-avatar">
-      <img src="avatar.jpg" alt="Admin Avatar">
+
+  <!-- Sidebar -->
+
+
+  <!-- Konten Utama -->
+ <nav class="admin-navbar" data-aos="fade-down">
+  <div class="admin-navbar-content">
+    <div class="admin-brand">
+      <link rel="stylesheet" href="{% static 'img/logo tegar.png' %}">
+      <div class="admin-title">
+        <h1>Halo, Admin!</h1>
+        <p>Selamat datang di Dashboard</p>
+      </div>
     </div>
-    <div class="admin-title">
-      <h1>Halo, Admin!</h1>
-      <p>Selamat datang di Dashboard</p>
-    </div>
+    <ul class="admin-nav-links">
+     <li> <a href="{% url 'announcement_manage'%}">Buat Berita</a></li>
+     <li> <a href="{% url 'home'%}">Home</a></li>
+    </ul>
   </div>
-</div>
+</nav>
+
 
 <!-- Kartu Jumlah Pengajuan -->
 <div class="card-container">

@@ -1,9 +1,10 @@
 from django import forms
-from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang, PindahKeluar,SKTMPengajuan, DomisiliPengajuan, SKUPengajuan
+from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang, PindahKeluar,SKTMPengajuan, DomisiliPengajuan, SKUPengajuan,Announcement
 
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 
 class PengajuanSuratForm(forms.ModelForm):
     class Meta:
@@ -74,7 +75,7 @@ class AktaKelahiranForm(forms.ModelForm):
 class PindahDatangForm(forms.ModelForm):
     class Meta:
         model = PindahDatang
-        exclude = ['status', 'hasil_surat']  # status dan hasil_surat hanya untuk admin
+        exclude = ['user', 'status', 'hasil_surat']  # tambahkan 'user' di sini!
         widgets = {
             'tanggal_pindah': forms.DateInput(attrs={'type': 'date'}),
             'alasan_pindah': forms.Textarea(attrs={'rows': 3}),
@@ -91,6 +92,8 @@ class PindahDatangForm(forms.ModelForm):
             'surat_pengantar': 'Surat Pengantar RT/RW',
             'no_whatsapp': 'Nomor WhatsApp Aktif',
         }
+
+
 
 class PindahKeluarForm(forms.ModelForm):
     class Meta:
@@ -190,7 +193,6 @@ class SKUPengajuanForm(forms.ModelForm):
 
 
 
-
 class RegisterForm(forms.Form):
     nik = forms.CharField(max_length=16, label='NIK')
     nama = forms.CharField(max_length=100, label='Nama Lengkap')
@@ -211,5 +213,17 @@ class RegisterForm(forms.Form):
         confirm_password = cleaned_data.get("confirm_password")
         if password and confirm_password and password != confirm_password:
             self.add_error('confirm_password', "Password tidak cocok.")
+            
+
+class AnnouncementForm(forms.ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ['title', 'content', 'image', 'is_active']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Judul Pengumuman'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Isi Pengumuman', 'rows': 5}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
 
 

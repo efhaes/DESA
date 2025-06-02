@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import PengajuanSurat,AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar,UserProfile,SKTMPengajuan
-from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm,PindahDatangForm,PindahKeluarForm,SKUPengajuanForm
+from .models import AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar,UserProfile,SKTMPengajuan,Announcement
+from .forms import PengajuanSuratForm,AktaKematianForm,AktaKelahiranForm,PindahDatangForm,PindahKeluarForm,SKUPengajuanForm,AnnouncementForm
 from .models import DomisiliPengajuan,SKUPengajuan
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
@@ -12,15 +12,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .forms import RegisterForm,SKTMPengajuanForm,DomisiliPengajuanForm
 from django.db.models import Q
 from itertools import chain 
+from django.contrib.auth.hashers import make_password
 
-def status_surat(request):
-    nama = request.GET.get('nama')
-    hasil = None
 
-    if nama:
-        hasil = PengajuanSurat.objects.filter(nama__icontains=nama).order_by('-tanggal')
-
-    return render(request, 'surat/status.html', {'hasil': hasil, 'nama': nama})
 
 
 def home(request):
@@ -121,12 +115,14 @@ def detail_pengajuan_akta_kematian(request, pk):
     return render(request, 'admin/akta_kematian_detail.html', {'akta': akta})
 
 
-
+@login_required
 def pengajuan_akta_kelahiran(request):
     if request.method == 'POST':
         form = AktaKelahiranForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+            pengajuan.save()
             messages.success(request, "Pengajuan berhasil dikirim.")
             return redirect('home')
     else:
@@ -161,7 +157,9 @@ def pengajuan_pindah_datang(request):
     if request.method == 'POST':
         form = PindahDatangForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+            pengajuan.save()
             messages.success(request, "Pengajuan berhasil dikirim.")
             return redirect('home')
     else:
@@ -197,7 +195,9 @@ def pengajuan_pindah_keluar(request):
     if request.method == 'POST':
         form = PindahKeluarForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+            pengajuan.save()
             messages.success(request, "Pengajuan berhasil dikirim.")
             return redirect('home')
     else:
@@ -231,7 +231,9 @@ def pengajuan_sktm(request):
     if request.method == 'POST':
         form = SKTMPengajuanForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+            pengajuan.save()
             messages.success(request, "Pengajuan berhasil dikirim.")
             return redirect('home')
     else:
@@ -267,7 +269,9 @@ def pengajuan_domisili(request):
     if request.method == 'POST':
         form = DomisiliPengajuanForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+            pengajuan.save()
             messages.success(request, "Pengajuan berhasil dikirim.")
             return redirect('home')
     else:
@@ -302,12 +306,15 @@ def pengajuan_sku(request):
     if request.method == 'POST':
         form = SKUPengajuanForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)  # jangan langsung save
+            pengajuan.user = request.user         # set user yang submit
+            pengajuan.save()                      # simpan data ke DB
             messages.success(request, "Pengajuan berhasil dikirim.")
             return redirect('home')
     else:
         form = SKUPengajuanForm()
     return render(request, 'surat/sku_form.html', {'form': form})
+
 
 @staff_member_required
 def detail_sku(request, pk):
@@ -328,23 +335,22 @@ def detail_sku(request, pk):
 def cek_status_surat(request):
     hasil = None
     jenis = request.GET.get('jenis')
-    nik = request.GET.get('nik')
 
-    if jenis and nik:
+    if jenis:
         if jenis == 'kelahiran':
-            hasil = AktaKelahiran.objects.filter(Q(nama_lengkap__icontains=nik) | Q(no_whatsapp__icontains=nik))
+            hasil = AktaKelahiran.objects.filter(user=request.user)
         elif jenis == 'kematian':
-            hasil = AktaKematian.objects.filter(Q(nama_jenazah__icontains=nik) | Q(no_whatsapp__icontains=nik))
+            hasil = AktaKematian.objects.filter(user=request.user)
         elif jenis == 'pindah_datang':
-            hasil = PindahDatang.objects.filter(Q(nama__icontains=nik) | Q(nik__icontains=nik))
+            hasil = PindahDatang.objects.filter(user=request.user)
         elif jenis == 'pindah_keluar':
-            hasil = PindahKeluar.objects.filter(Q(nama__icontains=nik) | Q(nik__icontains=nik))
+            hasil = PindahKeluar.objects.filter(user=request.user)
 
     return render(request, 'profile/cek_status.html', {
         'hasil': hasil,
-        'jenis': jenis,
-        'nik': nik
+        'jenis': jenis
     })
+
 
 
 def register(request):
@@ -352,17 +358,26 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             nik = form.cleaned_data['nik']
-            email = form.cleaned_data['email']
             nama = form.cleaned_data['nama']
             alamat = form.cleaned_data['alamat']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
             # Buat user baru
-            user = User.objects.create_user(username=nik, email=email, password=password)
-            # Buat profil user dengan data nama dan alamat
-            UserProfile.objects.create(user=user, nama=nama, alamat=alamat)
+            user = User.objects.create(
+                username=nik,
+                email=email,
+                password=make_password(password)
+            )
 
-            messages.success(request, "Registrasi berhasil, silakan login.")
+            # Buat UserProfile terkait user tadi
+            UserProfile.objects.create(
+                user=user,
+                nama=nama,
+                alamat=alamat
+            )
+
+            messages.success(request, "Registrasi berhasil! Silakan login.")
             return redirect('login')
     else:
         form = RegisterForm()
@@ -402,4 +417,47 @@ def admin_dashboard(request):
         'semua_pengajuan': semua_pengajuan,
     }
     return render(request, 'admin/dashboard.html', context)
+
+@user_passes_test(is_admin)
+@staff_member_required
+def announcement_manage(request):
+    announcements = Announcement.objects.all().order_by('-published_at')
+    form = AnnouncementForm()
+
+    if request.method == 'POST':
+        if 'create' in request.POST:
+            form = AnnouncementForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('announcement_manage')
+
+        elif 'edit' in request.POST:
+            announcement_id = request.POST.get('announcement_id')
+            announcement = get_object_or_404(Announcement, pk=announcement_id)
+            form = AnnouncementForm(request.POST, request.FILES, instance=announcement)
+            if form.is_valid():
+                form.save()
+                return redirect('announcement_manage')
+
+        elif 'delete' in request.POST:
+            announcement_id = request.POST.get('announcement_id')
+            announcement = get_object_or_404(Announcement, pk=announcement_id)
+            announcement.delete()
+            return redirect('announcement_manage')
+
+    context = {
+        'announcements': announcements,
+        'form': form,
+    }
+    return render(request, 'admin/kelola_pengumuman.html', context)
+
+# Halaman masyarakat lihat daftar pengumuman aktif
+def announcement_list(request):
+    announcements = Announcement.objects.filter(is_active=True).order_by('-published_at')
+    return render(request, 'profile/list_pengumuman.html', {'announcements': announcements})
+
+# Halaman detail pengumuman
+def announcement_detail(request, pk):
+    announcement = get_object_or_404(Announcement, pk=pk, is_active=True)
+    return render(request, 'profile/detail_pengumuman.html', {'announcement': announcement})
 

@@ -1,0 +1,41 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kelola Pengumuman</title>
+  <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+  <h2>Kelola Pengumuman</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="create">Tambah Pengumuman</button>
+  </form>
+
+  <hr>
+
+  <h3>Daftar Pengumuman</h3>
+  {% for a in announcements %}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 1rem;">
+      <h4>{{ a.title }}</h4>
+      <p>{{ a.content|truncatechars:100 }}</p>
+      <small>{{ a.published_at|date:"d M Y H:i" }}</small><br>
+      {% if a.image %}
+        <img src="{{ a.image.url }}" alt="Image" style="max-width: 150px;">
+      {% endif %}
+      <form method="POST" enctype="multipart/form-data" style="margin-top: 10px;">
+        {% csrf_token %}
+        <input type="hidden" name="announcement_id" value="{{ a.id }}">
+        {{ form.as_p }}
+        <button type="submit" name="edit">Edit</button>
+        <button type="submit" name="delete" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>
+      </form>
+    </div>
+  {% empty %}
+    <p>Tidak ada pengumuman.</p>
+  {% endfor %}
+</body>
+</html>

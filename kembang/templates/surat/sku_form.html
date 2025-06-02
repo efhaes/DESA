@@ -6,9 +6,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Form Pengajuan SKU</title>
-    <link rel="stylesheet" href="{% static 'css/surat/pindah.css'%}">
+    <link rel="stylesheet" href="{% static 'css/surat/domisili.css'%}">
 </head>
 <body>
+    <nav>
+        <div class="brand">Pelayanan Desa</div>
+        <div>
+            <a href="{% url 'home' %}">Beranda</a>
+            <a href="{% url 'logout' %}">logout</a>
+            <a href="{% url 'cek_status' %}">Cek Status</a>
+            <a href="{% url 'tentang' %}">Tentang</a>
+        </div>
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    
     <h2>Form Pengajuan Surat Keterangan Usaha (SKU)</h2>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}

@@ -8,24 +8,21 @@
 </head>
 <body>
     <!-- Navbar -->
-    <div class="navbar-admin">
-        <div class="admin-left">
-            <img src="{% static 'img/admin-avatar.png' %}" alt="Avatar" class="admin-avatar">
-            <div class="admin-text">
-                <h2>Halo, Admin!</h2>
-                <p>Selamat datang di Dashboard</p>
-            </div>
-        </div>
-        <div class="menu-toggle" id="menu-toggle">
-            ☰
-        </div>
-        <div class="admin-menu">
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
-            <a href="{% url 'daftar_pengajuan_akta_kematian' %}">Pengajuan</a>
-            <a href="{% url 'daftar_pengajuan_pindah_datang' %}">Data Penduduk</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </div>
+ <nav class="admin-navbar" data-aos="fade-down">
+  <div class="admin-navbar-content">
+    <div class="admin-brand">
+      <link rel="stylesheet" href="{% static 'img/logo tegar.png' %}">
+      <div class="admin-title">
+        <h1>Halo, Admin!</h1>
+        <p>Selamat datang di Dashboard</p>
+      </div>
     </div>
+    <ul class="admin-nav-links">
+     <li> <a href="{% url 'announcement_manage'%}">Buat Berita</a></li>
+     <li> <a href="{% url 'home'%}">Home</a></li>
+    </ul>
+  </div>
+</nav>
 
     <!-- Konten utama -->
     <div class="container">

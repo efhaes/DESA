@@ -1,41 +1,63 @@
-<!-- admin/daftar_kematian.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Daftar Pengajuan Akta Kematian</title>
-    
-<link rel="stylesheet" href="{% static 'css/daftar_kematian.css' %}">
+  <meta charset="UTF-8" />
+  <title>Daftar Pengajuan Akta Kematian</title>
+  <link rel="stylesheet" href="{% static 'css/daftar_kematian.css' %}">
 </head>
 <body>
+
+  <!-- NAVBAR -->
+  <nav class="admin-navbar" data-aos="fade-down">
+    <div class="admin-navbar-content">
+      <div class="admin-brand">
+        <img src="{% static 'img/logo tegar.png' %}" alt="Logo" class="admin-avatar" />
+        <div class="admin-title">
+          <h1>Halo, Admin!</h1>
+          <p>Selamat datang di Dashboard</p>
+        </div>
+      </div>
+      <ul class="admin-nav-links">
+        <li><a href="{% url 'announcement_manage' %}">Buat Berita</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
     <h1>Daftar Pengajuan Akta Kematian</h1>
 
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Nama Jenazah</th>
-                <th>Tanggal Kematian</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for akta in daftar %}
-            <tr>
-                <td>{{ akta.nama_jenazah }}</td>
-                <td>{{ akta.tanggal_kematian }}</td>
-                <td>{{ akta.status }}</td>
-                <td>
-                    <a href="{% url 'detail_pengajuan_akta_kematian' akta.pk %}">Detail</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="4">Belum ada pengajuan.</td></tr>
-            {% endfor %}
-        </tbody>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Jenazah</th>
+          <th>Tanggal Kematian</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for akta in daftar %}
+        <tr>
+          <td>{{ akta.nama_jenazah }}</td>
+          <td>{{ akta.tanggal_kematian }}</td>
+          <td>{{ akta.status }}</td>
+          <td><a href="{% url 'detail_pengajuan_akta_kematian' akta.pk %}">Detail</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">Belum ada pengajuan.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
 
-    <a href="{% url 'admin_dashboard' %}">Kembali ke Dashboard Admin</a>
+    <div class="back-link">
+      <a href="{% url 'admin_dashboard' %}">Kembali ke Dashboard Admin</a>
+    </div>
+  </main>
+
 </body>
 </html>

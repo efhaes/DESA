@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/daftar_pindah.css' %}">
 </head>
 <body>
+    <nav class="admin-navbar" data-aos="fade-down">
+  <div class="admin-navbar-content">
+    <div class="admin-brand">
+      <link rel="stylesheet" href="{% static 'img/logo tegar.png' %}">
+      <div class="admin-title">
+        <h1>Halo, Admin!</h1>
+        <p>Selamat datang di Dashboard</p>
+      </div>
+    </div>
+    <ul class="admin-nav-links">
+     <li> <a href="{% url 'announcement_manage'%}">Buat Berita</a></li>
+     <li> <a href="{% url 'home'%}">Home</a></li>
+    </ul>
+  </div>
+</nav>
     <h2>Daftar Pengajuan Surat Pindah Datang</h2>
     <table>
         <thead>

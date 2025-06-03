@@ -1,7 +1,7 @@
 :root {
-  --primary: #6c8f4e;     /* Hijau daun */
-  --secondary: #a78d63;   /* Coklat tanah */
-  --background: #f5f3eb;  /* Krem */
+  --primary: #3498DB;    /* Hijau daun */
+  --secondary: #2e2e2e;  /* Coklat tanah */
+  --background: #3498DB;  /* Krem */
   --text: #2e2e2e;
 }
 
@@ -12,6 +12,7 @@
   height: 100%;
   z-index: -1;
   background: var(--background);
+  color: #000;
 }
 
 /* Page and Card */
@@ -39,6 +40,7 @@ body {
 
 .login-card:hover {
   transform: rotateY(-3deg) rotateX(3deg) scale(1.01);
+  
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
 }
 
@@ -70,7 +72,7 @@ body {
 }
 
 .btn-login:hover {
-  background-color: var(--secondary);
+  background-color: #a3d4f4
 }
 
 /* Toggle Password */

@@ -13,10 +13,9 @@
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
   <!-- Font Awesome for eye icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
 </head>
 <body>
+
   <!-- Background Particle -->
   <div id="particles-js"></div>
 
@@ -29,7 +28,15 @@
         <p class="login-subtitle">Login dengan NIK dan Password Anda</p>
       </div>
 
-      
+      <!-- Alert messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
 
       <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -38,12 +45,12 @@
           <input type="text" name="nik" id="nik" class="form-control" required maxlength="16" />
         </div>
         <div class="mb-3 position-relative">
-  <label for="password" class="form-label">Password</label>
-  <input type="password" name="password" id="password" class="form-control" required />
-  <span class="toggle-password" onclick="togglePassword()">
-    <i class="fas fa-eye" id="eye-icon"></i>
-  </span>
-</div>
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" id="password" class="form-control" required />
+          <span class="toggle-password" onclick="togglePassword()">
+            <i class="fas fa-eye" id="eye-icon"></i>
+          </span>
+        </div>
 
         <button type="submit" class="btn btn-login w-100">Masuk</button>
       </form>
@@ -109,21 +116,21 @@
   </script>
 
   <!-- Toggle Password Script -->
- <script>
-  function togglePassword() {
-    const input = document.getElementById("password");
-    const icon = document.getElementById("eye-icon");
-    if (input.type === "password") {
-      input.type = "text";
-      icon.classList.remove("fa-eye");
-      icon.classList.add("fa-eye-slash");
-    } else {
-      input.type = "password";
-      icon.classList.remove("fa-eye-slash");
-      icon.classList.add("fa-eye");
+  <script>
+    function togglePassword() {
+      const input = document.getElementById("password");
+      const icon = document.getElementById("eye-icon");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>

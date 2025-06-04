@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -7,30 +6,78 @@
     <meta charset="UTF-8">
     <title>Form Pengajuan SKU</title>
     <link rel="stylesheet" href="{% static 'css/surat/domisili.css'%}">
+    <style>
+        .alert {
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+            color: white;
+            background-color: #28a745; /* green for success */
+        }
+
+        .alert.error {
+            background-color: #dc3545; /* red for error */
+        }
+
+        .alert.info {
+            background-color: #17a2b8; /* blue for info */
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <div class="brand">Pelayanan Desa</div>
-        <div>
-            <a href="{% url 'home' %}">Beranda</a>
-            <a href="{% url 'logout' %}">logout</a>
-            <a href="{% url 'cek_status' %}">Cek Status</a>
-            <a href="{% url 'tentang' %}">Tentang</a>
-        </div>
-        <div class="burger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-    
+     <nav>
+  <div class="brand">🏡 Pelayanan Desa</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="{% url 'home' %}">🏠 Beranda</a>
+    <a href="{% url 'cek_status' %}">🔎 Cek Status</a>
+    <a href="{% url 'tentang' %}">ℹ️ Tentang</a>
+    <a href="{% url 'logout' %}">🚪 Logout</a>
+  </div>
+
+  <div class="burger" id="burger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+    <!-- ALERT MESSAGES -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <h2>Form Pengajuan Surat Keterangan Usaha (SKU)</h2>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Kirim Pengajuan</button>
     </form>
+    <script>
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+
+  // Toggle menu saat burger diklik
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation(); // Hindari langsung nutup saat klik burger
+    navLinks.classList.toggle('active');
+  });
+
+  // Tutup menu saat klik di luar menu dan burger
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !burger.contains(e.target)) {
+      navLinks.classList.remove('active');
+    }
+  });
+
+  // Tutup menu saat scroll
+  window.addEventListener('scroll', () => {
+    navLinks.classList.remove('active');
+  });
+</script>
 </body>
 </html>
-
-

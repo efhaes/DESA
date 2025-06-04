@@ -1,21 +1,193 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pengumuman</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #eaf4fd;
+      color: #01257D;
+      padding: 0 1rem;
+    }
+
+    nav {
+      background-color: #01257D;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #00FFFF;
+      user-select: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .nav-links a:hover {
+      color: #00FFFF;
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .burger span {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #01257D;
+        flex-direction: column;
+        width: 200px;
+        padding: 1rem;
+        display: none;
+        border-radius: 0 0 0 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .burger {
+        display: flex;
+      }
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    div.announcement {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    div.announcement h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    div.announcement h3 a {
+      color: #01257D;
+      text-decoration: none;
+    }
+
+    div.announcement h3 a:hover {
+      color: #00FFFF;
+      text-decoration: underline;
+    }
+
+    div.announcement p {
+      margin: 0.5rem 0;
+      color: #333;
+    }
+
+    div.announcement small {
+      color: #666;
+      font-size: 0.85rem;
+    }
+  </style>
 </head>
 <body>
-  <h2>Daftar Pengumuman</h2>
 
-  {% for a in announcements %}
-    <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
-      <h3><a href="{% url 'announcement_detail' a.pk %}">{{ a.title }}</a></h3>
-      <p>{{ a.content|truncatewords:20 }}</p>
-      <small>{{ a.published_at|date:"d M Y" }}</small>
+  <nav>
+    <div class="brand">🏡 Pelayanan Desa</div>
+    <div class="nav-links" id="navLinks">
+      <a href="{% url 'home' %}">🏠 Beranda</a>
+      <a href="{% url 'cek_status' %}">🔎 Cek Status</a>
+      <a href="{% url 'tentang' %}">ℹ️ Tentang</a>
+      <a href="{% url 'logout' %}">🚪 Logout</a>
     </div>
-  {% empty %}
-    <p>Belum ada pengumuman.</p>
-  {% endfor %}
+    <div class="burger" id="burger" role="button" aria-label="Toggle menu" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <main>
+    <h2>Daftar Pengumuman</h2>
+
+    {% for a in announcements %}
+      <div class="announcement">
+        <h3><a href="{% url 'announcement_detail' a.pk %}">{{ a.title }}</a></h3>
+        <p>{{ a.content|truncatewords:20 }}</p>
+        <small>{{ a.published_at|date:"d M Y" }}</small>
+      </div>
+    {% empty %}
+      <p>Belum ada pengumuman.</p>
+    {% endfor %}
+  </main>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    burger.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navLinks.classList.toggle('active');
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !burger.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      navLinks.classList.remove('active');
+    });
+  </script>
+
 </body>
 </html>

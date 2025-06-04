@@ -13,11 +13,49 @@
         <div class="info">
             <p><strong>Nama:</strong> {{ keluar.nama }}</p>
             <p><strong>NIK:</strong> {{ keluar.nik }}</p>
-            <p><strong>Alamat Asal:</strong> {{ keluar.alamat_asal }}</p>
-            <p><strong>Alamat Tujuan:</strong> {{ keluar.tujuan_pindah }}</p>
+            <p><strong>Alamat Asal:</strong> {{ keluar.asal_daerah }}</p>
+            <p><strong>Alamat Tujuan:</strong> {{ keluar.tujuan_daerah }}</p>
             <p><strong>Tanggal Pindah:</strong> {{ keluar.tanggal_pindah|date:"Y-m-d" }}</p>
             <p><strong>Alasan Pindah:</strong> {{ keluar.alasan_pindah }}</p>
             <p><strong>Status:</strong> {{ keluar.status|title }}</p>
+
+            <p><strong>No. WhatsApp:</strong>
+                <a href="https://wa.me/{{ keluar.no_whatsapp|cut:'+' }}" target="_blank">
+                    {{ keluar.no_whatsapp }}
+                </a>
+            </p>
+
+            <p><strong>Kartu Keluarga (KK):</strong>
+                {% if keluar.kk %}
+                    <a href="{{ keluar.kk.url }}" target="_blank">Lihat KK</a>
+                {% else %}
+                    Belum diunggah
+                {% endif %}
+            </p>
+
+            <p><strong>KTP:</strong>
+                {% if keluar.ktp %}
+                    <a href="{{ keluar.ktp.url }}" target="_blank">Lihat KTP</a>
+                {% else %}
+                    Belum diunggah
+                {% endif %}
+            </p>
+
+            <p><strong>Surat Pengantar:</strong>
+                {% if keluar.surat_pengantar %}
+                    <a href="{{ keluar.surat_pengantar.url }}" target="_blank">Lihat Surat Pengantar</a>
+                {% else %}
+                    Belum diunggah
+                {% endif %}
+            </p>
+
+            <p><strong>Hasil Surat (PDF):</strong>
+                {% if keluar.hasil_surat %}
+                    <a href="{{ keluar.hasil_surat.url }}" target="_blank">Download</a>
+                {% else %}
+                    Belum tersedia
+                {% endif %}
+            </p>
         </div>
 
         <form method="post" enctype="multipart/form-data">
@@ -36,7 +74,12 @@
         </form>
 
         {% if keluar.hasil_surat %}
-        <p><strong>File Surat:</strong> <a href="{{ keluar.hasil_surat.url }}" target="_blank">Lihat File</a></p>
+            <p><strong>Bagikan Hasil Surat via WhatsApp:</strong></p>
+            <p>
+                <a href="https://wa.me/{{ keluar.no_whatsapp|cut:'+' }}?text=Berikut%20hasil%20surat%20pindah%20keluar%20Anda%20Sudah%20Jadi%20Silahkan%20Cek%20Kembali%20Di%20Website%20Kami">
+                    Kirim via WhatsApp
+                </a>
+            </p>
         {% endif %}
     </div>
 </body>

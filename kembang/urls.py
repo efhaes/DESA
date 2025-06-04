@@ -11,7 +11,7 @@ urlpatterns = [
     path('tentang/', views.tentang, name='tentang'),
     path('profil/', views.profil, name='profil'),
     path('persyaratan/', views.persyaratan, name='persyaratan'),
-    path('ajukan/', views.ajukan_surat, name='ajukan'),
+    
 
     path('semua/', views.semua_pengajuan, name='semua_pengajuan'),
     
@@ -54,6 +54,7 @@ urlpatterns = [
     path('kelola/pengumuman/', views.announcement_manage, name='announcement_manage'),
     path('pengumuman/', views.announcement_list, name='announcement_list'),
     path('pengumuman/<int:pk>/', views.announcement_detail, name='announcement_detail'),
+    path('pengajuan/semua-pengajuan/', views.semua_pengajuan, name='semua_pengajuan'),
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register, name='register'),

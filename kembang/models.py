@@ -9,25 +9,6 @@ STATUS_CHOICES = [
 
 ]
 
-class PengajuanSurat(models.Model):
-    JENIS_SURAT = [
-        ('domisili', 'Surat Domisili'),
-        ('sktm', 'Surat Keterangan Tidak Mampu'),
-        ('usaha', 'Surat Keterangan Usaha'),
-    ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    nama = models.CharField(max_length=100)
-    nik = models.CharField(max_length=16)
-    alamat = models.CharField(max_length=100)  # <- ini udah bener sekarang
-    jenis_surat = models.CharField(max_length=20, choices=JENIS_SURAT)
-    keterangan = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
-    tanggal = models.DateTimeField(auto_now_add=True)
-    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
-    def __str__(self):
-        return f"{self.nama} - {self.jenis_surat}"
-
-
 
 class AktaKematian(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)   
@@ -64,8 +45,9 @@ class AktaKelahiran(models.Model):
     nama_ibu = models.CharField(max_length=100)
     alamat = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
-    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
-    hasil_surat = models.FileField(upload_to='hasil_surat/akta_kematian/', blank=True, null=True)
+    no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp") 
+    tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
+    hasil_surat = models.FileField(upload_to='hasil_surat/akta_kelahiran/', blank=True, null=True)
 
     def __str__(self):
         return f'Akta Kelahiran {self.nama_lengkap}'
@@ -84,6 +66,7 @@ class PindahKeluar(models.Model):
     surat_pengantar = models.FileField(upload_to='pindah_keluar/surat_pengantar/')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")
+    tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
     hasil_surat = models.FileField(upload_to='hasil_surat/akta_kematian/', blank=True, null=True)
 
     def __str__(self):
@@ -104,6 +87,7 @@ class PindahDatang(models.Model):
     surat_pengantar = models.FileField(upload_to='pindah_datang/surat_pengantar/')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     no_whatsapp = models.CharField(max_length=15, verbose_name="No. WhatsApp")  # tambahkan ini
+    tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
     hasil_surat = models.FileField(upload_to='hasil_surat/akta_kematian/', blank=True, null=True)
 
     def __str__(self):
@@ -121,9 +105,10 @@ class SKTMPengajuan(models.Model):
     foto_ktp = models.ImageField(upload_to='sktm/foto_ktp/')
     foto_kk = models.ImageField(upload_to='sktm/foto_kk/')
     surat_pernyataan = models.FileField(upload_to='sktm/surat_pernyataan/')
+    tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     hasil_surat = models.FileField(upload_to='sktm/hasil_surat/', blank=True, null=True)
-    tanggal_dibuat = models.DateTimeField(auto_now_add=True)
+    
 
     def __str__(self):
         return f"{self.nama_lengkap} - {self.nik}"
@@ -138,9 +123,10 @@ class DomisiliPengajuan(models.Model):
     foto_ktp = models.ImageField(upload_to='domisili/foto_ktp/')
     foto_kk = models.ImageField(upload_to='domisili/foto_kk/')
     surat_permohonan = models.FileField(upload_to='domisili/surat_permohonan/')
+    tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     hasil_surat = models.FileField(upload_to='domisili/hasil_surat/', blank=True, null=True)
-    tanggal_dibuat = models.DateTimeField(auto_now_add=True)
+    
 
     def __str__(self):
         return f"{self.nama_lengkap} - {self.nik}"
@@ -158,7 +144,7 @@ class SKUPengajuan(models.Model):
     surat_kuasa = models.ImageField(upload_to='SKU/surat_kuasa/')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     hasil_surat = models.FileField(upload_to='SKU/hasil_surat/', blank=True, null=True)
-    tanggal_dibuat = models.DateTimeField(auto_now_add=True)
+    tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.nama_lengkap} - {self.nik}"
@@ -180,9 +166,6 @@ class Announcement(models.Model):
     updated_at = models.DateTimeField(auto_now=True)        
     is_active = models.BooleanField(default=True)           
 
-    # Optional: gambar ilustrasi pengumuman
-    image = models.ImageField(upload_to='announcement_images/', blank=True, null=True)
-
     def __str__(self):
         return self.title
 
@@ -190,3 +173,11 @@ class Announcement(models.Model):
         ordering = ['-published_at']   # pengumuman terbaru muncul paling atas
         verbose_name = "Pengumuman"
         verbose_name_plural = "Pengumuman"
+
+
+class AnnouncementImage(models.Model):
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='announcement_images/')
+
+    def __str__(self):
+        return f"Gambar untuk {self.announcement.title}"

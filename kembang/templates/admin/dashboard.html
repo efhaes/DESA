@@ -35,6 +35,9 @@
     <ul class="admin-nav-links">
      <li> <a href="{% url 'announcement_manage'%}">Buat Berita</a></li>
      <li> <a href="{% url 'home'%}">Home</a></li>
+     <li> <a href="{% url 'semua_pengajuan'%}">Semua Pengajuan</a></li>
+     
+     <li> <a href="{% url 'logout'%}">Logout</a></li>
     </ul>
   </div>
 </nav>
@@ -83,44 +86,17 @@
     <p>{{ sktm.count }}</p>
     <a href="{% url 'daftar_pengajuan_sktm' %}" class="button">Lihat Detail</a>
   </div>
+  <div class="card" data-aos="zoom-in" data-aos-delay="600">
+    <h2>💸 Semua Pengajuan</h2>
+    
+    <a href="{% url 'semua_pengajuan' %}" class="button">Lihat Detail</a>
+  </div>
 </div>
 
-<!-- Tabel Semua Pengajuan -->
-<div class="pengajuan-container" data-aos="fade-up">
-  <h2>🗃️ Semua Pengajuan</h2>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Nama</th>
-          <th>NIK</th>
-          <th>Jenis Surat</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for p in semua_pengajuan %}
-        <tr>
-          <td>{{ p.nama }}</td>
-          <td>{{ p.nik }}</td>
-          <td>
-            {% if p.alasan_pindah %}Pindah Datang
-            {% elif p.tujuan_pindah %}Pindah Keluar
-            {% elif p.tanggal_lahir %}Akta Kelahiran
-            {% elif p.tanggal_kematian %}Akta Kematian
-            {% elif p.npwp %}SKU
-            {% elif p.surat_pernyataan %}SKTM
-            {% elif p.surat_permohonan %}Domisili
-            {% else %}-{% endif %}
-          </td>
-          <td>{{ p.status|title }}</td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="4" style="text-align: center;">Tidak ada pengajuan</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+
+
+
+
 </div>
 
 <!-- Script AOS -->

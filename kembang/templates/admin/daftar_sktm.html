@@ -30,7 +30,7 @@
                 <th>NIK</th>
                 <th>No. WhatsApp</th>
                 <th>Status</th>
-                <th>Tanggal</th>
+                <th>Tanggal Pengajuan</th>
                 <th>Detail</th>
             </tr>
         </thead>
@@ -41,7 +41,7 @@
                 <td>{{ item.nik }}</td>
                 <td>{{ item.no_whatsapp }}</td>
                 <td>{{ item.status }}</td>
-                <td>{{ item.tanggal_dibuat|date:"d M Y" }}</td>
+                <td>{{ item.tanggal_pengajuan }}</td>
                 <td><a href="{% url 'detail_pengajuan_sktm' item.pk %}">Lihat</a></td>
             </tr>
             {% empty %}

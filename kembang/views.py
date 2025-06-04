@@ -77,9 +77,11 @@ def pengajuan_akta_kematian(request):
     if request.method == 'POST':
         form = AktaKematianForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+            pengajuan.save()
             messages.success(request, "Pengajuan berhasil dikirim.")
-            return redirect('pengajuan_akta_kematian')  # Bisa diarahkan ke halaman status atau beranda
+            return redirect('pengajuan_akta_kematian') # Bisa diarahkan ke halaman status atau beranda
     else:
         form = AktaKematianForm()
     return render(request, 'surat/aktakematian_form.html', {'form': form})
@@ -234,7 +236,7 @@ def pengajuan_sktm(request):
 
 @staff_member_required
 def daftar_sktm(request):
-    daftar = SKTMPengajuan.objects.all().order_by('-tanggal_dibuat')
+    daftar = SKTMPengajuan.objects.all().order_by('-tanggal_pengajuan')
     return render(request, 'admin/daftar_sktm.html', {'daftar': daftar})
 
 @staff_member_required
@@ -253,7 +255,7 @@ def detail_sktm(request, pk):
 
 @staff_member_required
 def daftar_domisili(request):
-    daftar = DomisiliPengajuan.objects.all().order_by('-tanggal_dibuat')
+    daftar = DomisiliPengajuan.objects.all().order_by('-tanggal_pengajuan')
     return render(request, 'admin/daftar_domisili.html', {'daftar': daftar})
 
 @login_required
@@ -290,7 +292,7 @@ def detail_domisili(request, pk):
 
 @staff_member_required
 def daftar_sku(request):
-    sku = SKUPengajuan.objects.all().order_by('-tanggal_dibuat')
+    sku = SKUPengajuan.objects.all().order_by('-tanggal_pengajuan')
     return render(request, 'admin/daftar_sku.html', {'sku': sku})
 
 @login_required
@@ -337,6 +339,12 @@ def cek_status_surat(request):
             hasil = PindahDatang.objects.filter(user=request.user)
         elif jenis == 'pindah_keluar':
             hasil = PindahKeluar.objects.filter(user=request.user)
+        elif jenis == 'SKTM':
+            hasil = SKTMPengajuan.objects.filter(user=request.user)
+        elif jenis == 'SKU':
+            hasil = SKUPengajuan.objects.filter(user=request.user)
+        elif jenis == 'domisili':
+            hasil = DomisiliPengajuan.objects.filter(user=request.user)
 
     return render(request, 'profile/cek_status.html', {
         'hasil': hasil,

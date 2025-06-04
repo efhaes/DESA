@@ -24,7 +24,15 @@
     <span></span>
   </div>
 </nav>
+{% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <h2>Form Pengajuan Surat Domisili</h2>
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

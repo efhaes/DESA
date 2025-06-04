@@ -15,7 +15,7 @@
             <tr>
                 <th>Nama</th>
                 <th>NIK</th>
-                <th>Tanggal Pindah</th>
+                <th>Tanggal Pin</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -25,7 +25,7 @@
             <tr>
                 <td>{{ item.nama }}</td>
                 <td>{{ item.nik }}</td>
-                <td>{{ item.tanggal_pindah|date:"Y-m-d" }}</td>
+                <td>{{ item.tanggal_pengajuan }}</td>
                 <td>{{ item.status }}</td>
                 <td><a href="{% url 'detail_pengajuan_pindah_keluar' item.pk %}">Detail</a>
 

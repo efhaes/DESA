@@ -33,7 +33,7 @@
       <thead>
         <tr>
           <th>Nama Jenazah</th>
-          <th>Tanggal Kematian</th>
+          <th>Tanggal Pengajuan</th>
           <th>Status</th>
           <th>Aksi</th>
         </tr>
@@ -42,7 +42,7 @@
         {% for akta in daftar %}
         <tr>
           <td>{{ akta.nama_jenazah }}</td>
-          <td>{{ akta.tanggal_kematian }}</td>
+          <td>{{ akta.tanggal_pengajuan }}</td>
           <td>{{ akta.status }}</td>
           <td><a href="{% url 'detail_pengajuan_akta_kematian' akta.pk %}">Detail</a></td>
         </tr>

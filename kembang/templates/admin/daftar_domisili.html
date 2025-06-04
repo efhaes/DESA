@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Daftar Pengajuan Surat Domisili</title>
-    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/daftar_kematian.css' %}">
 </head>
 <body>
     <h2>Daftar Pengajuan Surat Domisili</h2>
@@ -26,7 +26,7 @@
                 <td>{{ item.nik }}</td>
                 <td>{{ item.no_whatsapp }}</td>
                 <td>{{ item.status }}</td>
-                <td>{{ item.tanggal_dibuat|date:"d M Y" }}</td>
+                <td>{{ item.tanggal_pengajuan }}</td>
                 <td><a href="{% url 'detail_pengajuan_domisili' item.pk %}">Lihat</a></td>
             </tr>
             {% empty %}

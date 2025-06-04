@@ -25,6 +25,9 @@
   <div class="nav-links">
     <a href="{% url 'home' %}">Home</a>
     <a href="{% url 'tentang' %}">Tentang</a>
+    <a href="{% url 'announcement_list' %}">Pengumuman</a>
+    
+    
     <a href="{% url 'persyaratan' %}">Persyaratan</a>
     {% if user.is_authenticated %}
       <span>👤 {{ user.userprofile.nama }}</span>

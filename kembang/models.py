@@ -141,7 +141,7 @@ class SKUPengajuan(models.Model):
     surat_permohonan = models.FileField(upload_to='SKU/surat_permohonan/')
     foto_ktp = models.ImageField(upload_to='SKU/foto_ktp/')
     foto_kk = models.ImageField(upload_to='SKU/foto_kk/')
-    surat_kuasa = models.ImageField(upload_to='SKU/surat_kuasa/')
+    surat_kuasa = models.ImageField(upload_to='SKU/surat_kuasa/',blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     hasil_surat = models.FileField(upload_to='SKU/hasil_surat/', blank=True, null=True)
     tanggal_pengajuan = models.DateTimeField(auto_now_add=True)

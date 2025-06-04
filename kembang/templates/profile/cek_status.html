@@ -154,6 +154,9 @@
         <option value="kematian" {% if jenis == 'kematian' %}selected{% endif %}>Akta Kematian</option>
         <option value="pindah_datang" {% if jenis == 'pindah_datang' %}selected{% endif %}>Pindah Datang</option>
         <option value="pindah_keluar" {% if jenis == 'pindah_keluar' %}selected{% endif %}>Pindah Keluar</option>
+        <option value="SKU" {% if jenis == 'SKU' %}selected{% endif %}>SKU</option>
+        <option value="SKTM" {% if jenis == 'SKTM' %}selected{% endif %}>SKTM</option>
+        <option value="domisili" {% if jenis == 'domisili' %}selected{% endif %}>Domisili</option>
       </select>
       <button type="submit">Cari</button>
     </form>
@@ -177,6 +180,8 @@
                   {{ item.nama_lengkap }}
                 {% elif jenis == 'kematian' %}
                   {{ item.nama_jenazah }}
+                {% elif jenis == 'domisili' or jenis == 'SKU' or jenis == 'SKTM' %}
+    {{ item.nama_lengkap }}
                 {% else %}
                   {{ item.nama }}
                 {% endif %}

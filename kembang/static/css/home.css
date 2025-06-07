@@ -106,7 +106,10 @@ a:hover {
         right: 0;
         height: calc(100vh - 60px);
         width: 150px;
-        background: #01257D;
+        align-items: center;   
+        
+        text-align: center; 
+        background: linear-gradient(180deg, #01257D, #00FFFF); 
         flex-direction: column;
         padding: 2rem 1.5rem;
         gap: 1.5rem;
@@ -119,6 +122,7 @@ a:hover {
       nav.active .nav-links {
         transform: translateX(0);
       }
+      
 
       .burger {
         display: block;
@@ -209,40 +213,116 @@ a:hover {
 
 
 /* ===== Info Section ===== */
+/* Container utama */
 .info {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2.5rem 1rem;
-    background: #F0F8FF; /* biru lembut */
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 191, 255, 0.15);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem;
+  background: #F0F8FF;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 191, 255, 0.15);
+  text-align: center;
 }
+
+/* Judul utama */
 .info h2 {
-    color: #01257D;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 1.5rem;
+  color: #01257D;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
 }
-.info ul {
-    list-style: none;
-    padding: 0;
-    color: #3C4A63;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
+
+/* Carousel container */
+.berita-carousel {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
 }
-.info ul li {
-    margin-bottom: 0.8rem;
-    padding-left: 1.4rem;
-    position: relative;
+
+.berita-wrapper {
+  display: flex;
+  gap: 2rem;
+  scroll-snap-align: start;
+  overflow-x: auto;
+  padding-bottom: 1rem;
 }
-.info ul li::before {
-    content: "✔";
-    position: absolute;
-    left: 0;
-    color: #E6F3FF;
+
+.berita-item {
+  flex: 0 0 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  scroll-snap-align: start;
+  position: relative;
+  text-align: center;
 }
+
+/* Judul berita */
+.berita-item h3 a {
+  color: #01257D;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.berita-item small {
+  color: #555;
+  display: block;
+  margin-bottom: 0.7rem;
+}
+
+/* Isi konten */
+.berita-item p {
+  color: #3C4A63;
+  font-size: 1rem;
+  margin-top: 0.8rem;
+}
+
+/* Gambar slider */
+.image-slider {
+  position: relative;
+  margin: 1rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.slider-image {
+  width: 60%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 6px;
+  display: none;
+  margin: 0 auto;
+}
+
+.slider-image:first-child {
+  display: block;
+}
+
+/* Navigasi tombol jika kamu ingin tambahkan nanti */
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(1, 37, 125, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.slider-button.prev {
+  left: -20px;
+}
+
+.slider-button.next {
+  right: -20px;
+}
+
+
 
 /* ===== Cards Section ===== */
 .cards-container {
@@ -266,17 +346,23 @@ a:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0,191,255,0.35);
 }
-.card h3 {
+
+.card h2 {
+    font-size: 1.5rem; /* sebelumnya tidak diatur, sekarang kita kecilkan */
     margin-bottom: 1rem;
     font-weight: 700;
 }
+
 .card p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1.4rem;
+    font-size: 1rem; /* sekitar 14px, lebih kecil dari 1rem (16px) */
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
 }
+
+
+
 .card a, .card button {
-    background: #00BFFF;
+    background: #01257D; 
     color: #FFFFFF;
     border: none;
     padding: 0.7rem 1.5rem;
@@ -285,9 +371,147 @@ a:hover {
     cursor: pointer;
     transition: background 0.3s ease;
 }
-.card a:hover, .card button:hover {
-    background: #01257D;
+.card a:hover,
+.card button:hover {
+  background: #00BFFF;
 }
+
+
+/* Reset margin padding */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--background);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Particles background fixed */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--background);
+}
+
+/* Wrapper supaya center vertikal dan horizontal */
+.login-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Card Login */
+.login-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.login-card:hover {
+  transform: rotateY(-3deg) rotateX(3deg) scale(1.01);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+}
+
+/* Logo */
+.logo-desa {
+  width: 70px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+/* Titles */
+.login-title {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 0.2rem;
+}
+
+.login-subtitle {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form controls */
+input.form-control {
+  font-size: 1rem;
+  padding: 10px 12px;
+}
+
+/* Button */
+.btn-login {
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  background-color: #a3d4f4;
+  outline: none;
+}
+
+/* Footer fixed bottom */
+footer {
+  background-color: var(--secondary);
+  color: white;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+/* Supaya konten gak ketutup footer di mobile */
+@media (max-width: 576px) {
+  .login-wrapper {
+    padding-bottom: 70px;
+  }
+  .login-card {
+    padding: 30px 20px;
+    border-radius: 15px;
+  }
+  .login-title {
+    font-size: 1.4rem;
+  }
+  .btn-login {
+    font-size: 1rem;
+    padding: 10px;
+  }
+  .logo-desa {
+    width: 60px;
+  }
+}
+
+
 .card button[disabled] {
     background: #B0C4DE;
     color: #888;
@@ -296,10 +520,10 @@ a:hover {
 
 /* ===== Footer ===== */
 footer {
-    background: #3498DB;
+    background: #01257D;
     text-align: center;
     padding: 1rem 1.5rem;
-    color: #00FFFF;
+    color: #E6F3FF;
     font-size: 0.9rem;
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 }

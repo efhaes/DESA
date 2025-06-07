@@ -32,13 +32,13 @@
             <th>Tanggal Pengajuan</th>
             <th>Aksi</th>
         </tr>
-        {% for item in daftar %}
+        {% for item in sku %}
         <tr>
             <td>{{ item.nama_lengkap }}</td>
-            <td>{{ item.nik }}</td>
-            <td>{{ item.status }}</td>
-            <td>{{ item.tanggal_pengajuan }}</td>
-            <td><a href="{% url 'detail_pengajuan_sku' item.pk %}">Detail</a></td>
+        <td>{{ item.nik }}</td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.tanggal_pengajuan }}</td>
+        <td><a href="{% url 'detail_pengajuan_sku' item.pk %}">Detail</a></td>
         </tr>
         {% empty %}
         <tr>

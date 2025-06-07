@@ -1,50 +1,17 @@
+{% extends "partials/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8" />
-    <title>Beranda Desa Kita</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- CSS -->
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block css %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
 
-    <!-- Fonts & AOS -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-
-    <!-- Icon (optional) -->
-    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png">
-</head>
-<body>
-
-<!-- Navbar -->
-
-<nav>
-  <div class="brand">🌾 Desa Cidokom</div>
-  <div class="nav-links">
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'tentang' %}">Tentang</a>
-    <a href="{% url 'announcement_list' %}">Pengumuman</a>
-    
-    
-    <a href="{% url 'persyaratan' %}">Persyaratan</a>
-    {% if user.is_authenticated %}
-      <span>👤 {{ user.userprofile.nama }}</span>
-      <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">Login</a>
-    {% endif %}
-  </div>
-  <div class="burger" aria-label="Menu navigasi" aria-expanded="false" role="button" tabindex="0">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</nav>
-
-
-
+{% block content %}
 <!-- Hero -->
 <section class="hero" data-aos="fade-up">
     <h1>Selamat Datang di Website Pelayanan Desa Cidokom</h1>
@@ -53,28 +20,39 @@
 </section>
 
 
-<!-- Berita -->
-    <section class="info" data-aos="fade-up">
-    <h2>📰 Berita & Pengumuman</h2>
-    <ul>
-        {% for a in announcements %}
-        <li>
-            📌 <a href="{% url 'announcement_detail' a.pk %}">{{ a.title }}</a> - 
-            <small>{{ a.published_at|date:"d M Y" }}</small>
+    <!-- Berita -->
+<section class="info" data-aos="fade-up">
+  <h2>📰 Berita & Pengumuman</h2>
 
-            {% if a.image %}
-            <div style="margin-top: 0.5rem;">
-                <img src="{{ a.image.url }}" alt="Gambar {{ a.title }}" style="max-width:150px; border-radius:6px;"/>
-            </div>
-            {% endif %}
-            
-            <p>{{ a.content|truncatechars:100 }}</p>
-        </li>
-        {% empty %}
-        <li>Belum ada pengumuman.</li>
-        {% endfor %}
-    </ul>
-    </section>  
+  {% if announcements %}
+  <div class="berita-carousel">
+    <div class="berita-wrapper">
+      {% for a in announcements %}
+      <div class="berita-item">
+        <h3>📌 <a href="{% url 'announcement_detail' a.pk %}">{{ a.title }}</a></h3>
+        <small>{{ a.published_at|date:"d M Y" }}</small>
+
+        {% if a.images.all %}
+        <div class="image-slider" data-index="0">
+          {% for img in a.images.all %}
+          <img src="{{ img.image.url }}" alt="Gambar {{ a.title }}" class="slider-image"
+     {% if not forloop.first %}style="display:none;"{% endif %}>
+
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <p>{{ a.content|truncatechars:100 }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <p style="text-align:center;">Belum ada pengumuman.</p>
+  {% endif %}
+</section>
+
+ 
 
 
 
@@ -151,53 +129,67 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
 
-<!-- Footer -->
-<footer data-aos="fade-up">
-    <p>© 2025 Desa Kita. Dibuat dengan ❤️ oleh Pemuda Desa.</p>
-</footer>
-
-<!-- Script AOS -->
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+{% block javascripts %}
 <script>
-    AOS.init({
-        duration: 800,
-        once: true,
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const sliders = document.querySelectorAll('.image-slider');
+
+    sliders.forEach(slider => {
+      const images = slider.querySelectorAll('.slider-image');
+      const prevBtn = slider.querySelector('.prev-btn');
+      const nextBtn = slider.querySelector('.next-btn');
+      let index = 0;
+
+      function showImage(i) {
+        images.forEach((img, idx) => {
+          img.style.display = idx === i ? 'block' : 'none';
+        });
+      }
+
+      nextBtn.addEventListener('click', () => {
+        index = (index + 1) % images.length;
+        showImage(index);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        index = (index - 1 + images.length) % images.length;
+        showImage(index);
+      });
     });
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Carousel antar berita
+    const beritaWrapper = document.querySelector('.berita-wrapper');
+    const beritaItems = document.querySelectorAll('.berita-item');
+    let beritaIndex = 0;
+
+    setInterval(() => {
+      beritaIndex = (beritaIndex + 1) % beritaItems.length;
+      beritaWrapper.style.transform = `translateX(-${beritaIndex * 100}%)`;
+    }, 5000);
+
+    // Carousel dalam gambar (jika ada multiple images per berita)
+    const sliders = document.querySelectorAll('.image-slider');
+
+    sliders.forEach(slider => {
+      const images = slider.querySelectorAll('.slider-image');
+      let current = 0;
+
+      if (images.length > 1) {
+        setInterval(() => {
+          images[current].style.display = 'none';
+          current = (current + 1) % images.length;
+          images[current].style.display = 'block';
+        }, 3000);
+      }
+    });
+  });
+
+
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav');
-  const burger = document.querySelector('.burger');
-
-  burger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    nav.classList.toggle('active');
-    // toggle aria-expanded for accessibility
-    const expanded = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!expanded));
-  });
-
-  // Klik di luar nav, close menu
-  document.addEventListener('click', () => {
-    if(nav.classList.contains('active')){
-      nav.classList.remove('active');
-      burger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  // Jangan close menu kalau klik di dalam nav
-  nav.addEventListener('click', e => e.stopPropagation());
-
-  // Close menu saat scroll
-  window.addEventListener('scroll', () => {
-    if(nav.classList.contains('active')){
-      nav.classList.remove('active');
-      burger.setAttribute('aria-expanded', 'false');
-    }
-  });
-});
-</script>
-
-</body>
-</html>
+{% endblock javascripts %}

@@ -64,6 +64,8 @@ class DomisiliPengajuanForm(forms.ModelForm):
 
 
 class SKUPengajuanForm(forms.ModelForm):
+    npwp = forms.CharField(required=False)  # bikin npwp tidak wajib
+
     class Meta:
         model = SKUPengajuan
         exclude = ['user', 'status', 'hasil_surat', 'tanggal_pengajuan']

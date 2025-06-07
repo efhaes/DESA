@@ -72,18 +72,32 @@ def semua_pengajuan(request):
     })
 
 
+
+
 @login_required
 def pengajuan_akta_kematian(request):
     if request.method == 'POST':
+        # Cek apakah user sudah punya pengajuan aktif
+        sudah_ada = AktaKematian.objects.filter(
+            user=request.user,
+            status__in=['diajukan', 'diproses']
+        ).exists()
+
+        if sudah_ada:
+            messages.warning(request, "Anda sudah memiliki pengajuan yang sedang diproses.", extra_tags='pengajuan_kematian')
+            return redirect('pengajuan_akta_kematian')
+
         form = AktaKematianForm(request.POST, request.FILES)
         if form.is_valid():
             pengajuan = form.save(commit=False)
             pengajuan.user = request.user
+            pengajuan.status = 'diajukan'  # status awal
             pengajuan.save()
-            messages.success(request, "Pengajuan berhasil dikirim.")
-            return redirect('pengajuan_akta_kematian') # Bisa diarahkan ke halaman status atau beranda
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_kematian')
+            return redirect('pengajuan_akta_kematian')
     else:
         form = AktaKematianForm()
+
     return render(request, 'surat/aktakematian_form.html', {'form': form})
 
 @staff_member_required
@@ -112,16 +126,31 @@ def detail_pengajuan_akta_kematian(request, pk):
 @login_required
 def pengajuan_akta_kelahiran(request):
     if request.method == 'POST':
+        # Cek apakah user sudah punya pengajuan aktif
+        sudah_ada = AktaKelahiran.objects.filter(
+            user=request.user,
+            status__in=['diajukan', 'diproses']
+        ).exists()
+
+        if sudah_ada:
+            messages.warning(request, "Anda sudah memiliki pengajuan yang sedang diproses.", extra_tags='pengajuan_kelahiran')
+            return redirect('pengajuan_akta_kelahiran')
+
         form = AktaKelahiranForm(request.POST, request.FILES)
         if form.is_valid():
             pengajuan = form.save(commit=False)
             pengajuan.user = request.user
+            pengajuan.status = 'diajukan'  # status awal
             pengajuan.save()
-            messages.success(request, "Pengajuan berhasil dikirim.")
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_kelahiran')
             return redirect('pengajuan_akta_kelahiran')
     else:
         form = AktaKelahiranForm()
+
     return render(request, 'surat/akta_kelahiran_form.html', {'form': form})
+
+
+
 
 
 @staff_member_required
@@ -146,20 +175,33 @@ def detail_pengajuan_kelahiran(request, pk):
         return redirect('detail_pengajuan_kelahiran', pk=pk)
     return render(request, 'admin/detail_kelahiran.html', {'akta': akta})
 
+
+
 @login_required
 def pengajuan_pindah_datang(request):
     if request.method == 'POST':
+        # Cek apakah user sudah punya pengajuan aktif
+        sudah_ada = PindahDatang.objects.filter(
+            user=request.user,
+            status__in=['diajukan', 'diproses']
+        ).exists()
+
+        if sudah_ada:
+            messages.warning(request, "Anda sudah memiliki pengajuan yang sedang diproses.", extra_tags='pengajuan_datang')
+            return redirect('pengajuan_pindah_datang')
+
         form = PindahDatangForm(request.POST, request.FILES)
         if form.is_valid():
             pengajuan = form.save(commit=False)
             pengajuan.user = request.user
+            pengajuan.status = 'diajukan'  # status awal
             pengajuan.save()
-            messages.success(request, "Pengajuan berhasil dikirim.")
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_datang')
             return redirect('pengajuan_pindah_datang')
     else:
         form = PindahDatangForm()
-    return render(request, 'surat/datang_form.html', {'form': form})
 
+    return render(request, 'surat/datang_form.html', {'form': form})
 
 @staff_member_required
 def daftar_pindah_datang(request):
@@ -187,15 +229,27 @@ def detail_pindah_datang(request, pk):
 @login_required
 def pengajuan_pindah_keluar(request):
     if request.method == 'POST':
+        # Cek apakah user sudah punya pengajuan aktif
+        sudah_ada = PindahKeluar.objects.filter(
+            user=request.user,
+            status__in=['diajukan', 'diproses']
+        ).exists()
+
+        if sudah_ada:
+            messages.warning(request, "Anda sudah memiliki pengajuan yang sedang diproses.", extra_tags='pengajuan_keluar')
+            return redirect('pengajuan_pindah_keluar')
+
         form = PindahKeluarForm(request.POST, request.FILES)
         if form.is_valid():
             pengajuan = form.save(commit=False)
             pengajuan.user = request.user
+            pengajuan.status = 'diajukan'  # status awal
             pengajuan.save()
-            messages.success(request, "Pengajuan berhasil dikirim.")
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_keluar')
             return redirect('pengajuan_pindah_keluar')
     else:
         form = PindahKeluarForm()
+
     return render(request, 'surat/keluar_form.html', {'form': form})
 
 
@@ -219,19 +273,30 @@ def detail_pindah_keluar(request, pk):
     return render(request, 'admin/detail_keluar.html', {'keluar': keluar})
 
 
-
 @login_required
 def pengajuan_sktm(request):
     if request.method == 'POST':
+        # Cek apakah user sudah punya pengajuan aktif
+        sudah_ada = SKTMPengajuan.objects.filter(
+            user=request.user,
+            status__in=['diajukan', 'diproses']
+        ).exists()
+
+        if sudah_ada:
+            messages.warning(request, "Anda sudah memiliki pengajuan yang sedang diproses.", extra_tags='pengajuan_sktm')
+            return redirect('pengajuan_sktm')
+
         form = SKTMPengajuanForm(request.POST, request.FILES)
         if form.is_valid():
             pengajuan = form.save(commit=False)
             pengajuan.user = request.user
+            pengajuan.status = 'diajukan'  # status awal
             pengajuan.save()
-            messages.success(request, "Pengajuan berhasil dikirim.")
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_sktm')
             return redirect('pengajuan_sktm')
     else:
         form = SKTMPengajuanForm()
+
     return render(request, 'surat/sktm_form.html', {'form': form})
 
 @staff_member_required
@@ -266,7 +331,7 @@ def pengajuan_domisili(request):
             pengajuan = form.save(commit=False)
             pengajuan.user = request.user
             pengajuan.save()
-            messages.success(request, "Pengajuan berhasil dikirim.")
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_domisili')
             return redirect('pengajuan_domisili')
     else:
         form = DomisiliPengajuanForm()
@@ -300,14 +365,20 @@ def pengajuan_sku(request):
     if request.method == 'POST':
         form = SKUPengajuanForm(request.POST, request.FILES)
         if form.is_valid():
-            pengajuan = form.save(commit=False)  # jangan langsung save
-            pengajuan.user = request.user         # set user yang submit
-            pengajuan.save()                      # simpan data ke DB
-            messages.success(request, "Pengajuan berhasil dikirim.")
+            pengajuan = form.save(commit=False)
+            pengajuan.user = request.user
+
+            # Jika npwp kosong, isi dengan nik
+            if not pengajuan.npwp:
+                pengajuan.npwp = pengajuan.nik
+
+            pengajuan.save()
+            messages.success(request, "Pengajuan berhasil dikirim.", extra_tags='pengajuan_sku')
             return redirect('pengajuan_sku')
     else:
         form = SKUPengajuanForm()
     return render(request, 'surat/sku_form.html', {'form': form})
+
 
 
 @staff_member_required

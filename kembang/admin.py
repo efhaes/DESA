@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar,SKTMPengajuan, DomisiliPengajuan,SKUPengajuan,Announcement, AnnouncementImage
+from .models import AktaKematian,AktaKelahiran,PindahDatang,PindahKeluar,SKTMPengajuan, DomisiliPengajuan,SKUPengajuan,Announcement, AnnouncementImage,UserProfile
 
 
     
@@ -71,3 +71,10 @@ class AnnouncementAdmin(admin.ModelAdmin):
     inlines = [AnnouncementImageInline]
 
 admin.site.register(Announcement, AnnouncementAdmin)
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'nama', 'alamat')  # Menampilkan kolom di daftar admin
+    search_fields = ('nama', 'user__username') # Kolom pencarian
+    list_filter = ('nama',)                    # Filter di sidebar (opsional)
+
+admin.site.register(UserProfile, UserProfileAdmin)

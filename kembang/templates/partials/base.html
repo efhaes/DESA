@@ -3,13 +3,12 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Form Pengajuan Domisili{% endblock %}</title>
+    <title>{% block title %}Desa Kita{% endblock %}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" href="{% static 'css/surat/domisili.css' %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
@@ -28,21 +27,6 @@
 {% endif %}
 <div>
     {% block content %}
-      <!-- ✅ ALERT MESSAGE -->
-    {% if messages %}
-        <div class="alert-container">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <h2>Form Pengajuan Surat Domisili</h2>
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Kirim Pengajuan</button>
-    </form>
     {% endblock %}
 </div>
 

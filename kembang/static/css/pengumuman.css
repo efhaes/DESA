@@ -1,13 +1,9 @@
 /* Reset & Font */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
 
 body, h1, h2, h3, h4, p, ul {
   margin: 0;
   padding: 0;
+  margin-top: 4rem;
 }
 
 body {
@@ -17,121 +13,12 @@ body {
   line-height: 1.6;
 }
 
-/* NAVBAR */
-.admin-navbar {
-  background: #3498DB;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  padding: 18px 30px;
-  border-radius: 0 0 20px 20px;
-  position: relative;
-  z-index: 10;
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
-}
 
-.admin-navbar-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.admin-brand {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.admin-brand img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-.admin-title h1 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.admin-title p {
-  font-size: 0.95rem;
-  color: #ecf0f1;
-  margin-top: 2px;
-}
-
-.admin-nav-links {
-  list-style: none;
-  display: flex;
-  gap: 22px;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
-
-.admin-nav-links li a {
-  text-decoration: none;
-  font-weight: 600;
-  color: #ffffff;
-  padding: 8px 18px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.admin-nav-links li a:hover,
-.admin-nav-links li a:focus {
-  background-color: #5DADE2;
-  color: #fff;
-  box-shadow: 0 0 10px #5DADE2;
-  outline: none;
-}
-
-/* Burger Menu */
-.burger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.burger span {
-  width: 28px;
-  height: 3px;
-  background-color: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* Responsive Nav */
-@media (max-width: 768px) {
-  .burger {
-    display: flex;
-  }
-
-  .admin-nav-links {
-    width: 100%;
-    flex-direction: column;
-    display: none;
-    margin-top: 15px;
-    background-color: #2980b9;
-    border-radius: 12px;
-    padding: 15px 0;
-  }
-
-  .admin-nav-links.show {
-    display: flex;
-  }
-
-  .admin-nav-links li a {
-    padding: 12px 20px;
-    font-size: 1rem;
-  }
-}
 /* MAIN CONTENT */
 main h2, main h3 {
   color: #2c3e50;
+  margin-top: 4rem;
+
 }
 
 form {

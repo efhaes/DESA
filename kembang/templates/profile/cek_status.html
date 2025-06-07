@@ -1,150 +1,119 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cek Status Pengajuan Surat</title>
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block title %}
+cek status
+{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'css/home.css' %}">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #eaf4fd;
-      color: #01257D;
-    }
 
-    nav {
-      background-color: #01257D;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #f4f7fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-    .brand {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #00FFFF;
-      user-select: none;
-    }
+  main {
 
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-    }
+    flex: 1;
+    max-width: 800px;
+    margin: 6rem auto;
+    background: #ffffff;
+    padding: 2rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.6s ease-in-out;
+  }
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      user-select: none;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    .nav-links a:hover {
-      color: #00FFFF;
-    }
+  h2, h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #01257D;
+  }
 
-    .burger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-    .burger span {
-      width: 25px;
-      height: 3px;
-      background-color: white;
-      border-radius: 2px;
-      display: block;
-    }
+  select, button {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background-color: #01257D;
-        flex-direction: column;
-        width: 200px;
-        padding: 1rem;
-        display: none;
-        border-radius: 0 0 0 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      }
+  button {
+    background-color: #01257D;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
 
-      .nav-links.active {
-        display: flex;
-      }
+  button:hover {
+    background-color: #001f6d;
+  }
 
-      .burger {
-        display: flex;
-      }
-    }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    background: #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+  }
 
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+  th, td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+  }
 
-    h2, h3 {
-      text-align: center;
-    }
+  th {
+    background-color: #01257D;
+    color: white;
+    text-align: left;
+  }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+  tr:last-child td {
+    border-bottom: none;
+  }
 
-    select, button {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
+  a {
+    color: #00aaff;
+    text-decoration: none;
+    font-weight: 500;
+  }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.5rem;
-    }
+  a:hover {
+    text-decoration: underline;
+  }
 
-    th, td {
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
+  footer {
+    background: #01257D;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+  }
+</style>
 
-    a {
-      color: #01257D;
-    }
-  </style>
-</head>
-<body>
+{% endblock %}
 
-  <nav>
-    <div class="brand">🏡 Pelayanan Desa</div>
-    <div class="nav-links" id="navLinks">
-      <a href="{% url 'home' %}">🏠 Beranda</a>
-      <a href="{% url 'cek_status' %}">🔎 Cek Status</a>
-      <a href="{% url 'tentang' %}">ℹ️ Tentang</a>
-      <a href="{% url 'logout' %}">🚪 Logout</a>
-    </div>
-    <div class="burger" id="burger" role="button" aria-label="Toggle menu" tabindex="0">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </nav>
-
-  <main>
+{% block content %}
+<!-- Hero -->
+<main>
     <h2>Cek Status Pengajuan Surat</h2>
     <form method="get">
       <label for="jenis">Jenis Surat:</label>
@@ -203,8 +172,10 @@
       {% endif %}
     {% endif %}
   </main>
+{% endblock %}
 
-  <script>
+{% block javascripts %}
+ <script>
     const burger = document.getElementById('burger');
     const navLinks = document.getElementById('navLinks');
 
@@ -229,6 +200,4 @@
       navLinks.classList.remove('active');
     });
   </script>
-
-</body>
-</html>
+{% endblock javascripts %}

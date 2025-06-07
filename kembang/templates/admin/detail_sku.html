@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/detail_pindah.css' %}">
 </head>
 <body>
+    <nav class="admin-navbar" data-aos="fade-down">
+  <div class="admin-navbar-content">
+    <div class="admin-brand">
+      <link rel="stylesheet" href="{% static 'img/logo tegar.png' %}">
+      <div class="admin-title">
+        <h1>Halo, Admin!</h1>
+        <p>Selamat datang di Dashboard</p>
+      </div>
+    </div>
+    <ul class="admin-nav-links">
+     <li> <a href="{% url 'announcement_manage'%}">Buat Berita</a></li>
+     <li> <a href="{% url 'home'%}">Home</a></li>
+    </ul>
+  </div>
+</nav>
     <h2>Detail Pengajuan Surat Keterangan Usaha (SKU)</h2>
 
     <p><strong>Nama Lengkap:</strong> {{ sku.nama_lengkap }}</p>
@@ -15,11 +30,36 @@
     <p><strong>No WhatsApp:</strong> <a href="https://wa.me/{{ sku.no_whatsapp }}">{{ sku.no_whatsapp }}</a></p>
     <p><strong>NPWP:</strong> {{ sku.npwp }}</p>
 
+    {% if sku.surat_pengantar %}
     <p><strong>Surat Pengantar:</strong> <a href="{{ sku.surat_pengantar.url }}" target="_blank">Lihat</a></p>
+{% else %}
+    <p><strong>Surat Pengantar:</strong> Tidak ada file.</p>
+{% endif %}
+
+{% if sku.surat_permohonan %}
     <p><strong>Surat Permohonan:</strong> <a href="{{ sku.surat_permohonan.url }}" target="_blank">Lihat</a></p>
+{% else %}
+    <p><strong>Surat Permohonan:</strong> Tidak ada file.</p>
+{% endif %}
+
+{% if sku.foto_ktp %}
     <p><strong>Foto KTP:</strong><br><img src="{{ sku.foto_ktp.url }}" width="200"></p>
+{% else %}
+    <p><strong>Foto KTP:</strong> Tidak ada file.</p>
+{% endif %}
+
+{% if sku.foto_kk %}
     <p><strong>Foto KK:</strong><br><img src="{{ sku.foto_kk.url }}" width="200"></p>
+{% else %}
+    <p><strong>Foto KK:</strong> Tidak ada file.</p>
+{% endif %}
+
+{% if sku.surat_kuasa %}
     <p><strong>Surat Kuasa:</strong><br><img src="{{ sku.surat_kuasa.url }}" width="200"></p>
+{% else %}
+    <p><strong>Surat Kuasa:</strong> Tidak ada file.</p>
+{% endif %}
+
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -33,9 +73,12 @@
         <label>Upload Hasil Surat:</label>
         <input type="file" name="hasil_surat"><br><br>
 
-        {% if sku.hasil_surat %}
-        <p><strong>Hasil Surat:</strong> <a href="{{ sku.hasil_surat.url }}" target="_blank">Download</a></p>
-        {% endif %}
+        {% if sku.surat_kuasa %}
+    <p><strong>Surat Kuasa:</strong><br><img src="{{ sku.surat_kuasa.url }}" width="200"></p>
+{% else %}
+    <p><strong>Surat Kuasa:</strong> Tidak ada file.</p>
+{% endif %}
+
 
         <button type="submit">Simpan</button>
     </form>

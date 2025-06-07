@@ -1,92 +1,14 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pengumuman</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #eaf4fd;
-      color: #01257D;
-      padding: 0 1rem;
-    }
+{% extends "partials/base.html" %}
+{% load static %}
 
-    nav {
-      background-color: #01257D;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+{% block title %}
+Persyaratan Surat Pelayanan Desa
+{% endblock %}
 
-    .brand {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #00FFFF;
-      user-select: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      user-select: none;
-    }
-
-    .nav-links a:hover {
-      color: #00FFFF;
-    }
-
-    .burger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .burger span {
-      width: 25px;
-      height: 3px;
-      background-color: white;
-      border-radius: 2px;
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background-color: #01257D;
-        flex-direction: column;
-        width: 200px;
-        padding: 1rem;
-        display: none;
-        border-radius: 0 0 0 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .burger {
-        display: flex;
-      }
-    }
-
-    main {
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+     main {
       max-width: 800px;
       margin: 2rem auto;
       background: white;
@@ -130,40 +52,59 @@
       color: #666;
       font-size: 0.85rem;
     }
-  </style>
-</head>
-<body>
 
-  <nav>
-    <div class="brand">🏡 Pelayanan Desa</div>
-    <div class="nav-links" id="navLinks">
-      <a href="{% url 'home' %}">🏠 Beranda</a>
-      <a href="{% url 'cek_status' %}">🔎 Cek Status</a>
-      <a href="{% url 'tentang' %}">ℹ️ Tentang</a>
-      <a href="{% url 'logout' %}">🚪 Logout</a>
-    </div>
-    <div class="burger" id="burger" role="button" aria-label="Toggle menu" tabindex="0">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </nav>
+    .image-scroll-container {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
 
-  <main>
+    .image-scroll-container img {
+      border-radius: 8px;
+      object-fit: cover;
+      height: 120px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .image-scroll-container img:hover {
+      transform: scale(1.05);
+    }</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<main>
     <h2>Daftar Pengumuman</h2>
 
-    {% for a in announcements %}
+    {% if announcements %}
+      {% for a in announcements %}
       <div class="announcement">
         <h3><a href="{% url 'announcement_detail' a.pk %}">{{ a.title }}</a></h3>
+
+        {% if a.images.all %}
+        <div class="image-scroll-container">
+          {% for img in a.images.all %}
+            <img src="{{ img.image.url }}" width="200" alt="Gambar Pengumuman {{ forloop.counter }}">
+          {% endfor %}
+        </div>
+        {% else %}
+          <p>Tidak ada gambar untuk pengumuman ini.</p>
+        {% endif %}
+
         <p>{{ a.content|truncatewords:20 }}</p>
         <small>{{ a.published_at|date:"d M Y" }}</small>
       </div>
-    {% empty %}
+      {% endfor %}
+    {% else %}
       <p>Belum ada pengumuman.</p>
-    {% endfor %}
-  </main>
+    {% endif %}
+    </main>
+{% endblock %}
 
-  <script>
+{% block javascripts %}
+<script>
     const burger = document.getElementById('burger');
     const navLinks = document.getElementById('navLinks');
 
@@ -188,6 +129,4 @@
       navLinks.classList.remove('active');
     });
   </script>
-
-</body>
-</html>
+{% endblock javascripts %}

@@ -1,142 +1,93 @@
-:root {
-  --primary: #6c8f4e;
-  --secondary: #a78d63;
-  --background: #f5f3eb;
-  --text: #2e2e2e;
-}
-
-body {
+/* === GLOBAL === */
+body, html {
+  height: 100%;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--background);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(180deg, #01257D, #00FFFF);
+  overflow-x: hidden;
+  position: relative;
 }
 
+/* === PARTICLES === */
 #particles-js {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
-  z-index: -1;
-  background: var(--background);
+  z-index: 0;
 }
 
+/* === REGISTER WRAPPER === */
 .register-wrapper {
-  height: 150vh;
-  padding: 30px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
 }
 
+/* === REGISTER CARD === */
 .register-card {
-  background: #fff;
-  padding: 20px 30px;
+  background-color: white;
   border-radius: 20px;
+  max-width: 450px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  transition: 0.4s ease;
-}
-
-.register-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  position: relative;
 }
 
 .logo-desa {
-  width: 80px;
+  width: 60px;
   height: auto;
 }
 
+/* === TITLE & SUBTITLE === */
 .register-title {
-  color: var(--primary);
   font-size: 1.8rem;
-  font-weight: 400;
+  color: #01257D;
+  font-weight: bold;
 }
 
 .register-subtitle {
-  color: var(--text);
   font-size: 1rem;
-  margin-bottom: 1rem;
+  color: #6c757d;
 }
 
-/* FORM INPUT */
-form .form-label {
-  font-weight: 400;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-
-form input,
-form select,
-form textarea {
-  display: block;
-  width: 100%;
-  background-color: #fafafa;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  padding: 5px 5px;
-  font-size: 0,7rem;
-  color: var(--text);
-  box-shadow: inset 0 0 0 1px #ccc;
-  transition: all 0.3s ease;
-}
-
-form input::placeholder,
-form textarea::placeholder {
-  color: #999;
-  opacity: 0.9;
-}
-
-form input:focus,
-form select:focus,
-form textarea:focus {
-  background-color: #fff;
-  box-shadow: inset 0 0 0 2px var(--primary);
-  border-color: var(--primary);
-  outline: none;
-}
-
-/* ERROR & HELP TEXT */
-.invalid-feedback {
-  font-size: 0.875rem;
-  color: #d9534f;
-  margin-top: 0.3rem;
-}
-
-.form-text {
-  font-size: 0.8rem;
-  color: #777;
-  margin-top: 0.2rem;
-}
-
-/* BUTTON */
-.btn-register {
-  background-color: var(--primary);
-  border: none;
-  color: white;
+/* === FORM CONTROL === */
+.form-label {
   font-weight: 600;
-  font-size: 1.05rem;
-  padding: 12px;
-  border-radius: 12px;
-  transition: background-color 0.3s ease, transform 0.2s;
+  color: #01257D;
+}
+
+.form-control {
+  border-radius: 10px;
+  padding: 3px 10px;
+  border: 1px solid #ccc;
+  transition: border 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #01257D;
+  box-shadow: 0 0 0 0.2rem rgba(1, 37, 125, 0.25);
+}
+
+/* === BUTTON === */
+.btn-register {
+  background-color: #01257D;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-register:hover {
-  background-color: var(--secondary);
-  transform: scale(1.02);
+  background-color: #0056b3;
 }
 
-/* LINK */
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive */
+/* === RESPONSIVE === */
 @media (max-width: 576px) {
   .register-card {
-    padding: 30px 20px;
+    padding: 2rem 1rem;
   }
 
   .register-title {

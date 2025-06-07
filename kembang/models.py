@@ -5,8 +5,7 @@ STATUS_CHOICES = [
     ('diajukan', 'Diajukan'),
     ('diproses', 'Sedang Diproses'),
     ('selesai', 'Sudah Diproses'),
-    
-
+    ('ditolak', 'Persyaratan Tidak Terpenuhi'),
 ]
 
 
@@ -136,18 +135,24 @@ class SKUPengajuan(models.Model):
     nama_lengkap = models.CharField(max_length=100)
     nik = models.CharField(max_length=16)
     no_whatsapp = models.CharField(max_length=15)
-    npwp = models.CharField(max_length=50)
+    npwp = models.CharField(max_length=50, blank=True, null=True)  # jadi bisa kosong
     surat_pengantar = models.FileField(upload_to='SKU/surat_pengantar/')
     surat_permohonan = models.FileField(upload_to='SKU/surat_permohonan/')
     foto_ktp = models.ImageField(upload_to='SKU/foto_ktp/')
     foto_kk = models.ImageField(upload_to='SKU/foto_kk/')
-    surat_kuasa = models.ImageField(upload_to='SKU/surat_kuasa/',blank=True, null=True)
+    surat_kuasa = models.ImageField(upload_to='SKU/surat_kuasa/', blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='diajukan')
     hasil_surat = models.FileField(upload_to='SKU/hasil_surat/', blank=True, null=True)
     tanggal_pengajuan = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        if not self.npwp:  # Jika npwp kosong
+            self.npwp = self.nik  # otomatis isi dengan nik
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.nama_lengkap} - {self.nik}"
+
 
 
 class UserProfile(models.Model):

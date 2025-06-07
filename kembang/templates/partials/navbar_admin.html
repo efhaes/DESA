@@ -1,0 +1,25 @@
+  <!-- Konten Utama -->
+ <nav class="admin-navbar" data-aos="fade-down">
+  <div class="admin-navbar-content">
+    <div class="admin-brand">
+      <link rel="stylesheet" href="{% static 'img/logo tegar.png' %}">
+      <div class="admin-title">
+        <h1>Halo, Admin!</h1>
+        <p>Selamat datang di Dashboard</p>
+      </div>
+    </div>
+    <ul class="admin-nav-links">
+     <li> <a href="{% url 'announcement_manage'%}">Buat Berita</a></li>
+     <li> <a href="{% url 'home'%}">Home</a></li>
+     <li> <a href="{% url 'semua_pengajuan'%}">Semua Pengajuan</a></li>
+     
+     <li> <a href="{% url 'logout'%}">Logout</a></li>
+    </ul>
+  </div>
+  <div class="burger" onclick="toggleMenu()">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+</nav>

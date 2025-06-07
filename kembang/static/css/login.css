@@ -1,95 +1,84 @@
-:root {
-  --primary: #3498DB;    /* Hijau daun */
-  --secondary: #2e2e2e;  /* Coklat tanah */
-  --background: #3498DB;  /* Krem */
-  --text: #2e2e2e;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #01257D, #00FFFF);
+  position: relative;
 }
 
-/* Background Particles Layer */
+/* Background Particle (jika digunakan) */
 #particles-js {
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: -1;
-  background: var(--background);
-  color: #000;
 }
 
-/* Page and Card */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
+/* Login Wrapper */
 .login-wrapper {
-  height: 100vh;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 50px 15px 100px; /* Tambah padding bawah agar tidak nempel dengan footer */
+
 }
 
 .login-card {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 20px;
+  max-width: 450px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-  transform-style: preserve-3d;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(1, 37, 125, 0.15);
+  backdrop-filter: blur(5px);
 }
 
-.login-card:hover {
-  transform: rotateY(-3deg) rotateX(3deg) scale(1.01);
-  
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-}
-
-/* Logo */
 .logo-desa {
-  width: 70px;
+  width: 80px;
   height: auto;
 }
 
-/* Text */
+/* Title dan Subtitle */
 .login-title {
-  color: var(--primary);
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #01257D;
 }
 
 .login-subtitle {
-  color: var(--text);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  color: #666;
 }
 
-/* Button */
+/* Button Login */
 .btn-login {
-  background-color: var(--primary);
-  border: none;
+  background-color: #01257D;
   color: white;
+  transition: 0.3s ease;
   font-weight: 600;
-  transition: background 0.3s ease;
 }
 
 .btn-login:hover {
-  background-color: #a3d4f4
+  background-color: #001a5c;
 }
 
-/* Toggle Password */
-.toggle-password {
-  position: absolute;
-  top: 38px;
-  right: 15px;
-  cursor: pointer;
-  color: #888;
+/* Link daftar/login */
+a {
+  text-decoration: none;
 }
 
-/* Responsive */
-@media (max-width: 576px) {
-  .login-card {
-    padding: 30px 20px;
-  }
-  .login-title {
-    font-size: 1.4rem;
-  }
+a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background-color: #01257D;
+  color: white;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
 }

@@ -18,115 +18,7 @@ a:hover {
     color: #00BFFF;
 }
 
-/* Navbar */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #01257D;
-    padding: 1rem 2rem;
-    color: #ffffff;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
 
-.brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00FFFF;
-}
-
-.nav-links {
-    display: flex;
-    gap: 1.2rem;
-}
-
-.nav-links a {
-    color: #ffffff;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-.nav-links a:hover {
-    color: #00FFFF;
-}
-
-/* Burger icon */
-.burger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 5px;
-}
-.burger span {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    border-radius: 3px;
-    transition: 0.3s;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 70px;
-        right: 0;
-        background-color: #01257D;
-        flex-direction: column;
-        width: 200px;
-        text-align: right;
-        padding: 1rem 2rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        border-bottom-left-radius: 10px;
-    }
-
-    .nav-links.show {
-        display: flex;
-    }
-
-    .burger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-.burger span {
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
-  border-radius: 3px;
-  transition: all 0.3s ease-in-out;
-}
-
-@media (max-width: 768px) {
-  .burger {
-    display: flex;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background-color: #01257D;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 200px;
-    padding: 1rem;
-    border-radius: 0 0 10px 10px;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-}
-
-}
 
 
 
@@ -135,7 +27,7 @@ nav {
 h1, h2 {
     text-align: center;
     color: #01257D;
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 /* Form */

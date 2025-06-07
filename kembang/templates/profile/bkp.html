@@ -11,50 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" /> 
   <link rel="stylesheet" href="{% static 'css/dashboard_admin.css' %}">
-
-
   <!-- Di dalam <head> -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <!-- Di akhir <body> -->
+
+
 </head>
 <body>
-<nav class="admin-navbar">
-  <div class="admin-navbar-content">
-    <div class="admin-brand">
-      <img src="{% static 'img/logo tegar.png' %}" alt="Logo" style="width: 40px;">
-      <div class="admin-title">
-        <h1>Halo, Admin!</h1>
-        <p>Selamat datang di Dashboard</p>
-      </div>
-    </div>
 
-    <!-- Desktop Nav -->
-    <ul class="admin-nav-links">
-      <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="{% url 'announcement_manage' %}">Buat Berita</a></li>
-      <li><a href="{% url 'logout' %}">Logout</a></li>
-    </ul>
-
-    <!-- Burger Button (mobile only) -->
-    <div class="burger" id="openSidebar">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-</nav>
-
-<!-- Sidebar untuk mobile -->
-<div class="sidebar" id="sidebar">
-  <button id="closeSidebar">&times;</button>
-  <ul>
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'announcement_manage' %}">Buat Berita</a></li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-  </ul>
-</div>
-
-
+  <!-- Sidebar -->
 
 
 
@@ -111,39 +76,6 @@
 </div>
 
 
-
-
-
-</div>
-<footer class="admin-footer">
-  <div class="footer-content">
-    <p>&copy; 2025 Desa Cidokom. Semua hak dilindungi.</p>
-    <p>Dibuat dengan oleh DisCRUD</p>
-  </div>
-</footer>
-
-
-<script>
-  const sidebar = document.getElementById('sidebar');
-  const openSidebar = document.getElementById('openSidebar');
-  const closeSidebar = document.getElementById('closeSidebar');
-
-  // Toggle buka/tutup sidebar
-  openSidebar.addEventListener('click', () => {
-    sidebar.classList.add('show');
-  });
-
-  closeSidebar.addEventListener('click', () => {
-    sidebar.classList.remove('show');
-  });
-
-  // Tutup sidebar saat discroll
-  window.addEventListener('scroll', () => {
-    if (sidebar.classList.contains('show')) {
-      sidebar.classList.remove('show');
-    }
-  });
-</script>
 
 
 

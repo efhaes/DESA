@@ -1,60 +1,24 @@
-/* Warna Tema Biru */
-:root {
-  --primary: #3498DB;     /* Biru tua */
-  --secondary: #00FFFF;   /* Biru elektrik */
-  --background: #f5faff;  /* Biru sangat muda */
-  --text: #1a1a1a;        /* Teks gelap */
-}
-
 /* Reset dasar */
 body {
-  background-color: var(--background);
-  color: var(--text);
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #E6F3FF; /* biru sangat muda */
+    color: #2E3C54; /* abu gelap kebiruan */
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
 }
-
-/* Navbar */
-nav {
-  background-color: var(--primary);
-  color: white;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-nav .brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-nav a:hover {
-  color: var(--secondary);
-}
-
 /* Judul halaman */
 h2 {
-  color: var(--primary);
-  margin-bottom: 40px;
+  color: #01257D; /* Ganti dengan warna biru tua misalnya */
+  margin-bottom: 50px;
   font-weight: 700;
+  margin-top: 4rem;
 }
 
 /* Card 3D Animasi */
 .custom-card {
   background-color: white;
-  border: 1px solid var(--secondary);
+  border: 1px solid #00FFFF; /* Warna border, misalnya biru elektrik */
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -68,7 +32,7 @@ h2 {
 }
 
 .custom-card h5 {
-  color: var(--primary);
+  color: #01257D; /* Warna judul card */
   font-weight: 600;
   margin-bottom: 15px;
 }
@@ -83,21 +47,4 @@ h2 {
 }
 
 /* Responsif */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
-  nav div {
-    margin-top: 10px;
-  }
-
-  .custom-card {
-    padding: 20px !important;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-}

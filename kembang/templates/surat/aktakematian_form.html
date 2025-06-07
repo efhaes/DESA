@@ -1,35 +1,43 @@
-<!-- surat/aktakematian_form.html -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <title>Pengajuan Akta Kematian</title>
+    <title>{% block title %}Pengajuan Akta Kematian{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="{% static 'css/surat/form_kematian.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png">
+
+    {% block css %}
+    {% endblock %}
 </head>
 <body>
 
-     <nav>
-        <div class="brand">Pelayanan Desa</div>
-        <div>
-            <a href="{% url 'home' %}">Beranda</a>
-            <a href="{% url 'logout' %}">logout</a>
-            <a href="{% url 'cek_status' %}">Cek Status</a>
-            <a href="{% url 'tentang' %}">Tentang</a>
-        </div>
-        <div class="burger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
+{% if request.user.isauthenticated.is_staff %}
+        {% include "partials/navbar_admin.html"%}
+{% else %}
+        {% include "partials/navbar_masyarakat.html"%}
+{% endif %}
+<div>
+    {% block content %}
      {% if messages %}
-        <div class="alert-container">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
+  {% for message in messages %}
+    {% if 'pengajuan_kematian' in message.tags %}
+      <div class="alert {{ message.tags }}">
+        {{ message }}
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+      </div>
     {% endif %}
+  {% endfor %}
+{% endif %}
     <h1>Formulir Pengajuan Akta Kematian</h1>
     <form method="POST" enctype="multipart/form-data">
     
@@ -38,7 +46,57 @@
 
         <button type="submit">Kirim Pengajuan</button>
     </form>
+    {% endblock %}
+</div>
 
-    
+<footer data-aos="fade-up">
+    <p>© 2025 Desa Kita. Dibuat dengan Pemoeda.</p>
+</footer>
+
+{% block javascripts %}
+{% endblock %}
+<!-- Script AOS -->
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+    });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav');
+  const burger = document.querySelector('.burger');
+
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nav.classList.toggle('active');
+    // toggle aria-expanded for accessibility
+    const expanded = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!expanded));
+  });
+
+  // Klik di luar nav, close menu
+  document.addEventListener('click', () => {
+    if(nav.classList.contains('active')){
+      nav.classList.remove('active');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Jangan close menu kalau klik di dalam nav
+  nav.addEventListener('click', e => e.stopPropagation());
+
+  // Close menu saat scroll
+  window.addEventListener('scroll', () => {
+    if(nav.classList.contains('active')){
+      nav.classList.remove('active');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+</script>
+
 </body>
 </html>

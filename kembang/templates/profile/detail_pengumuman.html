@@ -1,248 +1,179 @@
+{% extends "partials/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ announcement.title }}</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #eaf4fd;
-      color: #01257D;
-     
-    }
+{% block title %}
+Dashboard
+{% endblock %}
 
-    /* Navbar desktop */
-    nav {
-      background-color: #01257D;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      color: white;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-      user-select: none;
-      font-size: 1rem;
-    }
+{% block css %}
+<style>
+ html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-    nav .brand {
-      font-weight: 700;
-      font-size: 1.6rem;
-      letter-spacing: 1px;
-      cursor: default;
-    }
+/* Kontainer utama isi halaman */
+.main-content {
+  flex: 1 0 auto; /* fleksibel memenuhi ruang tersedia */
+  padding: 1rem;
+}
 
-    nav .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
+/* Footer */
+footer {
+  flex-shrink: 0; /* jangan mengecil */
+  background-color: #01257D;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+}
 
-    nav .nav-links a {
-      color: #00FFFF;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+  h2 {
+    color: #01257D;
+    font-weight: 600;
+    font-size: 2rem;
+    margin: 4rem 0 0.25rem 0;
+    text-align: center;
+    user-select: text;
+  }
 
-    nav .nav-links a:hover,
-    nav .nav-links a:focus {
-      color: #ffffff;
-      background-color: rgba(0, 255, 255, 0.2);
-      outline: none;
-      box-shadow: 0 0 6px #00FFFFaa;
-    }
+  small {
+    color: #666;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-style: italic;
+    user-select: text;
+  }
 
-    /* Hide burger icon on desktop */
-    .burger {
-      display: none;
-    }
+  /* Slideshow container */
+  .slideshow-container {
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    position: relative;
+    user-select: none;
+  }
 
-    /* Responsive for mobile */
-    @media (max-width: 600px) {
-      nav .nav-links {
-        position: fixed;
-        top: 60px;
-        right: -220px;
-        background-color: #01257D;
-        height: calc(100vh - 60px);
-        width: 200px;
-        flex-direction: column;
-        padding: 2rem 1rem;
-        gap: 1.5rem;
-        transition: right 0.3s ease;
-        box-shadow: -2px 0 8px rgba(0,0,0,0.3);
-      }
-      nav.active .nav-links {
-        right: 0;
-      }
-      .burger {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        gap: 5px;
-      }
-      .burger span {
-        width: 25px;
-        height: 3px;
-        background-color: #00FFFF;
-        border-radius: 2px;
-        transition: all 0.3s ease;
-      }
-    }
+  .slide-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(1, 37, 125, 0.35);
+    object-fit: cover;
+    max-height: 400px;
+    display: none;  /* default sembunyi */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
 
-    /* Announcement content */
-    h2 {
-      color: #01257D;
-      font-weight: 600;
-      font-size: 2rem;
-      margin: 2rem 0 0.25rem 0;
-      text-align: center;
-    }
-    small {
-      color: #666;
-      font-size: 0.9rem;
-      display: block;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-style: italic;
-    }
+  .slide-image.active {
+    display: block;
+    opacity: 1;
+  }
 
-    /* Container gambar dengan scroll horizontal */
-    .image-scroll-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      padding-bottom: 8px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: #00FFFF #eaf4fd;
-    }
-    /* Scrollbar styling for Webkit browsers */
-    .image-scroll-container::-webkit-scrollbar {
-      height: 8px;
-    }
-    .image-scroll-container::-webkit-scrollbar-track {
-      background: #eaf4fd;
-      border-radius: 10px;
-    }
-    .image-scroll-container::-webkit-scrollbar-thumb {
-      background-color: #00FFFF;
-      border-radius: 10px;
-    }
+  .content-text {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #0b1746;
+    margin-bottom: 2.5rem;
+    white-space: pre-wrap;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    text-align: justify;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    user-select: text;
+  }
 
-    .image-scroll-container img {
-      flex: 0 0 auto;
-      max-height: 220px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(1, 37, 125, 0.35);
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      object-fit: cover;
-      width: auto;
-      max-width: 100%;
-    }
-    .image-scroll-container img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 18px rgba(0, 255, 255, 0.5);
-    }
+  @media (max-width: 600px) {
+  h2 {
+    font-size: 1.5rem;
+  }
 
-    /* Jika hanya 1 gambar (bukan di scroll container) */
-    img.single-image {
-      max-width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(1, 37, 125, 0.3);
-      margin-bottom: 1.5rem;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      cursor: pointer;
-      object-fit: cover;
-    }
+  small {
+    font-size: 0.8rem;
+  }
 
-    /* Paragraf konten */
-    .content-text {
-      font-size: 1.15rem;
-      line-height: 1.7;
-      color: #0b1746;
-      margin-bottom: 2.5rem;
-      white-space: pre-wrap;
-      letter-spacing: 0.02em;
-      font-weight: 400;
-      text-align: justify;
-    }
+  .slideshow-container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
 
-    a.back-link {
-      color: #00FFFF;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      display: inline-block;
-      margin-bottom: 3rem;
-    }
-    a.back-link:hover {
-      color: #01257D;
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
+  .slide-image {
+    max-height: 250px;
+  }
 
-<nav id="navbar">
-  <div class="brand">🌾 Desa Cidokom</div>
-  <div class="nav-links" id="navLinks">
-    <a href="{% url 'home' %}">Beranda</a>
-    <a href="{% url 'announcement_list' %}">Pengumuman</a>
-    <a href="{% url 'tentang' %}">Tentang</a>
-    {% if user.is_authenticated %}
-      <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">Login</a>
-    {% endif %}
-  </div>
-  <div class="burger" id="burger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</nav>
+  .content-text {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
 
+  a.back-link {
+    margin: 0 1rem 3rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
 <h2>{{ announcement.title }}</h2>
 <small>{{ announcement.published_at|date:"d M Y H:i" }}</small>
 
-{# Cek ada multiple images (announcement.images) atau satu (announcement.image) #}
-{% if announcement.images %}
-  <div class="image-scroll-container">
-    {% for img in announcement.images %}
-      <img src="{{ img.url }}" alt="Gambar Pengumuman {{ forloop.counter }}" />
+{% if announcement.images.all|length > 0 %}
+  <div class="slideshow-container" aria-live="polite" aria-atomic="true">
+    {% for img in announcement.images.all %}
+      <img src="{{ img.image.url }}" alt="Gambar Pengumuman {{ forloop.counter }}" class="slide-image {% if forloop.first %}active{% endif %}" />
     {% endfor %}
   </div>
-{% elif announcement.image %}
-  <img src="{{ announcement.image.url }}" alt="Gambar Pengumuman" class="single-image" />
+{% else %}
+  <p style="text-align:center; color:#555; margin-bottom: 2rem;">Tidak ada gambar untuk pengumuman ini.</p>
 {% endif %}
 
-<p class="content-text">{{ announcement.content|linebreaks }}</p>
+<h3 class="content-text">{{ announcement.content|linebreaks }}</h3>
 
-<a href="{% url 'announcement_list' %}" class="back-link">← Kembali ke Daftar</a>
 
+{% endblock %}
+
+{% block javascripts %}
 <script>
-  const burger = document.getElementById('burger');
-  const nav = document.getElementById('navbar');
+  const slides = document.querySelectorAll('.slide-image');
+  let currentIndex = 0;
+  let autoScroll;
 
-  burger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-  });
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+  }
+
+  function changeSlide() {
+    currentIndex++;
+    if (currentIndex >= slides.length) currentIndex = 0;
+    showSlide(currentIndex);
+  }
+
+  // Auto scroll setiap 5 detik
+  function startAutoScroll() {
+    autoScroll = setInterval(changeSlide, 3000);
+  }
+
+  function stopAutoScroll() {
+    clearInterval(autoScroll);
+  }
+
+  if (slides.length > 0) {
+    startAutoScroll();
+
+    slides.forEach(slide => {
+      slide.addEventListener('mouseenter', stopAutoScroll);
+      slide.addEventListener('mouseleave', startAutoScroll);
+    });
+  }
 </script>
-
-</body>
-</html>
+{% endblock %}
